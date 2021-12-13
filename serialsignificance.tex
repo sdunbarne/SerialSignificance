@@ -1,0 +1,1432 @@
+
+\documentclass[12pt]{article}
+
+\input{../../../../etc/macros} %\input{../../../../etc/mzlatex_macros}
+\input{../../../../etc/pdf_macros}
+
+\bibliographystyle{plain}
+
+\begin{document}
+
+\myheader \mytitle
+
+\hr
+
+\sectiontitle{Simple Serial Significance Testing}
+
+\hr
+
+\usefirefox
+
+\hr
+
+% \visual{Study Tip}{../../../../CommonInformation/Lessons/studytip.png}
+% \section*{Study Tip}
+
+% \hr
+
+\visual{Rating}{../../../../CommonInformation/Lessons/rating.png}
+\section*{Rating} %one of
+% Everyone: contains no mathematics.
+% Student: contains scenes of mild algebra or calculus that may require guidance.
+% Mathematically Mature: may contain mathematics beyond calculus with proofs.
+Mathematicians Only:  prolonged scenes of intense rigor.
+
+\hr
+
+\visual{Section Starter Question}{../../../../CommonInformation/Lessons/question_mark.png}
+\section*{Section Starter Question}
+
+Given a statistical test for the hypothesis that a state from a
+Markov chain is ``unusual'' with respect to some function
+labeling the states, what would a \emph{Type II error} for the statistical
+test mean?  
+
+Given a statistical test for the hypothesis that a state from a
+reversible Markov chain is ``unusual'' with respect to some function
+labeling the states, what would a \emph{Type I error} for the statistical
+test mean?
+
+\hr
+
+\visual{Key Concepts}{../../../../CommonInformation/Lessons/keyconcepts.png}
+\section*{Key Concepts}
+
+\begin{enumerate}
+    \item
+        The \( \sqrt{\epsilon} \) test is:  Observe a trajectory \( X_0,
+        X_1, X_2, \dots, X_n \) from the state \( X_0 \) for any fixed \(
+        n \). The event that \( v(X_0) \) is an \( \epsilon \)-outlier
+        among \( v(X_0), \dots v(X_n ) \) is significant at \( p = \sqrt
+        {2\epsilon} \) under the null hypothesis that \( X_0 \sim \pi \).
+    \item
+    \item
+\end{enumerate}
+
+\hr
+
+\visual{Vocabulary}{../../../../CommonInformation/Lessons/vocabulary.png}
+\section*{Vocabulary}
+\begin{enumerate}
+    \item
+        A \defn{value function} or \emph{label} is a function \( v :
+        \mathcal{X} \to \Reals \).  The value function or labels have
+        auxiliary information about the states of the chain and are not
+        assumed to have any relationship to the transition probabilities
+        of the Markov chain.
+    \item
+        A real number \( \alpha_0 \) is an \defn{\( \epsilon \)-outlier}
+        among \( \alpha_0, \alpha_1, \dots \alpha_n \) if there are, at
+        most, \( \epsilon(n + 1) \) indices \( i \) for which \( \alpha_i
+        \le \alpha_0 \), in other words \( \card{ \setof{i}{\alpha_i <
+        \alpha_0}} \le \epsilon(n+1) \).
+    \item
+        Say \( \alpha_j \) is \emph{among-\( \ell \)-smallest} among \(
+        \alpha_0, \dots \alpha_n \) if there are at most \( \ell \)
+        indices \( i \ne j \) from \( 0, \dots, n \) such that the label
+        of \( \alpha_i \) is at most the label of \( \alpha_j \).  That
+        is, \( \alpha_j \) is among-\( \ell \)-smallest among \( \alpha_0,
+        \dots \alpha_n \) if \( \card{ \setof{i}{0 \le i \le n, v(\alpha_i)
+        < v(\alpha_j)}} \le \ell \).  In particular, \( \alpha_j \) is
+        among-\( 0 \)-smallest from \( \alpha_0, \dots \alpha_n \) when
+        its label is the unique minimum label.
+\end{enumerate}
+
+\hr
+
+\section*{Notation}
+\begin{enumerate}
+    \item
+        \( X \), \( X_0 \), \( X_n \) -- Markov chain, starting state,
+        general step of the chain.
+  \item \( \mathcal{X} \) -- State space of a Markov chain
+  \item \( v :  \mathcal{X} \to \Reals \) -- value or label function
+  \item \( \pi \) -- stationary distribution
+  \item \( x_0 \) -- a given state from the state space
+  \item \( \alpha_0, \alpha_1, \dots \alpha_n \) -- arbitrary real
+    numbers for the definition of outliers
+  \item \( \epsilon \) -- small real number
+  \item \[
+              \rho(j; \ell, n) = \Prob{X_j \text{ is
+                  among-$\ell$-smallest from } X_0, \dots, X_n }
+            \]
+  \item   \( \rho(j; 0, n \given \sigma)
+            \) -- the probability that \( X_j = \sigma \) has the unique
+            minimum value in the Markov chain of length \( n \) given
+            that the Markov passes through \( \sigma \) at step \( j
+            \).
+  \item \( p_{\nu}^n \) -- the
+probability that in a \( n \)-step stationary trajectory \( X_0, X_1,
+\dots X_n \), the minimum \( v \) label value occurs at \( X_i \).
+\item \( N \) -- a large integer
+\item \( \zeta_{\nu} = \pm 1 \)  --  Bernoulli random variable with
+equal probability \( \frac{1}{2} \)
+\item   \( \tau_2 \) -- the relaxation time
+  for \( X \) defined as \( 1/ (1-\lambda_2) \) 
+\item  \( \lambda_2 \) --  the spectral gap for \( X \)
+\end{enumerate}
+
+\visual{Mathematical Ideas}{../../../../CommonInformation/Lessons/mathematicalideas.png}
+\section*{Mathematical Ideas}
+
+% To Do:
+% \begin{enumerate}
+%     \item Add in some details about reversibility and the connection
+%       to detailed balance.
+%     \item
+%         Find a more descriptive name for the outliers.
+%     \item
+%         Draw some figures to illustrate outliers.
+%     \item
+%         Examples of outliers for reversible chains.
+%         \begin{enumerate}
+%             \item
+%                 bathroom example in Stationary Distributions (reversible?)
+%             \item
+%                 Random walk with reflective boundary
+%             \item
+%                 Random walk on a circle
+%             \item
+%                 Ehrenfest urn model
+%             \item
+%                 Card shuffling on 3 cards
+%             \item
+%                 Gibbs sampler for bivariate normal (reversible?)
+%             \item
+%                 Use at least one of these for exercises
+%         \end{enumerate}
+%     \item
+%         Index entries
+%     \item
+%         Reorganize proofs and theorems to a logical order, maybe use
+%         hand drawn graph, also reorganize Theorem references.
+% \end{enumerate}
+
+Following the work of Chikina, Frieze, Mattingly and Pegden
+\cite{doi:10.1080/2330443X.2020.1806763, Chikina2860, Chikina2019} this
+section derives statistical tests to detect that a given state of a
+reversible Markov chain was \emph{not} chosen from a stationary
+distribution.  In particular, given a value function for the states of
+the Markov chain, the goal is to show rigorously the given state is an
+outlier with respect to the values, by establishing a \( p \) value
+under the null hypothesis the given state comes from a stationary
+distribution of the chain.
+
+In simplest form, the test is the following:  Given a particular state
+in the Markov chain, take a random walk from the state for any
+number of steps.  The simplest statistical test is that observing that
+the presented state is an \( \epsilon \)-outlier on the walk is
+significant at \( p = \sqrt{2\epsilon} \) under the null hypothesis that
+the state was chosen from a stationary distribution.  The test assumes
+nothing about the Markov chain beyond reversibility.  With the simple
+test, significance at \( p \approx \sqrt{\epsilon} \) is the best
+possible in general.  Compound tests using multiple random
+walks can provide better significance at \( p \approx \epsilon \).
+
+\subsection*{Theoretical Background}
+
+% A simple heuristic used in practice is to sample ranks of states from
+% long random trajectories on the Markov chain and compare these with the
+% rank of the presented state; if the presented state is a \( 0.1\% \)
+% outlier compared with the sampled ranks (its rank is in the bottom \(
+% 0.1\% \) of sampled ranks), then this observation should correspond to a
+% \( p \) value of \( 0.001 \).  This significance is not rigorous,
+% however, without good bounds on the mixing time of the Markov chain.  [Need
+% more explanation here about the stationary distribution.]
+
+The essential problem in statistics is to bound the probability of a
+surprising observation under a null hypothesis that observations are
+drawn from some probability distribution.  Often the bounding
+calculation is difficult.  First, defining the way in which the outcome
+is surprising requires care.  Second, the correct choice of the unbiased
+distribution implied by the null hypothesis may not be immediately
+clear.
+% classical tools like the \( t \)-test are often applied by making
+% simplifying assumptions about the distribution in such cases.
+Third, the \( p \) value calculations may be difficult when
+the observation is surprising in a simple way and the null hypothesis
+distribution is known but where there is no simple algorithm to draw
+samples from this distribution.  In the third case, the best candidate
+method to sample from the null hypothesis is often through a Markov
+chain, which essentially takes a long random walk on the possible values
+of the distribution.  Under suitable conditions, theorems about Markov
+chains guarantee that the chain converges to its stationary
+distribution, sometimes at a known rate, allowing a random sample to be
+drawn from a distribution quantifiably close to the target distribution.
+This principle is behind Markov chain Monte Carlo sampling and
+statistical physics models.
+
+A problem in applications of Markov chains is the usually unknown rate
+at which the chain converges to the stationary distribution.  It is
+rare to have rigorous results on the mixing time of a real-world Markov
+chain, which means that, in practice, sampling proceeds by running a
+Markov chain for a ``long time'' and hoping that sufficient mixing has
+occurred.
+
+In this section, the problem is assessing statistical significance in a
+Markov chain \emph{without requiring results on the mixing time} of the
+chain or indeed, any special structure at all in the chain beyond
+reversibility.  Consider a reversible Markov chain \( X \) on a state
+space \( \mathcal{X} \) with an associated label or value function \( v
+: \mathcal{X} \to \Reals \)  (The notation here is \( v \) for the
+\emph{value} or label function instead of \( \omega \) as in
+\cite{Chikina2860}, to avoid overloading notation.  Elsewhere \( \omega \)
+represents sample points in the sample space.) The labels or values
+give auxiliary information without assuming any relationship to the
+transition probabilities of \( X \).  The goal is to show that a given
+state \( x_0 \) is unusual for states drawn from a stationary
+distribution \( \pi \).  With good bounds on the mixing time of \( X \),
+sampling from a distribution of \( v(\pi) \) gives a rigorous \( p \)
+value for the significance of the smallness of the label of \( x_0 \).
+However, such convergence bounds are rarely available.
+
+Proposition~%
+\ref{thm:significance:basethm} detects that \( X_0 = x_0 \) is unusual
+relative to states chosen randomly according to \( \pi \).  The test
+does not require bounds on the mixing rate of \( X \).  First, a more
+precise definition of ``unusual relative to states chosen randomly''.
+
+\begin{definition}
+    A \defn{value function},~%
+    \index{value function}
+    also called a \emph{label}, is a function \( v :  \mathcal{X} \to
+    \Reals \).  The value function has auxiliary information
+    about the states of the chain and has no
+    relationship to the transition probabilities of the Markov chain.
+\end{definition}
+
+\begin{remark}
+    For the statistical significance tests in this section the only
+    relevant feature of the value function is the ranking it imposes on
+    the elements of \( \mathcal{X} \).
+\end{remark}
+
+\begin{definition}
+    A real number \( \alpha_0 \) is an \defn{\( \epsilon \)-outlier}%
+    \index{\( \epsilon \)-outlier}
+    among \( \alpha_0, \alpha_1, \dots \alpha_n \) (with repetitions
+    possible) if there are, at most, \( \epsilon(n + 1) \) indices \( i \)
+    for which \( \alpha_i \le \alpha_0 \), in other words \( \card{%
+    \setof{i}{\alpha_i \le \alpha_0}} \le \epsilon(n+1) \).
+    Alternatively, \( \alpha_0 \) is among the smallest \( \epsilon \)-fraction
+    of the ranked values of \( \alpha_0, \alpha_1, \dots \alpha_n \).
+\end{definition}
+
+The following definition uses counting instead of proportions to express
+the smallness of a real number relative to a set.  The proof of 
+Proposition~\ref{thm:significance:basethm}  uses this definition.
+
+\begin{definition}
+    Say \( \alpha_j \) is \defn{among-\( \ell \)-smallest}%
+    \index{among-\( \ell \)-smallest}
+    among \( \alpha_0, \dots \alpha_n \) if there are at most \( \ell \)
+    indices \( i \ne j \) from \( 0, \dots, n \) such that  \(
+    \alpha_i \) is at most as large as \( \alpha_j \).  That is, \(
+    \alpha_j \) is among-\( \ell \)-smallest among \( \alpha_0, \dots
+    \alpha_n \) if
+    \[
+      \card{ \setof{i}{i \ne j, v(\alpha_i) \le v(\alpha_j)}}
+      \le \ell.
+    \]  In particular, \( \alpha_j \) is among-\( 0 \)-smallest
+    from \( \alpha_0, \dots \alpha_n \) when its label is the unique
+    minimum label.
+\end{definition}
+
+\begin{remark}
+    The definitions are connected:
+    \begin{itemize}
+        \item
+            If \( \alpha_0 \) is an \( \epsilon \)-outlier, then \(
+            \alpha_0 \) is among-\( \lfloor \epsilon (n+1) \rfloor \)-smallest.
+        \item
+            If \( \alpha_0 \) is among-\( \ell \)-smallest, then \(
+            \alpha_0 \) is an \( \frac{\ell + 1}{n+1} \)-outlier.
+    \end{itemize}
+\end{remark}
+
+\begin{example}
+    Consider the set of \( 11 \) real numbers drawn at random uniformly
+    from \( [0,1] \) and presented in sorted order:
+    \[
+        0.006, 0.042, 0.359, 0.381, 0.399, 0.523, 0.533, 0.702, 0.762, 0.921,
+        0.963
+      \] so \( n = 10 \) and let \( \epsilon = 0.1 \).
+
+    Then \( 0.006 \)
+    is an \( 0.1 \)-outlier since the number of indices for which \(
+    \alpha_i \le 0.006 \), specifically \( 1 \), is less than \(
+    \epsilon(n+1) = 0.1\cdot (10 +1) = 1.1 \).
+    However, \( 0.006 \)
+    is not an \( 0.05 \)-outlier since the number of indices for which \(
+    \alpha_i \le 0.006 \), specifically \( 1 \), is more than \(
+    \epsilon(n+1) = 0.05 \cdot (10 +1) = 0.55 \).  As a further
+    example, there are \( 2 \) indices for which \( \alpha_i \le 0.042
+    \) so \( 0.042 \) is not an \( 0.05 \), \( 0.1 \) or
+    \(0.15 \)-outlier, but it is a \( 0.2 \)-outlier 
+
+    Also, \( 0.006 \) is among-\( 0 \)-smallest since there are \( 0 \)
+    indices \( i \ne j \) from \( 0, \dots, n \) such that the value of \(
+    \alpha_i \) is at most the value of \( 0.006 \).  Additionally, \(
+    0.042 \) is among-\( 1 \)-smallest since there is \( 1 \) index \( i
+    \ne j \) from \( 0, \dots, 10 \) such that the value of \( \alpha_i \)
+    is at most the value of \( 0.042 \), specifically the value \( 0.006
+    \).
+
+    The exercises have a comparison of \( \epsilon \)-outlier and among-\(
+    \ell \)-smallest to the notions of the order of a list and the rank
+    of elements of a list.
+\end{example}
+
+\begin{proposition}
+    \label{thm:significance:basethm}
+    \begin{enumerate}
+        \item
+            Fix \( n \).
+        \item
+            Suppose \( \sigma_0 \) is chosen from a stationary
+            distribution \( \pi \) of the reversible Markov chain \( X \).
+        \item
+            Suppose \( X_1, X_2, \dots, X_n \) is a sample of the Markov
+            chain starting from \( X_0 = \sigma_0 \).
+        \item
+            Suppose the state space has a value function \( v :
+            \mathcal {X} \to \Reals \).
+        \item
+            Let
+            \[
+                \rho(j; \ell, n) = \Prob{v(X_j) \text{ is among-$\ell$
+                -smallest among } v(X_0), \dots, v(X_n) }.
+            \]
+    \end{enumerate}
+
+    Then
+    \[
+        \rho(0; \ell, n) \le \sqrt{ \frac{2\ell + 1}{n+1}}.
+    \]
+
+
+    % Then the probability that the label of \( X_0 = \sigma_0 \) is an \(
+    % \epsilon \)-outlier from among the list of labels observed in the
+    % trajectory \( X_0, X_1 , X_2 , \dots X_n \) is, at most, \( \sqrt{2\epsilon}
+    % \).  In other words
+    % \[
+    %     \Prob{ \card{\setof{i}{\alpha_i \le \alpha_0}} \le \epsilon(n+1)}
+    %     \le \sqrt{2 \epsilon}.
+    %   \]
+
+    %   Let \( X = X_0, X_1, \dots \) be a
+    % reversible Markov chain with a stationary distribution \( \pi \),
+    % and suppose the states of \( X \) have real-valued labels.  If \( X_0
+    % \sim \pi \), then for any fixed \( n \), the probability that the
+    % label of \( X_0 \) is an \( \epsilon \)-outlier from among the list
+    % of labels observed in the trajectory \( X_0, X_1 , X_2 , \dots X_n \)
+    % is, at most, \( \sqrt{2\epsilon} \).
+\end{proposition}
+
+\begin{remark}
+    The Proposition makes no assumptions on the structure of the Markov
+    chain beyond reversibility.  Note that if a Markov chain can be
+    broken down into two disjoint communicating classes, i.e.\ two
+    disconnected Markov chains and if the individual Markov chains are
+    reversible, then so is the full chain, since it is impossible to
+    cross from one to the other.  This is a worthwhile observation,
+    since all examples of reversible Markov chains so far are
+    irreducible, giving the impression that all reversible Markov chains
+    are irreducible.
+
+    In particular, the Proposition applies even if the chain is not
+    irreducible, i.e.\ even if the state space is not connected
+    under the Markov chain.  In this disconnected case the chain will never
+    completely mix since it remains in one component. This remark is
+    important for the example application below of Markov chains
+    sampling valid political districting, where it is not known that the
+    Markov chains are irreducible.  Even if valid districting only
+    requires contiguous districts of roughly equal populations, it is
+    unknown if any valid districting is reachable from any other by a
+    legal sequence of steps.  Note that Proposition~%
+    \ref{thm:significance:basethm} can only show that a given sample is
+    highly unlikely to have been chosen from \( \pi \).  The Proposition
+    does not give a way for generating samples from \( \pi \).
+
+    This suggests that a careful choice of label function can help to
+    distinguish irreducible components, especially in political districting. Suppose
+    that one component is relatively small and unusual compared to more
+    typical states from a larger irreducible component.  A label
+    function that measures this difference would be a candidate for the
+    Proposition.
+\end{remark}
+
+\begin{proof}
+    \begin{enumerate}
+        \item
+            Let \( \pi \) denote the stationary distribution for \( X \)
+            and suppose that the initial state \( X_0 \) is distributed
+            as \( X_0 \sim \pi \), so that in fact, \( X_i \sim \pi \)
+            for all \( i \).
+        \item
+            Consider the set of labels, \( v(X_0), v(X_1), \dots, v(X_n)
+            \).  For simplicity, say \( X_j \) is among-\( \ell \)-smallest
+            among \( X_0, \dots, X_n \) instead of referring to the
+            labels of the states. For a first understanding of the
+            proof, focus on the \( \ell = 0 \) case, so the minimum
+            value is the focus.
+        \item
+            For \( 0 \le j \le n \)
+            define
+            \[
+              \rho(j; \ell, n) = \Prob{X_j \text{ is
+                  among-$\ell$-smallest from } X_0, \dots, X_n }
+            \] and
+            \[
+                \rho(j; \ell, n \given \sigma) = \Prob{X_j \text{ is
+                among-$\ell$-smallest from } X_0, \dots, X_n%
+                \given X_j = \sigma }.
+            \] Observe that \( \rho(j; 0 ,n) \) is the probability that \(
+            \sigma_j \) has the unique minimum value in the Markov chain
+            of length \( n \).  Likewise, \( \rho(j; 0, n \given \sigma)
+            \) is the probability that \( X_j = \sigma \) has the unique
+            minimum value in the Markov chain of length \( n \) given
+            that the Markov passes through \( \sigma \) at step \( j \).
+        \item
+            Observe that because \( X_s \sim \pi \) for all \( s \),
+            additionally
+            \begin{multline*}
+              \rho(j; \ell, n \given \sigma) =\\
+              \Prob{X_{s+j} \text{ is
+                among-$\ell$-smallest among } X_s, \dots, X_{s+n}
+              \given X_j = \sigma }.
+            \end{multline*}
+        \item\label{enum:significance:basethm5} 
+            Because \( X = X_0 , X_1, \dots \) is stationary and
+            reversible, the probability that \( (X_0, \dots, X_n ) = (\sigma_0,
+            \dots , \sigma_n ) \) is equal to the probability that \( (X_0,\dots,
+            X_n ) = (\sigma_n, \dots, \sigma_0) \) for any fixed
+            sequence \( (\sigma_0, \dots, \sigma_n ) \).  Thus, any
+            sequence \( (\sigma_0,\dots, \sigma_n ) \) for which \(
+            \sigma_j = \sigma \) and \( \sigma_j \) is a among-\( \ell \)-smallest
+            corresponds to an equiprobable sequence \( (\sigma_n,\dots,
+            \sigma_0 ) \), for which \( \sigma_{n-j} = \sigma \) and \(
+            \sigma_{n-j} \) is among-\( \ell \)-smallest.  Thus a first
+            fact about \( \rho(j; \ell, n \given \sigma) \) is:
+            \[
+                \rho(j; \ell, n \given \sigma) = \rho(n-j; \ell, n
+                \given \sigma).
+            \]
+        \item \label{enum:significance:basethm6}
+            The next claim is:
+            \[
+                \rho(j; 2\ell, n \given \sigma) \ge \rho(j; \ell, j \given
+                \sigma) \cdot \rho(0; \ell, n-j \given \sigma).
+            \] The proof of the claim is to consider the sub-event that \(
+            X_j \) is among-\( \ell \)-smallest among \( X_0, \dots,
+            X_j \) and also among-\( \ell \)-smallest among \( X_j, \dots, X_n \).  These events are
+            conditionally independent when conditioning on the value of \(
+            X_j = \sigma \), and \( \rho(j; \ell, j \given \sigma) \)
+            gives the probability of the first of these events, whereas
+            applying the previous step with \( s = j \) shows that \(
+            \rho(0, \ell, n-j \given \sigma) \) gives the probability of
+            the second event.  Finally, as a sub-event when both of these events
+            happen, \( X_j \) is among-\( 2\ell \)-smallest from \( X_0,
+            \dots, X_n \).  This establishes the inequality in the claim.
+          \item \label{enum:significance:basethm7}
+            Combining the information
+            \begin{align*}
+                \rho(j; 2\ell, n \given \sigma) &\ge \rho(j; \ell, j
+                \given \sigma) \cdot \rho(0; \ell, n-j \given \sigma) \\
+                &= \rho(0; \ell, j \given \sigma) \cdot \rho(0; \ell,
+                n-j \given \sigma) \\
+                &= \left( \rho(0; \ell, n \given \sigma) \right)^2.
+            \end{align*}
+            where the first inequality comes from
+            step~\ref{enum:significance:basethm6}. The middle
+            equality comes from 
+            step~\ref{enum:significance:basethm5}.
+            The last inequality comes from the simple observation that
+            \( \rho(j; \ell, n \given \sigma) \) is nonincreasing in
+            \( n \) for fixed \( j \), \( \ell \) and \( \sigma \), in
+            particular for \( j \) fixed to be \( 0 \).
+        \item\label{enum:significance:basethm8}
+            Now \( \rho(j;\ell,n) = \E{\rho(j; \ell, n \given X_j)} \),
+            where the expectation is taken over the random choice of \(
+            X_j \sim \pi \).  Thus, taking expectations over the
+            inequality in step~\ref{enum:significance:basethm7}
+            \begin{multline}
+                \rho(j; 2\ell, n) = \E{\rho(j;
+                \ell, n \given \sigma)} \ge \E{\rho(j; \ell, n \given
+                \sigma)^2} \\
+                \ge \left( \E{\rho(0, \ell, n \given \sigma)}\right)^2 =
+                \left( \rho(0; \ell, n) \right)^2
+            \end{multline}
+            where the second of the two inequalities is the
+            Cauchy-Schwartz inequality.
+        \item
+            To complete the proof, sum the left- and right-hand sides
+            of the inequality in step~\ref{enum:significance:basethm8} to obtain
+            \[
+                \sum\limits_{j=0}^n \rho(j; 2\ell, n) \ge (n+1) (\rho(0;
+                \ell, n))^2.
+            \]
+        \item
+            Letting \( \xi_j \), \( 0 \le i \le n \) be the indicator
+            variable that is \( 1 \) whenever \( X_j \) is among-\( 2\ell
+            \)-smallest among \( X_0, \dots , X_n \), then \( \sum_{\nu=0}^n
+            \xi_{\nu} \) is the number of among-\( 2\ell \)-smallest
+            terms which is at most \( 2\ell + 1 \).  Therefore,
+            linearity of expectation gives that
+            \[
+                2\ell + 1 \ge (n + 1)(\rho(0; l,n) )^2
+            \] giving
+            \[
+                \rho(0; \ell, n) \le \sqrt{ \frac{2\ell + 1}{n+1}}.
+            \]
+    \end{enumerate}
+\end{proof}
+
+\begin{corollary}[The $\sqrt{\epsilon}$ test]
+    \label{thm:significance:sqrtepstest}
+    \begin{enumerate}
+        \item
+            Fix \( n \).
+        \item
+            As a null hypothesis, suppose \( \sigma_0 \) is chosen from
+            a stationary distribution \( \pi \) of the reversible Markov
+            chain \( X \).
+        \item
+            Suppose \( X_1, X_2, \dots, X_n \) is a sample of the Markov
+            chain starting from \( X_0 = \sigma_0 \).
+        \item
+            Suppose the state space has a value function \( v :
+            \mathcal {X} \to \Reals \).
+    \end{enumerate}
+    Then the event that \( v(X_0) \) is an \( \epsilon \)-outlier among \(
+    v(x_0), \dots v(x_n ) \) is significant at \( p = \sqrt{2\epsilon} \)
+    under the null hypothesis that \( X_0 \sim \pi \).
+\end{corollary}
+\index{$\sqrt{\epsilon}$-test}
+
+\begin{proof}
+    \begin{enumerate}
+        \item
+            This is a restatement of Proposition~%
+            \ref{thm:significance:basethm} as a statistical test in
+            terms of the proportion \( \epsilon \).
+        \item
+            Let the reversible Markov chain \( X \), the stationary
+            distribution \( \pi \), the labeling \( v \), fixed integer \(
+            n \), and fixed small proportion \( \epsilon \) determine a \(
+            n \)-vector \( (\rho(0; \epsilon, n), \rho(1; \epsilon, n),
+            \dots, \rho(n; \epsilon, n)) \) where, with a slight abuse
+            of notation, for each \( i \), \( \rho(i; \epsilon, n) \) is
+            the probability that in a \( n \)-step stationary trajectory
+            \( X_0, X_1, \dots X_n \), \( v(X_i) \) is
+            among-\(\lfloor \epsilon(n+1) \rfloor)-smallest
+            in the list \( v(X_0), v(X_1), \dots,
+            v(X_n) \).
+        \item
+            Proposition~\ref{thm:significance:basethm} proves
+            \[
+                \rho(0; \epsilon, n) \le \sqrt{\frac{2 \lfloor \epsilon
+                (n+1) \rfloor}{n+1}} \le \sqrt{\frac{2 \epsilon (n+1)}{n+1}}
+                = \sqrt{2\epsilon}.
+            \]
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    Chikina, et al.
+    \cite{Chikina2860} call Corollary~%
+    \ref{thm:significance:sqrtepstest} the \( \sqrt{\epsilon} \) test,
+    and this section follows their terminology.  However, more logically
+    it could be called the \( \epsilon \) test, referring to the outlier
+    fraction, or the \( \sqrt{2 \epsilon} \) test referring to the
+    significance level.
+\end{remark}
+
+\begin{remark}
+    The significance level is often called the Type I error rate.%
+    \index{Type I error rate}
+    It is the probability of rejecting the null hypothesis, given that
+    the null hypothesis is true.  Often in statistics, the probability
+    of rejecting the null hypothesis is denoted by \( \alpha \).  So
+    here Corollary~%
+    \ref{thm:significance:sqrtepstest} says that if the label is an \(
+    \epsilon \)-outlier, then the probability of \emph{erroneously}
+    concluding that \( X_0 \) did \emph{not} come from the stationary
+    distribution, when in fact \( X_0 \) \emph{did} come from the stationary
+    distribution, is less than \( \sqrt{2 \epsilon } \).
+\end{remark}
+
+\begin{remark}
+    The power%
+    \index{power}
+    of a binary hypothesis test is the probability that the test
+    correctly rejects the null hypothesis when the alternative
+    hypothesis is true.  Here that would be the probability that the \(
+    \sqrt{\epsilon} \) test correctly says \( X_0 \) as an \( \epsilon \)-outlier
+    did \emph{not} come from the stationary distribution Later sections
+    consider the statistical power of the \( \sqrt{\epsilon} \) test and
+    show that the relationship \( p \approx \sqrt{\epsilon} \) is best
+    possible.  It is currently an open question whether the constant \(
+    2 \) can be improved.
+\end{remark}
+
+Another way to look at the theorem is the following.  The Markov chain \(
+\mathcal{X} \), the stationary distribution \( \pi \), the labeling \( v
+\), and a fixed integer \( n \) determine a \( n \)-vector \( (p_0^n, p_1^n,
+\dots, p_n^n) \) where for each \( \nu \), \( p_{\nu}^n \) is the
+probability that in a \( n \)-step stationary trajectory \( X_0, X_1,
+\dots X_n \), the minimum \( v \) label value occurs at \( X_i \).  In
+other words, choosing \( X_0 \) randomly from the stationary
+distribution \( \pi \) and taking \( n \) steps in \( \mathcal{X} \) to
+obtain the trajectory \( X_0, X_1, \dots X_n \), the probability that
+observing \( v(X_i) \) is the minimum among \( v(X_0), v(X_1), \dots, v(X_n)
+\) is \( p_i^n \).  Adopt the convention that ties among the values \( v
+(X_0), v(X_1), \dots, v(X_n) \) picks \( p_i^n \) randomly so that \( p_0^n
++ p_1^n + \cdots + p_n^n = 1 \) for \( X \), \( \pi \), \( n \).
+
+Thinking that the minimum value is roughly equally likely to occur
+anywhere in the chain, it might be natural to guess that \( p_i^n
+\approx \frac{1}{n+1} \). To be the minimum value means that the value
+occurs in the least \( \frac{1}{n+1} \) fraction, so \( \epsilon = \frac
+{1}{n+1} \). Corollary~%
+\ref{thm:significance:sqrtepstest} shows that \( p_0^n \le \frac{2}{\sqrt
+{%
+n+1}} \).  The next section has an example that \( p_0^n \) can be as
+large as \( \frac{1}{\sqrt{2\pi n}} \).  The example means that the \( O
+(\sqrt{\epsilon}) \) probability from Corollary~%
+\ref{thm:significance:sqrtepstest}, as the worst possible behavior for \(
+p_0^n \), can actually be achieved.
+
+In the general setting of a reversible Markov chain, the Corollary leads
+to a simple quantitative procedure for asserting rigorously that \(
+\sigma_0 \) is atypical with respect to \( \pi \) without knowing the
+mixing time of \( X \):  simply observe a random trajectory \( \sigma_0
+= X_0 , X_1, X_2, \dots, X_n \) from \( \sigma_0 \) for any fixed \( n \).
+If \( v(\sigma_0 ) \) is an \( \epsilon \)-outlier among \( v(X_0), v(X_1),
+\dots, v(X_n) \), then the probability of \emph{erroneously} concluding
+that \( X_0 \) did \emph{not} come from the stationary distribution,
+when in fact the null hypothesis that \( X_0 \) did come from the
+stationary distribution is true, is less than \( \sqrt{2 \epsilon } \).
+
+Corollary~%
+\ref{thm:significance:sqrtepstest} leads to the Outlier Test
+Algorithm:%
+\index{Outlier Test Algorithm}
+\begin{enumerate}
+    \item
+        Begin from the state being evaluated for ``outlier'' status.
+    \item
+        Make a sequence of random changes to the states according to the
+        Markov chain transition probabilities.
+    \item
+        Evaluate the labeling of the chain.
+    \item
+        Call the original state an ``outlier'' if the overwhelming
+        majority of labels (more than \( 1 - \epsilon \) of the labels)
+        are greater in label than the starting state.
+\end{enumerate}
+
+The Outlier Test Algorithm is useful because \( \sqrt{2\epsilon} \) is
+reasonably close to \( 0 \) for \( \epsilon \) small; in particular, it
+is possible to obtain ``good enough'' statistical significance from
+observations which can be made with reasonable computational resources.
+Of course, smaller significance compared to \( \epsilon \) would be even
+better, but, as already noted, \( p = O(\sqrt{\epsilon}) \) is the best
+possible.
+
+Apart from its application to gerrymandering below, the \( \sqrt{\epsilon}
+\) Test has a simple informal interpretation for the general behavior of
+reversible Markov chains, namely:  long-term typical (i.e., stationary)
+states are unlikely to change in a measurable way (as measured by the
+label) under a sequence of chain transitions, with a best-possible
+quantification of this fact (up to constant factors).
+
+Next is a corollary of Theorem~%
+\ref{thm:significance:basethm} that applies to the setting where \( X_0
+\) is not distributed as a stationary distribution \( \pi \) but instead
+is distributed with small total variation distance to \( \pi \).
+
+\begin{corollary}
+    \begin{enumerate}
+        \item
+            Let \( X \) be a reversible Markov chain on \( \mathcal{X} \).
+        \item
+            Let \( v :  \mathcal{X} \to \Reals \) be a label function.
+        \item
+            Let \( X_0 \) be a state chosen from \( \mathcal{X} \) with
+            distribution such that \( \| X_0 - \pi \|_{TV} \le \epsilon_1
+            \).
+    \end{enumerate}
+    Then for any fixed \( n \), the probability that the label of \( X_0
+    \) is an \( \epsilon \)-outlier from among the list of labels
+    observed in the trajectory \( X_0, X_1, \dots X_n \) is at most \(
+    \sqrt{2\epsilon} + \epsilon_1 \)
+\end{corollary}
+
+\begin{proof}
+    \begin{enumerate}
+        \item
+            If \( \rho_1 \), \( \rho_{2} \), and \( \tau \) are
+            probability distributions, then the product distributions \(
+            (\rho_1 , \tau ) \) and \( (\rho_2 , \tau ) \) satisfy \( \|
+            (\rho_1 , \tau )- (\rho_2, \tau )\|_{TV} = \|\rho_1- \rho_2
+            \|_{TV} \).
+        \item
+            The plan is to split the randomness in the trajectory \( X_0,
+            \dots , X_n \) of the Markov chain into two independent
+            sources:  the initial distribution is \( X_0 \sim \rho \),
+            and \( \tau \) is the uniform distribution on sequences of
+            length \( n \) of real numbers \( r_1 , r_2, \dots, r_n \)
+            in \( [0, 1] \).
+        \item
+            The distribution of the trajectory \( X_0 , X_1,\dots, X_n \)
+            is the product \( (\rho, \tau ) \) by using sequences of
+            reals \( r_1, \dots, r_n \) to choose transitions in the
+            chain; from \( X_i = \sigma_i \), if there are \( L \)
+            transitions possible, with probabilities \( p_1, \dots, p_L \).
+        \item
+            Then, make the \( t \)th possible transition if \( r_i \in [p_1
+            + \cdots + p_{t-1}, p_1 + \cdots + p_{t-1 }+ p_t] \).  If \(
+            \|\rho- \pi\|_{TV} \le \epsilon_1 \), then \( \|(\rho, \tau
+            )- (\pi, \tau )\|_{TV} \le \epsilon_1 \).
+        \item
+            Therefore, any event that would happen with probability at
+            most \( p \) for the sequence \( X_0 ,\dots, X_n \) when \(
+            X_0 \sim \pi \) must happen with probability at most \( p +
+            \epsilon_1 \) when \( X_0 \sim \rho \), where \( \|\rho- \pi\|_
+            {TV} \le \epsilon_1 \).  The corollary follows.
+    \end{enumerate}
+\end{proof}
+
+\begin{example}
+    Consider a simple specific case of the alternative Ehrenfest urn
+    model%
+    \index{Ehrenfest urn
+  model}%
+.    Two urns, labeled \( A \) and \( B \), contain a total of \( N = 7 \)
+    balls.  At each step a ball is selected at random with all selections equally
+    likely.  Then an urn is selected, urn \( A \) with probability \( p
+    = \frac{1}{2} \) and urn \( B \) with probability \( q = 1-p = \frac
+    {1}{2} \) and the ball is moved to that urn.  The state at each step
+    is the number of balls in the urn \( A \), from \( 0 \) to \( N \).
+    Start from state \( 0 \), with no balls in urn \( A \).  This Markov
+    chain is ergodic.  All states are accessible and all states
+    communicate.  All states are recurrent and there are no transient
+    states.  The chain is periodic with period \( 1 \) so it is
+    regular.  The standard Ehrenfest urn model, without the random
+    choice of urns at each step, is periodic with period \( 2 \). 
+    Having period \( 1 \) makes interpretation of the results simpler.
+
+    For this very simple example, let the label function be the number
+    of balls in urn \( A \), so that the label function is identical
+    with the state number.  The simplicity of the alternative Ehrenfest
+    urn model limits the possibilities for the labels.  More interesting
+    label functions appear in the gerrymandering example later, where
+    the states have considerably more structure and information
+    associated with them.
+
+    The second largest (in absolute magnitude) eigenvalue of the
+    transition probability matrix is approximately \( 0.857 \).  The
+    total variation distance of the probability distribution of the
+    states at step \( n \) should differ from the stationary
+    distribution by a multiple of \( (0.857)^n \).  Therefore, it takes
+    about \( 31 \) steps for the total variation distance of the
+    probability distribution of the states to differ from the stationary
+    distribution by less than \( 0.01 \).  For the alternative Ehrenfest
+    urn model with \( 7 \) balls, the stationary distribution of the
+    Markov chain started from state \( 0 \) will be in state \( 0 \)
+    about \( 0.78125\% \) of the steps.  In \( 199 \) steps, together
+    with the starting state \( 0 \), it would be normal to see the state
+    \( 0 \) just once or twice.  Equivalently, the mean recurrence time
+    to state \( 0 \) is \( 128 \) steps, so again in \( 199 \) steps it
+    would be normal to see the state \( 0 \) just once or twice.  This
+    shows that the state \( 0 \) is an atypical state with respect to
+    the stationary distribution, which should be expected from the
+    statistical mechanical interpretation of the alternative Ehrenfest
+    urn model. The state \( 0 \) is a state of high
+    statistical-mechanical order, with all the balls in urn \( B \),
+    none in urn \( A \).  Such highly ordered states should be unlikely.
+    In summary, the label \( 0 \) should be fairly unusual, in spite of
+    the fact that \( 0 \) is a state in the stationary distribution.
+
+    If \( \epsilon = 0.01 \), then this analysis predicts that value \(
+    0 \) would usually be an \( \epsilon \)-outlier for the set of
+    values generated by the chain, since it would usually appear in the
+    smallest \( \epsilon \)-fraction of the ranked values, that is, the
+    least two values.  Equivalently \( 198 \) of the \( 200 \) values
+    from the path would be greater than \( 0 \).  Actually running
+    simulations of the Ehrenfest Markov chains show that state \( 0 \)
+    is an \( 0.01 \)-outlier according to this test roughly half of the
+    time, see the exercises.  The simulations show that rejecting the
+    null hypothesis, that is, falsely concluding that \( 0 \) is \emph{not}
+    from the stationary distribution, occurs about half the time.  This
+    illustrates that Corollary~%
+    \ref{thm:significance:sqrtepstest} bounds the Type I error, not the
+    Type II error.
+
+    However, with just \( 8 \) labels, there is not much to distinguish
+    being an \( \epsilon \)-outlier, and variation among Markov chain
+    runs could account for false negatives, that is, finding that the
+    truly unusual state \( 0 \) (unusual in the sense of high
+    statistical-mechanical order and unusual in the sense of
+    infrequent visitation) occurs in the larger \( 1 - \epsilon \)
+    fraction of the labels, asserting that label \( 0 \) is not unusual.
+    Experiments with more trials with longer path lengths for the Markov
+    chain shows that the proportion of trials showing that \( 0 \) is an
+    \( \epsilon \)-outlier, that is, the empirical probability, slowly
+    increases.  This is an illustration of the problem of determining
+    the statistical power of the test discussed later.
+
+    Considering a slightly larger specific case of the alternative
+    Ehrenfest urn model%
+    \index{Ehrenfest urn
+  model}%
+.    \( N = 21 \) balls illustrates the utility of a more discriminating
+    label function.  Now with Markov chain runs of \( 299 \) steps in \(
+    1000 \) trials the proportion showing that \( 0 \) is an \( \epsilon
+    \)-outlier is about \( 0.86 \).  With longer Markov chain runs of \(
+    399 \) steps in \( 1000 \) trials the proportion showing that \( 0 \)
+    is an \( \epsilon \)-outlier is about \( 0.90 \).
+
+    % The important observation now is that the \( \epsilon \)-outlier
+    % test can show that state \( 0 \) is unusual without knowing the
+    % mixing time, or that the Markov chain is in the steady state, or
+    % even the steady state distribution.
+
+\end{example}
+
+\subsection*{Example Where \( p = O(\sqrt{\epsilon}) \) is the Best
+Possible}
+
+It might be natural to suspect that observing \( \epsilon \)-outlier
+status for \( \sigma \) on a random trajectory from \( \sigma \) is
+significant at something like \( p = O(\epsilon) \) instead of the
+significance \( p = O(\sqrt{\epsilon}) \) established by Corollary~%
+\ref{thm:significance:sqrtepstest}.  However, because Corollary~%
+\ref{thm:significance:sqrtepstest} places no demand on the mixing rate
+of \( X \), it should instead seem remarkable that any significance can
+be shown in general, and indeed, an example in this section shows that
+significance at \( p = O( \sqrt{\epsilon}) \) is the best possible.
+
+Let \( N \) be a large integer.  Let \( X \) be the Markov chain where \(
+X_0 \) is chosen at random uniformly in \( \mathcal{X} = \set{0, 1, 2, \dots , N-1} \),
+and for any \( \nu \ge 1 \), \( X_{\nu} \) is equal to \( X_{\nu-1} +
+\zeta_{\nu} \) modulo \( N \), where \( \zeta_{\nu} = \pm 1 \) with
+equal probability \( \frac{1}{2} \).  That is, \( X \) is random walk on
+the circle.  Note that the chain is stationary and reversible.  Let the
+value function be the position around the circle, that is, \(
+v(X_{\nu}) = X_{\nu} \mod N \).
+
+Given \( n \) and \( \epsilon \), choose \( N > \frac{2n+1}{\epsilon} \).
+Then \( N \) is large enough that the distance of \( X_0 \) from \( 0 \)
+in both directions is greater than \( n \) with probability greater
+than \( 1 -
+\epsilon \). Conditioning on this event, we have that \( X_0 \) is
+minimum among \( X_0, \dots , X_n \) if and only if all of the partial
+sums \( \sum\limits_{\nu=1}^ {j} \zeta_\nu \) are positive for \( j \le
+n \).  The probability of this event is just the probability that a \( n
+\)-step \( 1 \)-dimensional random walk from the origin takes a first
+step to the right and does not return to the origin.  The calculation of
+this probability is a classical problem in random walks, which can be
+solved using the reflection principle.  In particular, for \( n \) even,
+the probability is given by (see the exercises) 
+\[
+    \frac{1}{2^{n+1}}\binom{n}{n/2} \asympt \frac{1}{\sqrt{2 \pi n}}.
+\] Because being the minimum of \( X_0, \dots , X_n \) corresponds to
+being an \( \epsilon \)-outlier for \( \epsilon = \frac{1}{n+1} \) this
+example shows that the probability of being an \( \epsilon \)-outlier
+can be as high as \( \sqrt{\epsilon/(2\pi)} \).  Of course, \( \sqrt{\epsilon/
+(2\pi)} < \sqrt{2\epsilon} \) so the best possible value of the constant
+in the \( \sqrt{\epsilon} \) test is an interesting question.
+
+\subsection*{Notes on Statistical Power}
+% This section based on pnas.201617540SI.pdf, Section S7.
+
+The effectiveness of the \( \sqrt{\epsilon} \) test depends on the
+availability of a sufficiently discriminating choice for the value
+function \( v \) and the ability to run the test for long enough (in
+other words, choose \( n \) large enough) to detect that the presented
+state is a local outlier.  It is possible, however, to make a general
+statement about the power of the test when \( n \) is chosen large
+relative to the actual mixing time of the chain.  Recall that one
+potential application of the test is in situations where the mixing time
+of the chain is actually accessible through reasonable computational
+resources, although this fact cannot be proved rigorously, because
+theoretical bounds on the mixing time are not available.  In particular,
+we do know that the test is very likely to succeed when \( n \) is
+sufficiently large and \( v(\sigma_0) \) is atypical.
+
+% The following may be a relevant reference for the previous remark.
+% MIXING TIME ESTIMATION IN REVERSIBLE MARKOV CHAINS
+% FROM A SINGLE SAMPLE PATH
+% DANIEL HSU, A RYEH KONTOROVICH, D AVID A. LEVIN,
+% YUVAL PERES, C SABA SZEPESVARI AND GEOFFREY WOLFER
+
+% The Annals of Applied Probability
+% 2019, Vol. 29, No. 4, 2439 - 2480
+% https://doi.org/10.1214/18-AAP1457
+% Institute of Mathematical Statistics, 2019
+
+\begin{remark}
+    Let \( \tau_2 \) be the relaxation time%
+    \index{relaxation time}
+    for \( X \) defined as \( 1/ (1-\lambda_2) \) where \( \lambda_2 \)
+    is the spectral gap for \( X \). The relaxation time is intimately
+    related to the mixing time of \( X \).  [Maybe specify how, using
+    the lower bound in the section on spectral decomposition.]
+\end{remark}
+
+% @article{10.1214/aoap/1028903453,
+% author = {Pascal Lezaud},
+% title = {{Chernoff-type bound for finite Markov chains}},
+% volume = {8},
+% journal = {The Annals of Applied Probability},
+% number = {3},
+% publisher = {Institute of Mathematical Statistics},
+% pages = {849 -- 867},
+% keywords = {Chernoff bound, Eigenvalues, Markov chain, Perturbation theory},
+% year = {1998},
+% doi = {10.1214/aoap/1028903453},
+% URL = {https://doi.org/10.1214/aoap/1028903453}
+% }
+
+% This is the probable reference for the Gillman Theorem
+% [Gil98] D. Gillman. A Chernoff bound for random walks on expander graphs. SIAM J. Comput.,
+% 27(4):1203 - 1220, 1998, https://doi.org/10.1137/S0097539794268765
+% See also
+% D. Gillman, Thesis (Ph. D.)--Massachusetts Institute of Technology,
+% Dept. of Mathematics, 1993.
+% http://hdl.handle.net/1721.1/17332
+
+Theorem~%
+\ref{thm:significance:powerthm} below is a simple application of the
+following theorem of Gillman
+\cite[Theorem 2.1]{gillman98} translated into the current notation and
+assumptions.
+
+\begin{theorem}[Gillman's Chernoff-Type Bound]
+    \label{thm:significance:gillman}
+    \begin{enumerate}
+        \item
+            Let \( X = X_0, X_1, \dots \) be a reversible Markov chain
+            on \( \mathcal{X} \).
+        \item
+            Let \( A \subset \mathcal{X} \).
+        \item
+            Let \( N_n(A) \) denote the number of visits to \( A \)
+            among \( X = X_0, X_1, \dots, X_n \).
+    \end{enumerate}
+    Then for any \( \gamma > 0 \),
+    \[
+        \Prob{N_n(A)/n - \pi(A) \ge \gamma} \le \left( 1 + \frac{\gamma}
+        {10 \tau_2} \right) \sqrt{\sum_{\sigma} \frac{(\Prob{X_0 =
+        \sigma})^2}{\pi (\sigma)}} \exp \left( \frac{-\gamma^2 \cdot n}{20
+        \tau_2} \right).
+    \]
+\end{theorem}
+\index{Gillman's Chernoff-Type Bound}
+
+\begin{remark}
+  Note that the application of Gillman Theorem 2.1 quoted in
+  pnas.201617540SI.pdf, Section S7 appears to have some typographical
+  errors, specifically,
+  \begin{enumerate}
+  \item The use of \( n \) in the event on the left side and the \( n
+    \) appearing in the numerator of the exponential function argument
+    should both be \( n \), following to the notation in
+    pnas.201617540SI.pdf, Section S7.
+  \item The \( n \) appearing in the numerator of the
+    large-parenthesized coefficient should not appear.
+  \item These typographical errors have been corrected in the
+    statement of above.
+  \item These typographical errors do ot affect the overall
+    conclusions related to the theorem.
+  \end{enumerate}
+\end{remark}
+
+\begin{theorem}
+    \label{thm:significance:powerthm}
+    \begin{enumerate}
+        \item
+            Let \( X \) be a reversible Markov chain on \( \mathcal{X} \).
+        \item
+            Let \( v :  \mathcal{X} \to \Reals \) be a label function.
+        \item
+            Given \( \sigma_0 \), suppose that for a random state \(
+            \sigma \sim \pi \),
+            \[
+                \Prob{v(\sigma) \le v(\sigma_0)} \le \epsilon.
+            \]
+    \end{enumerate}
+    Then with probability at least
+    \[
+        \rho \ge 1 - \left( 1 + \frac{\epsilon}{10 \tau_2} \right)
+        \cdot \frac{1}{\sqrt{\pi_{\min}}} \cdot \exp \left( \frac {-\epsilon^
+        {2} \cdot n}{20 \tau_{2}} \right)
+    \] \( v(\sigma) \) is a \( 2\epsilon \)-outlier among \( v(\sigma_0),
+    v(\sigma_1), \dots, v(\sigma_n) \) where \( \sigma_0, \sigma_1,
+    \dots, \sigma_n \) is a random trajectory starting from \( \sigma_0 \).
+\end{theorem}
+
+\begin{proof}
+  \begin{enumerate}
+  \item 
+    Apply Theorem~%
+    \ref{thm:significance:gillman} with \( A \) as the set of states \(
+    \sigma \in \mathcal{X} \) such that \( v(\sigma) \le v(\sigma_0) \),
+    \( X_0 = \sigma_0 \) and \( \gamma = \epsilon \).  By assumption \(
+    \pi(A) \le \epsilon \).
+  \item  Theorem~%
+    \ref{thm:significance:gillman} gives that
+    \[
+        \Prob{N_{n}(A)/n > 2\epsilon} \le \left( 1 + \frac{\epsilon n}{10
+        \tau_2} \right) \cdot \frac{1}{\sqrt{\pi_{\min}}} \cdot \exp
+        \left( \frac{-\epsilon^{2 n}}{20 \tau_2} \right).
+      \]
+    \item 
+      The statement of the proof uses the additional simplification:
+      \[
+        \frac{(\Prob{X_0 =
+        \sigma})^2}{\pi (\sigma)}} \le \frac{(\Prob{X_0 =
+      \sigma})^2}{\pi_{\min}}}
+     \]
+     so
+     \[
+       \sum_{\sigma} \frac{(\Prob{X_0 =\sigma})^2}{\pi (\sigma)}}
+     \le
+     \frac{\sum_{\sigma}{(\Prob{X_0 =\sigma})^2}}{\pi_{\min}}
+     \le
+     \frac{(\sum_{\sigma}{\Prob{X_0 =\sigma})^2}}{\pi_{\min}}
+     = \frac{1}{\pi_{\min}}.
+   \]
+   using standard inequalities.
+  \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    The probability \( \rho \) in Theorem~%
+    \ref{thm:significance:powerthm} converges in \( n \) exponentially
+    quickly to \( 1 \).  The probability \( \rho \)is very close to \( 1
+    \) if \( n \) is large relative to \( \tau_2 \).  In particular,
+    Theorem~%
+    \ref{thm:significance:powerthm} shows that the \( \sqrt{\epsilon} \)
+    test will work when the test runs long enough.  Of course, one
+    strength of the \( \sqrt{\epsilon} \) test is that it can sometimes
+    show bias, even when \( n \) is far too small to mix the chain,
+    which is almost certainly the case for the application to
+    gerrymandering later.  When these short-\( n \) runs are successful
+    at detecting bias is, of course, dependent on the relationship of
+    the presented state \( \sigma_0 \) and its local neighborhood in the
+    chain.
+\end{remark}
+
+
+\subsection*{Application to Political Districting}
+
+Pennsylvania is divided into roughly \( 9,000 \) census blocks.  Define
+a division of these blocks into \( 18 \) districts to be a valid
+districting of Pennsylvania if districts differ in population by less
+than \( 2\% \), are contiguous, are simply connected (districts do not
+contain holes), and are ``compact''.  Roughly, this final condition
+prohibits districts with extremely contorted structure.  The state space
+of the Markov chain is the set of valid districtings of Pennsylvania.
+One step of the Markov chain consists of randomly swapping a precinct on
+the boundary of a district to a neighboring district if the result is
+still a valid districting.  The chain is adjusted slightly to ensure
+that the uniform distribution on valid districting is indeed a
+stationary distribution for the chain.  Observe that this Markov chain
+has a potentially huge state space; if the only constraint on valid
+districting was that the districts have roughly equal population, there
+would be \( 10^{10000} \) or so valid districtings.  (See the exercises
+for a justification of this estimate.) Although contiguity and
+especially, compactness are severe restrictions that will decrease this
+number substantially, it seems difficult to compute effective upper
+bounds on the number of resulting valid districtings, and certainly, the
+number of valid districtings is still enormous.  Impressively, these
+considerations are all immaterial to the very general method of
+significance testing. Regarding mixing time, even in chains with
+relatively weak constraints on the districtings (and very fast running
+time in implementation) seems to mix too slowly to sample \( \pi \),
+even heuristically.
+
+Applying the \( \sqrt{\epsilon} \) test involves the choice of a label
+function \( v(\sigma) \), which assigns a real number to each
+districting.  Two useful label functions are
+\begin{itemize}
+    \item
+        \( v_{\text{var}} \) is the (negative) variance of the
+        proportion of Democrats in each district of the districting (as
+        measured by 2012 presidential votes), and
+    \item
+        \( v_{\text{MM}} \) is the difference between the median and
+        mean of the proportions of Democrats in each district.
+\end{itemize}
+The use of the variance is motivated by the fact that it can change
+quickly with small changes in districtings.  The median-mean difference \(
+v_{\text{MM}} \) is motivated by the fact that this metric has a long
+history of use in gerrymandering and is directly tied to the goals of
+gerrymandering, An important point is that these label functions are not
+based on an assumption that small values of \( v_{\text {var}} \) or \(
+v_{\text{MM}} \) directly imply gerrymandering.  Instead, because the \(
+\sqrt{\epsilon} \) test is valid for any fixed label function, these
+labels are tools used to show significance, which are chosen because
+they are simple and natural functions on vectors that can be quickly
+computed, seem likely to be different for typical versus gerrymandered
+districtings, and have the potential to change relatively quickly with
+small changes in districtings.  For chains of length \( 2^{40} \) steps
+with various notions of valid districtings differing in compactness
+measure and threshold, the \( \sqrt{\epsilon} \) test showed
+significance at \( p \) values in the range from \( 10^{-4} \) to \( 10^
+{-5} \) for the \( v_{\text {MM}} \) label function and the range from \(
+10^{-4} \) to \( 10^{-7} \) for the \( v_{\text{var}} \) label function,
+see
+\cite{chikina2860si}.
+
+It should also be kept in mind that, although the \( \sqrt{\epsilon} \)
+Test gives a method to show that the districting is unusual among
+districtings distributed according to the stationary distribution \( \pi
+\), it does so without giving a method to sample from the stationary
+distribution.  In particular, the method cannot answer the question of
+how many seats Republicans and Democrats should have in a \emph{typical}
+districting of Pennsylvania, because the chain is not selecting from the
+stationary distribution.  Instead, the \( \sqrt{\epsilon} \) gives a way
+to disprove the hypothesis \( X_{0} \sim \pi \) without sampling \( \pi \).
+Consider the following specialization of the Local Outlier Algorithm to
+evaluate political districting of a state:\\
+\textbf{Local Outlier Test}%
+\index{Local Outlier Test}
+\begin{enumerate}
+    \item
+        Begin with the districting being evaluated.
+    \item
+        \label{enum:significance:mcstep} Make a sequence of random
+        changes to the districting, while preserving some set of
+        constraints imposed on the districtings.
+    \item
+        Evaluate the partisan properties of each districting encountered
+        (e.g., by simulating elections using past voting data).
+    \item
+        \label{enum:significance:crafted} Call the original districting
+        ``carefully crafted'' or ``gerrymandered'' if the overwhelming
+        majority of districtings produced by making small random changes
+        are less partisan than the original districting.
+\end{enumerate}
+
+Naturally, the test described above can be implemented so that it
+precisely satisfies the hypotheses of the Theorems in this section.  For
+this purpose, a (very large) set of comparison districtings are defined,
+to which the districting being evaluated belongs.  For example, the
+comparison districtings may be the districtings built out of Census
+blocks (or some other unit) which are contiguous, equal in population up
+to some specified deviation, or include other constraints.  A Markov
+chain \( \mathcal{X} \) is defined on this set of districtings, where
+transitions in the chain correspond to changes in districtings.  For
+example, a transition may correspond to randomly changing the district
+assignment of a randomly chosen Census block which currently borders
+more than one district, subject to the constraints imposed on the
+comparison set.  This is called a flip chain'' on the state space of all
+feasible districting.  Alternatively, a ``ReCom chain'' method works as
+follows:  merge two districts in the plan, generate a minimum spanning
+tree for the precincts in the merged district, then ``split'' the merged
+district into two new districts by finding a population-balanced cut of
+the minimum spanning tree.  The ``random changes' from Step~%
+\ref{enum:significance:mcstep} will then be precisely governed by the
+transition probabilities of the Markov chain \( X \).  By designing \( X
+\) so that the uniform distribution \( \pi \) on the set of comparison
+districtings \( \Sigma \) is a stationary distribution for \( X \),
+Theorem 1.1 gives an upper bound on the false-positive rate (in other
+words, a global statistical significance) for the ``gerrymandered''
+declaration when it is made in Step~%
+\ref{enum:significance:crafted}.
+
+
+\visual{Section Starter Question}{../../../../CommonInformation/Lessons/question_mark.png}
+\section*{Section Ending Answer}
+
+Making a Type II error would be to perform the statistical test,
+and \emph{accept} the hypothesis that the state is ``unusual'' with
+respect to some function labeling the states when in fact, the state
+is \emph{not} unusual with respect to the labeling.  That is to
+conclude that the state is unusual when in fact it is typical.
+
+Making a Type I error would be to perform the statistical test,
+and \emph{reject} the hypothesis that the state is ``unusual'' with
+respect to some function labeling the states when in fact, the state
+\emph{is} unusual with respect to the labeling.
+
+
+\subsection*{Sources} This section is adapted from
+\cite{Chikina2860, Chikina2019, doi:10.1080/2330443X.2020.1806763}.
+
+% @misc{chikina2019separating,
+%       title={Separating effect from significance in Markov chain tests}, 
+%       author={Maria Chikina and Alan Frieze and Jonathan Mattingly and Wesley Pegden},
+%       year={2019},
+%       eprint={1904.04052},
+%       archivePrefix={arXiv},
+%       primaryClass={math.PR}
+%     }
+    
+The first paragraph of the remark following Proposition~%
+\ref{{thm:significance:basethm}} about Markov chains with distinct
+irreducible components is adapted from
+https://math.stackexchange.com/questions/1636992/an-example-of-a-reversible-but-reducible-markov-chain
+
+
+\hr
+
+\visual{Algorithms, Scripts, Simulations}{../../../../CommonInformation/Lessons/computer.png}
+\section*{Algorithms, Scripts, Simulations}
+
+\subsection*{Algorithm}
+
+\subsection*{Scripts}
+
+%% \input{ _scripts}
+
+\hr
+
+\visual{Problems to Work}{../../../../CommonInformation/Lessons/solveproblems.png}
+\section*{Problems to Work for Understanding}
+\renewcommand{\theexerciseseries}{}
+\renewcommand{\theexercise}{\arabic{exercise}}
+
+\begin{exercise}
+    For a set of real values \( \alpha_0, \dots \alpha_n \), compare the
+    definition of \( \epsilon \)-outlier and among-\( \ell \)-smallest
+    to the notions of the order of a list and the rank of elements of a
+    list.
+\end{exercise}
+\begin{solution}
+    For a set with no duplicates (or ties), \( \alpha_0 \) is an \(
+    \epsilon \)-outlier of the set if and only if the rank (by
+    increasing value) of \( \alpha_0 \) in \( \alpha_0, \dots \alpha_n \)
+    is less than or equal to \( \epsilon(n+1) \).
+
+    For a set with no duplicates (or ties), \( \alpha_0 \) is among-\(
+    \ell \)-smallest if and only its order (increasing) in \( \alpha_0,
+    \dots \alpha_n \) is \( \ell + 1 \).
+
+    For a set with duplicates (or ties), the rank is not well-defined
+    since there are several methods of ranking the ties.  For example,
+    for the R function \texttt{rank()}, the user can specify the
+    argument \texttt{ties.method} to determine the result at the
+    corresponding indices.  The \texttt{first} method results in a
+    permutation with increasing values at each index set of ties, and
+    analogously \texttt{last} with decreasing values.  The \texttt{random}
+    method puts these in random order whereas the default, \texttt{average},
+    replaces them by their mean, and \texttt{max} and \texttt{min}
+    replaces them by their maximum and minimum respectively, the latter
+    being the typical sports ranking.  See the examples in the R
+    documentation for \texttt{rank()}.  However, the \( \epsilon \)-outlier
+    is well-defined.  For example, consider the \( 11 \) values \( 3, 1,
+    4, 1, 5, 9, 2, 6, 5, 3, 5 \) and \( \epsilon = 0.1 \).  Then \(
+    \alpha_0 = 1 \) is \emph{not} an \( 0.1 \)-outlier since \( 2 =
+    \card{%
+    \setof{i}{\alpha_i \le \alpha_0}} \ge \epsilon(n+1) = 1.1 \).  On
+    the other hand, \( \alpha_0 = 1 \) \emph{is} an \( 0.2 \)-outlier.
+\end{solution}
+
+\begin{exercise}
+    Given a Markov chain \( X \) with labels \( v:  \mathcal{X} \to
+    \Reals \) and stationary distribution \( \pi \), define for each \(
+    j, \ell \le n \) a real number \( \rho(j; \ell, n) \) which is the
+    probability that for a \( \pi \)-stationary trajectory \( X_1, X_2,
+    \dots X_n \) the label \( v(X_j) \) is among-\( \ell \)-smallest in \( v(X_1),
+    v(X_2), \dots v(X_n) \).  Show that \( \rho(j,\ell, n) \) is
+    well-defined.
+\end{exercise}
+% \begin{solution}
+
+% \end{solution}
+\begin{exercise}
+    Use the script to determine the proportion of trials for which the
+    state \( 0 \) is an \( 0.01 \)-outlier for the alternative Ehrenfest
+    urn model with \( N = 7, 21, 51 \) balls and path length of the
+    chain \( 199, 399, 599, 999 \) steps when executing \( 200, 400, 800
+    \) and \( 1600 \) trials.  Display the results in three charts, one
+    for each \( N \).
+\end{exercise}
+% \begin{solution}
+
+% \end{solution}
+
+\begin{exercise}
+    Pennsylvania is divided into roughly \( 9,000 \) census blocks.
+    Define a division of these blocks into \( 18 \) districts to be a
+    valid districting of Pennsylvania if districts are equal in
+    population. Assume that census block are approximately equal in
+    size, and assume the only constraint on valid districting is that
+    the districts have roughly equal population, then justify the claim
+    that there would be \( 10^{10000} \) or so valid districtings.
+\end{exercise}
+
+\begin{solution}
+    Assuming that census block are approximately equal in size, and the
+    only constraint on valid districting is that the districts have
+    roughly equal population, then each district would have \( 500 \)
+    blocks.  The way to allocate \( 9000 \) blocks in \( 18 \) groups of
+    \( 500 \) each is the multinomial
+    \[
+        N = \frac{9000!}{(500!)^{18}}
+    \] With Stirling's approximation, this is approximately
+    \begin{align*}
+        N &\approx \frac{\sqrt{2\pi} (9000)^{9000} \sqrt{9000} \EulerE^{-9000}}
+        {(\sqrt{2\pi} (500)^{500} \sqrt{500} \EulerE^{-500})^{18}} \\
+        &= (2\pi)^{-17/2} \left( \frac{9000}{500} \right)^{9000} \left(
+        \frac{\sqrt{9000}}{500^{9}} \right) \\
+        &= (2\pi)^{-17/2} 18^{9000} \left( \frac{\sqrt{9000}}{500^{9}}
+        \right) \\
+    \end{align*}
+    Since all that is needed is the exponent, evaluate the base-\( 10 \)
+    logarithm of the last expression.  That is \( \log_{10} N \approx 11
+    {,}268 \).  So the assertion that there are \( 10^{10000} \) or so
+    equal population districtings is a justified lower estimate.
+
+    Just for comparison, scientists estimate there are about \( 10^{80} \)
+    \emph{atoms} in the universe.
+  \end{solution}
+
+  \begin{exercise}
+    Verify that
+    \[
+    \frac{1}{2^{n+1}}\binom{n}{n/2} \asympt \frac{1}{\sqrt{2 \pi n}}.
+\]
+\end{exercise}
+\begin{solution}
+  Using Stirling's Approximation is one way, slightly tedious,  to
+  show this.
+
+  Another way is to start from the inequality
+  \[
+    \frac{4^n}{\sqrt{(2n+1)(\PI/2)}}\left(1-\frac{1}{2n} \right) < {\binom
+    {2n}{n}} < \frac{4^n}{\sqrt{(2n+1)(\PI/2)}} \left(1 + \frac{1}{2n}
+    \right).
+\]
+ established in the subsection \emph{Wallis' Formula and the Central
+ Binomial Coefficient} of the section \emph{Wallis Formula} in the
+chapter on Stirling's Formula.  Rewrite \( n = 2n \) and divide
+through by \( 2^{n + 1} = 2 \cdot 4^n \) to obtain
+\[
+  \frac{1}{\sqrt{2\pi(n+1)}} \left( 1 - \frac{1}{n} \right) <
+  \frac{1}{2^{n+1}} \binm{n}{n/2} <
+  \frac{1}{\sqrt{2\pi(n+1)}} \left( 1 + \frac{1}{n} \right).
+\]
+Then it quickly follows 
+    \[
+    \frac{1}{2^{n+1}}\binom{n}{n/2} \asympt \frac{1}{\sqrt{2 \pi n}}.
+\]
+\end{solution}
+% \begin{exercise}
+%   \begin{enumerate}[label=(\alpha*)]
+%   \item
+%   \end{enumerate}
+% \end{exercise}
+% \begin{solution}
+%   \begin{enumerate}[label=(\alpha*)]
+%   \item
+%   \end{enumerate}
+% \end{solution}
+
+\hr
+
+\visual{Books}{../../../../CommonInformation/Lessons/books.png}
+\section*{Reading Suggestion:}
+
+\bibliography{../../../../CommonInformation/bibliography}
+
+%   \begin{enumerate}
+%     \item
+%     \item
+%     \item
+%   \end{enumerate}
+
+\hr
+
+\visual{Links}{../../../../CommonInformation/Lessons/chainlink.png}
+\section*{Outside Readings and Links:}
+\begin{enumerate}
+    \item
+    \item
+    \item
+    \item
+\end{enumerate}
+
+\section*{\solutionsname} \loadSolutions
+
+\hr
+
+\mydisclaim \myfooter
+
+Last modified:  \flastmod
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+
+%%% Local Variables:
+%%% TeX-master: t
+%%% End:
