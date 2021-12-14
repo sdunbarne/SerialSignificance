@@ -672,19 +672,20 @@ Corollary~%
 \ref{thm:significance:sqrtepstest} leads to the Outlier Test
 Algorithm:%
 \index{Outlier Test Algorithm}
-\begin{enumerate}
-    \item
-        Begin from the state being evaluated for ``outlier'' status.
-    \item
-        Make a sequence of random changes to the states according to the
-        Markov chain transition probabilities.
-    \item
-        Evaluate the labeling of the chain.
-    \item
+\begin{algorithm}[H]] \KwData{Markov chain $X$, starting state
+    $\sigma_0$, value function $v(\cdot}$}
+\KwResult{probability
+  $\sqrt{2 \epsilon}$ of \emph{erroneously} concluding that \( X_0 \)
+  did \emph{not} come from the stationary distribution}
+        Begin from the state being evaluated for ``outlier'' status.\;
+        Make a sequence of $n$ random changes to the states according to the
+        Markov chain transition probabilities.\;
+        Evaluate the labeling of the chain.\;
         Call the original state an ``outlier'' if the overwhelming
         majority of labels (more than \( 1 - \epsilon \) of the labels)
-        are greater in label than the starting state.
-\end{enumerate}
+        are greater in label than the starting state.\;
+    \caption{Outlier Test Algorithm.}    
+\end{algorithm}
 
 The Outlier Test Algorithm is useful because \( \sqrt{2\epsilon} \) is
 reasonably close to \( 0 \) for \( \epsilon \) small; in particular, it
@@ -928,12 +929,26 @@ sufficiently large and \( v(\sigma_0) \) is atypical.
 % Institute of Mathematical Statistics, 2019
 
 \begin{remark}
-    Let \( \tau_2 \) be the relaxation time%
+    Let \( \tau_{\text{rel}} \) be the relaxation time%
     \index{relaxation time}
-    for \( X \) defined as \( 1/ (1-\lambda_2) \) where \( \lambda_2 \)
-    is the spectral gap for \( X \). The relaxation time is intimately
-    related to the mixing time of \( X \).  [Maybe specify how, using
-    the lower bound in the section on spectral decomposition.]
+    for \( X \) defined as \( 1/ (1-\lambda_*) \) where
+    \[ \lambda_* =
+    \max{\abs{\setof{\lambda}{\text{$\lambda$ is an eigenvalue of $P$,
+            $\lambda \ne 1$}}}}
+    \]
+    is the \emph{absolute spectral gap} for \( X \). The relaxation time is
+    related to the mixing time of \( X \).  Let \( d(t) =
+    \sup_{\sigma} \| P^t - \pi \|_{TV} \).  The \emph{mixing time} is
+    defined as \( \tau_{\text{mix}}(\epsilon) = \min\setof{t}{d(t) \le
+      \epsilon} \).  Then, \cite[Theorems 12, 3, 12.4]{levin09},
+    \[
+      (\tau_{\text{rel}}-1) \log \left( \frac{1}{2\epsilon} \right)
+      \le \tau_{\text{mix}} \le \tau_{\text{rel}} \log \left(
+        \frac{1}{\epsilon \min_x \pi(x)} \right).
+    \]
+    In some cases the relaxation time can be calculated from the
+    eigenvalues of the transition probability matrix to give bounds on
+    the mixing time, which is difficult to determine directly.
 \end{remark}
 
 % @article{10.1214/aoap/1028903453,
@@ -1232,6 +1247,9 @@ The first paragraph of the remark following Proposition~%
 irreducible components is adapted from
 https://math.stackexchange.com/questions/1636992/an-example-of-a-reversible-but-reducible-markov-chain
 
+The remark about relaxation times and mixing times is adapted from
+\cite{levin09} and
+https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time-of-markov-chains
 
 \hr
 
@@ -1253,7 +1271,7 @@ https://math.stackexchange.com/questions/1636992/an-example-of-a-reversible-but-
 
 \begin{exercise}
     For a set of real values \( \alpha_0, \dots \alpha_n \), compare the
-    definition of \( \epsilon \)-outlier and among-\( \ell \)-smallest
+    definition of ``\( \epsilon \)-outlier'' and ``among-\( \ell \)-smallest''
     to the notions of the order of a list and the rank of elements of a
     list.
 \end{exercise}
@@ -1288,17 +1306,25 @@ https://math.stackexchange.com/questions/1636992/an-example-of-a-reversible-but-
 \end{solution}
 
 \begin{exercise}
-    Given a Markov chain \( X \) with labels \( v:  \mathcal{X} \to
+    Given a Markov chain \( X \) with value function \( v:  \mathcal{X} \to
     \Reals \) and stationary distribution \( \pi \), define for each \(
     j, \ell \le n \) a real number \( \rho(j; \ell, n) \) which is the
     probability that for a \( \pi \)-stationary trajectory \( X_1, X_2,
     \dots X_n \) the label \( v(X_j) \) is among-\( \ell \)-smallest in \( v(X_1),
     v(X_2), \dots v(X_n) \).  Show that \( \rho(j,\ell, n) \) is
-    well-defined.
+    well-defined.  
 \end{exercise}
-% \begin{solution}
-
-% \end{solution}
+\begin{solution}
+  The probability of a \( \pi \)-stationary trajectory \( X_1, X_2,
+    \dots X_n \) can be calculated as usual.  Then the probability of
+    the value set \( v(X_1), v(X_2), \dots v(X_n) \) can be
+    calculated.  The label \( v(X_j) \) is among-\( \ell \)-smallest in \( v(X_1),
+    v(X_2), \dots v(X_n) \) is a sub-event of the event \( v(X_1),
+    v(X_2), \dots v(X_n) \).  Then \( \rho(j; \ell, n) \) which is the
+    probability that for a \( \pi \)-stationary trajectory \( X_1, X_2,
+    \dots X_n \) the label \( v(X_j) \) is among-\( \ell \)-smallest in \( v(X_1),
+    v(X_2), \dots v(X_n) \) is the probability of this sub-event.
+\end{solution}
 \begin{exercise}
     Use the script to determine the proportion of trials for which the
     state \( 0 \) is an \( 0.01 \)-outlier for the alternative Ehrenfest
@@ -1307,9 +1333,112 @@ https://math.stackexchange.com/questions/1636992/an-example-of-a-reversible-but-
     \) and \( 1600 \) trials.  Display the results in three charts, one
     for each \( N \).
 \end{exercise}
-% \begin{solution}
+\begin{solution}
 
-% \end{solution}
+library(markovchain)
+
+N <- 7; p <- 1/2; q <- 1 - p;
+stateNames <- as.character( 0:N )
+## Be careful here, because states numbered from 0,
+## but R indexes from 1
+transMatrix <- matrix(0, N+1,N+1)
+transMatrix[1,1] <- q
+transMatrix[1,2] <- p
+transMatrix[N+1, N  ] <- q
+transMatrix[N+1, N+1] <- p
+for (row in 2:N) {
+    transMatrix[row, row-1] <- ((row-1)/N)*q
+    transMatrix[row,row] <- ((N-(row-1))/N)*q + ((row-1)/N)*p
+    transMatrix[row,row+1] <- ((N-(row-1))/N)*p
+}
+
+startState <- "0"
+
+ehrenfest2 <- new("markovchain", transitionMatrix=transMatrix,
+                 states=stateNames, name="Ehrenfest2")
+
+
+pathLength <- c(199, 399, 599, 999)
+nTrials <- c(200, 400, 800, 1600)
+
+eps <- 0.01
+
+results <- matrix(0, length(pathLength), length(nTrials))
+
+for (pL in 1:length(pathLength)) {
+for  (nT in 1:length(nTrials)) {
+
+outlierThreshold <- floor( eps * (pathLength[pL] + 1) ) + 1
+
+nEpsOutlier<- 0
+
+for (i in 1:nTrials[nT]) {
+            
+    path <- rmarkovchain(n=pathLength[pL],
+                         object = ehrenfest2,
+                         t0 = startState)
+    fullPath <- c(startState, path)
+    labelFullPath <- as.numeric(fullPath)
+    labelStartState <- as.numeric(startState)
+    if (!identical(sort(labelFullPath)[outlierThreshold], labelStartState)) {
+                nEpsOutlier <- nEpsOutlier + 1
+    }
+}
+
+probEpsOutlier <- nEpsOutlier/nTrials[nT]
+
+results[pL, nT] <- probEpsOutlier
+}
+}
+
+results
+
+## NAME: ehrenfest2.R
+## USAGE: within R, at interactive prompt
+##        source("ehrenfest2.R")
+## REQUIRED ARGUMENTS: none
+## OPTIONS: none
+## DESCRIPTION: An R script using the markovchain library to 
+##              simulate an alternative Ehrenfest urn model.            
+## DIAGNOSTICS: some diagnostics implicit from markovchain
+## CONFIGURATION AND ENVIRONMENT:  library(markovchain)
+## DEPENDENCIES:  library(markovchain)
+## INCOMPATIBILITIES: none known
+## PROVENANCE: created Steve Dunbar, based on documentation in
+## "The markovchain Package: A Package for Easily Handling Discrete
+##  Markov Chains in R" by G. Spedicato, et al.
+## BUGS AND LIMITATIONS: none known
+## FEATURES AND POTENTIAL IMPROVEMENTS:
+## 1.  Make a random start state.
+## AUTHOR:  Steve Dunbar
+## VERSION: Version 1.0 as of Tue Jan 22 07:43:53 CST 2019
+## KEYWORDS: Markov chain, stable distribution
+
+
+  \( N= 7 \)
+
+        [,1]   [,2]    [,3]     [,4]
+[1,] 0.430 0.3975 0.38875 0.407500
+[2,] 0.475 0.4800 0.48125 0.488125
+[3,] 0.555 0.5675 0.52500 0.530000
+[4,] 0.545 0.5900 0.59750 0.577500
+
+\( N = 21 \)
+
+      [,1]   [,2]    [,3]     [,4]
+[1,] 0.730 0.7250 0.75250 0.740625
+[2,] 0.875 0.9200 0.92625 0.920000
+[3,] 0.985 0.9825 0.98625 0.975000
+[4,] 1.000 1.0000 1.00000 0.999375
+
+\( N = 51 \)
+      [,1]   [,2]    [,3]     [,4]
+[1,] 0.775 0.7425 0.73500 0.734375
+[2,] 0.930 0.9275 0.94125 0.935625
+[3,] 0.980 0.9850 0.98375 0.979375
+[4,] 0.995 0.9975 0.99875 1.000000
+
+\end{solution}
 
 \begin{exercise}
     Pennsylvania is divided into roughly \( 9,000 \) census blocks.
