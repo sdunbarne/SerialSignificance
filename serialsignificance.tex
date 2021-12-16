@@ -1258,9 +1258,54 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 
 \subsection*{Algorithm}
 
+\begin{algorithm}[H]
+  \SetKwInOut{Input}{input}\SetKwInOut{output}
+  \SetKwData{pL}{pathLength}
+  \SetKwData{nT}{nTrials}
+  \SetKwData{res}{results}
+  \SetKwData{oT}{outlierThreshold}
+  \SetKwData{neO}{nEpsilonOutlier}
+  \SetKwData{pEO}{probEpsOutlier}
+  \SetKwFunction{Floor}{floor}
+  
+  \Input{Number of balls $N$ and probability of urn switch, $p$}
+  \Output{Table of empirical probabilities of $\epsilon$-Outlier Test
+    success.}
+  \BlankLine
+  $N \leftarrow 7$, $p \leftarrow 1/2$, $q \leftarrow 1-p$.\;
+  \tcp{Build transition $(N+1) \times (N+1)$probability matrix}
+  $P_{11} \leftarrow q$, $P_{12} \leftarrow p$\;
+  $P_{N+1,N} \leftarrow q$, $P_{N+1, N+1} \leftarrow p$\;
+  \For{$r \leftarrow 2$} \KwTo $N${
+    $P_{r,r-1} \leftarrow (r-1)/N \cdot q$\;
+    $P_{r,r} \leftarrow (N-(r-1))/N \cdot q + (r-1/N \cdot p$\;
+    $P_{r,r-1} \leftarrow (N-(r-1))/N \cdot p$\;
+  }
+  \tcp{Build and initialize Markov chain}
+  $X_0 \leftarrow 0$;
+  Build Markov chain object\;
+  \BlankLine
+  Set \pL array, \nT array\, $\epsilon$, initialize \res
+
+  \lForEach{element in \pL}{
+    \lForEach{element in \nt} {
+      \oT $\leftarrow$ \Floor( ($\epsilon \cdot$ \pL +1) )+1\;
+      Initialize \nEO $\leftarrow 0$\;
+
+    \lForEach{$i \leftarrow 1$ \KwTo \nT }{
+      Run Markov chain of length \pL\;
+      Prepend initial state $X_0$\;
+      \If{ $X_0 <$ \oT}{increment \nEO}
+    }
+    \pEO $\leftarrow$ \nEo$/$\nt\;
+    Update results table with \pEo;
+   } 
+ }
+ Report results table\;
+\end{algorithm}
 \subsection*{Scripts}
 
-%% \input{ _scripts}
+\input{serialsignificance_scripts}
 
 \hr
 
