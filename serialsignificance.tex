@@ -885,8 +885,8 @@ than \( 1 -
 \epsilon \). Conditioning on this event, we have that \( X_0 \) is
 minimum among \( X_0, \dots , X_n \) if and only if all of the partial
 sums \( \sum\limits_{\nu=1}^ {j} \zeta_\nu \) are positive for \( j \le
-n \).  The probability of this event is just the probability that a \( n
-\)-step \( 1 \)-dimensional random walk from the origin takes a first
+n \).  The probability of this event is just the probability that an \( n
+\)-step \( 1 \)-dimensional random walk from \( X_0 \) takes a first
 step to the right and does not return to the origin.  The calculation of
 this probability is a classical problem in random walks, which can be
 solved using the reflection principle.  In particular, for \( n \) even,
@@ -900,6 +900,85 @@ can be as high as \( \sqrt{\epsilon/(2\pi)} \).  Of course, \( \sqrt{\epsilon/
 (2\pi)} < \sqrt{2\epsilon} \) so the best possible value of the constant
 in the \( \sqrt{\epsilon} \) test is an interesting question.
 
+Figure~\ref{fig:serialsignificance:circlewalk} schematically illustrates a specific
+example.  Let $n = 199$, $\epsilon = 0.01$, so $N >
+\frac{2k+1}{\epsilon} = 39,000$.  Take $N = 40{,}000}$ for
+simplicity.  States, such as $20{,}000$, chosen outside the region
+marked with bars have the distance of \( X_0 \) from \( 0 \)
+in both directions is greater than \( n = 199 \) with probability greater
+than \( 1 - \epsilon = 0.99 \).  An \( n
+\)-step random walk from \( X_0 \) satisfying the condition is
+drawn schematically.
+
+\begin{figure}
+  \centering
+  \begin{asy}
+settings.outformat = "pdf";
+
+import geometry;
+
+size(5inches);
+
+real myfontsize = 12;
+real mylineskip = 1.2*myfontsize;
+pen mypen = fontsize(myfontsize, mylineskip);
+defaultpen(mypen);
+
+point O = (0,0);
+real r = 2;
+circle C = circle(O,r);
+draw(C);
+
+dot("$0$", relpoint(C, 0.25), N);
+dot("$1$", relpoint(C, 0.24), N);
+dot("$2$", relpoint(C, 0.23), N);
+
+dot(relpoint(C, 0.21));
+dot(relpoint(C, 0.20));
+dot(relpoint(C, 0.19));
+
+dot("$199$", relpoint(C, 0.15), NE);
+
+dot("$39{,}999$", relpoint(C, 0.26), S);
+dot("$39{,}998$", relpoint(C, 0.27), NW);
+
+dot(relpoint(C, 0.29));
+dot(relpoint(C, 0.30));
+dot(relpoint(C, 0.31));
+
+dot("$39{,}801$", relpoint(C, 0.35), NW);
+
+arc avoided = arc(C, 51, 129);
+draw(avoided, Bars);
+
+dot("$20{,}000$", relpoint(C, -0.25), S);
+dot("$19{,}999$", relpoint(C, -0.24), NE);
+dot("$20{,}001$", relpoint(C, -0.26), NW);
+
+dot(relpoint(C, 0.00));
+dot(relpoint(C, -0.01));
+dot(relpoint(C, 0.01));
+
+dot(relpoint(C, 0.50));
+dot(relpoint(C, 0.49));
+dot(relpoint(C, 0.51));
+
+circle C1 = circle(O, 0.92*r);
+circle C2 = circle(O, 0.91*r);
+circle C3 = circle(O, 0.90*r);
+
+arc walk1 = arc(C1, -90, -130, direction=CW);
+arc walk2 = arc(C2, -130, -110, direction=CCW);
+arc walk3 = arc(C3, -110, -140, direction=CW);
+
+draw(walk1, Arrow);
+draw(walk2, Arrow);
+draw(walk3, Arrow);
+\end{asy}
+  \caption{A schematic diagram of the random walk on a circle
+    illustrating the example of the best possible bound.}
+  \label{fig:serialsignificance:circlewalk}
+\end{figure}
 \subsection*{Notes on Statistical Power}
 % This section based on pnas.201617540SI.pdf, Section S7.
 
