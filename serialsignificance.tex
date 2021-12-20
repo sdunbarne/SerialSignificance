@@ -131,32 +131,8 @@ equal probability \( \frac{1}{2} \)
 
 % To Do:
 % \begin{enumerate}
-%     \item Add in some details about reversibility and the connection
-%       to detailed balance.
 %     \item
 %         Find a more descriptive name for the outliers.
-%     \item
-%         Draw some figures to illustrate outliers.
-%     \item
-%         Examples of outliers for reversible chains.
-%         \begin{enumerate}
-%             \item
-%                 bathroom example in Stationary Distributions (reversible?)
-%             \item
-%                 Random walk with reflective boundary
-%             \item
-%                 Random walk on a circle
-%             \item
-%                 Ehrenfest urn model
-%             \item
-%                 Card shuffling on 3 cards
-%             \item
-%                 Gibbs sampler for bivariate normal (reversible?)
-%             \item
-%                 Use at least one of these for exercises
-%         \end{enumerate}
-%     \item
-%         Index entries
 %     \item
 %         Reorganize proofs and theorems to a logical order, maybe use
 %         hand drawn graph, also reorganize Theorem references.
@@ -185,15 +161,6 @@ walks can provide better significance at \( p \approx \epsilon \).
 
 \subsection*{Theoretical Background}
 
-% A simple heuristic used in practice is to sample ranks of states from
-% long random trajectories on the Markov chain and compare these with the
-% rank of the presented state; if the presented state is a \( 0.1\% \)
-% outlier compared with the sampled ranks (its rank is in the bottom \(
-% 0.1\% \) of sampled ranks), then this observation should correspond to a
-% \( p \) value of \( 0.001 \).  This significance is not rigorous,
-% however, without good bounds on the mixing time of the Markov chain.  [Need
-% more explanation here about the stationary distribution.]
-
 The essential problem in statistics is to bound the probability of a
 surprising observation under a null hypothesis that observations are
 drawn from some probability distribution.  Often the bounding
@@ -201,8 +168,6 @@ calculation is difficult.  First, defining the way in which the outcome
 is surprising requires care.  Second, the correct choice of the unbiased
 distribution implied by the null hypothesis may not be immediately
 clear.
-% classical tools like the \( t \)-test are often applied by making
-% simplifying assumptions about the distribution in such cases.
 Third, the \( p \) value calculations may be difficult when
 the observation is surprising in a simple way and the null hypothesis
 distribution is known but where there is no simple algorithm to draw
@@ -316,6 +281,8 @@ Proposition~\ref{thm:significance:basethm}  uses this definition.
     is an \( 0.1 \)-outlier since the number of indices for which \(
     \alpha_i \le 0.006 \), specifically \( 1 \), is less than \(
     \epsilon(n+1) = 0.1\cdot (10 +1) = 1.1 \).
+    See Figure~\ref{fig:serialsignificance:epsoutlier} for an
+    illustration of this example.
     However, \( 0.006 \)
     is not an \( 0.05 \)-outlier since the number of indices for which \(
     \alpha_i \le 0.006 \), specifically \( 1 \), is more than \(
@@ -323,6 +290,40 @@ Proposition~\ref{thm:significance:basethm}  uses this definition.
     example, there are \( 2 \) indices for which \( \alpha_i \le 0.042
     \) so \( 0.042 \) is not an \( 0.05 \), \( 0.1 \) or
     \(0.15 \)-outlier, but it is a \( 0.2 \)-outlier 
+
+    \begin{figure}
+      \centering
+      \begin{asy}
+size(5inches);
+
+real myfontsize = 12;
+real mylineskip = 1.2*myfontsize;
+pen mypen = fontsize(myfontsize, mylineskip);
+defaultpen(mypen);
+
+real eps = 0.1;
+pair[] alpha = {(0.006,0), (0.042,0), (0.359,0), (0.381,0), (0.399,0),
+			 (0.523,0), (0.533,0), (0.702,0), (0.762,0),
+			 (0.921,0), (0.963,0)};
+pair h = (0,0.05);
+
+draw((0,0)--(1,0));
+for(int i=0; i<11; ++i) {
+  dot(alpha[i]);
+}
+draw(circle(alpha[0], 0.01), red);
+
+draw( (alpha[0]+h)--(alpha[10]+h), Bars);
+draw( (alpha[0]+h)--(eps * (alpha[10]-alpha[0]) + h), Bars);
+
+label("$\epsilon$", ((1/2)* eps * (alpha[10]-alpha[0])) + 1.5*h);
+label("$\alpha_0$", alpha[0]-h);
+label("$\alpha_n$", alpha[10]-h);
+      \end{asy}
+      \caption{Example of $\epsilon$-outliers with $11$ random values
+        in $[0,1]$ and $\epsilon = 0.1$.}
+      \label{fig:serialsignificance:epsoutlier}
+    \end{figure}
 
     Also, \( 0.006 \) is among-\( 0 \)-smallest since there are \( 0 \)
     indices \( i \ne j \) from \( 0, \dots, n \) such that the value of \(
@@ -1030,28 +1031,6 @@ sufficiently large and \( v(\sigma_0) \) is atypical.
     the mixing time, which is difficult to determine directly.
 \end{remark}
 
-% @article{10.1214/aoap/1028903453,
-% author = {Pascal Lezaud},
-% title = {{Chernoff-type bound for finite Markov chains}},
-% volume = {8},
-% journal = {The Annals of Applied Probability},
-% number = {3},
-% publisher = {Institute of Mathematical Statistics},
-% pages = {849 -- 867},
-% keywords = {Chernoff bound, Eigenvalues, Markov chain, Perturbation theory},
-% year = {1998},
-% doi = {10.1214/aoap/1028903453},
-% URL = {https://doi.org/10.1214/aoap/1028903453}
-% }
-
-% This is the probable reference for the Gillman Theorem
-% [Gil98] D. Gillman. A Chernoff bound for random walks on expander graphs. SIAM J. Comput.,
-% 27(4):1203 - 1220, 1998, https://doi.org/10.1137/S0097539794268765
-% See also
-% D. Gillman, Thesis (Ph. D.)--Massachusetts Institute of Technology,
-% Dept. of Mathematics, 1993.
-% http://hdl.handle.net/1721.1/17332
-
 Theorem~%
 \ref{thm:significance:powerthm} below is a simple application of the
 following theorem of Gillman
@@ -1563,6 +1542,24 @@ results
 [4,] 0.995 0.9975 0.99875 1.000000
 
 \end{solution}
+
+%         Examples of outliers for reversible chains.
+%         \begin{enumerate}
+%             \item
+%                 bathroom example in Stationary Distributions (reversible?)
+%             \item
+%                 Random walk with reflective boundary
+%             \item
+%                 Random walk on a circle
+%             \item
+%                 Ehrenfest urn model
+%             \item
+%                 Card shuffling on 3 cards
+%             \item
+%                 Gibbs sampler for bivariate normal (reversible?)
+%             \item
+%                 Use at least one of these for exercises
+%         \end{enumerate}
 
 \begin{exercise}
     Pennsylvania is divided into roughly \( 9,000 \) census blocks.
