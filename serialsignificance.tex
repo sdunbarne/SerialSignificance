@@ -233,9 +233,28 @@ precise definition of ``unusual relative to states chosen randomly''.
     possible) if there are, at most, \( \epsilon(n + 1) \) indices \( i \)
     for which \( \alpha_i \le \alpha_0 \), in other words \( \card{%
     \setof{i}{\alpha_i \le \alpha_0}} \le \epsilon(n+1) \).
-    Alternatively, \( \alpha_0 \) is among the smallest \( \epsilon \)-fraction
-    of the ranked values of \( \alpha_0, \alpha_1, \dots \alpha_n \).
-\end{definition}
+    Alternatively, \( \alpha_0 \) is in the smallest \( \epsilon \)-fraction
+    of the \( n \) ranked values of \( \alpha_0, \alpha_1, \dots \alpha_n \).
+  \end{definition}
+
+  \begin{remark}
+    For \( \alpha_0 \) to be an \( \epsilon \)-outlier says that \(
+    a\pha \) is relatively more rare than the \( \epsilon
+    \)-proportion that might be expected if the indices were uniformly
+    distributed the range of values.     For example, consider the set of \( 11 \) values
+    \( \set{\alpha_0 = 3, \alpha_1 = 1, \alpha_2 = 4, \alpha_3 = 1,
+      \alpha_4 = 5, \alpha_5 = 9, \alpha_6 = 2, \alpha_7 = 6, \alpha_8
+      = 5, \alpha_9 = 3, \alpha_{10} = 5} \).  Then \(
+    \alpha_0 = 1 \) is \emph{not} an \( 0.1 \)-outlier since \( 2 =
+    \card{%
+    \setof{i}{\alpha_i \le \alpha_0}} \ge \epsilon(n+1) = 1.1 \).  In
+  fact,  \( \alpha_0 = 1 \) \emph{is not} a \( 0.2 \)-outlier (the
+  cardinality is \( 3 \), greater than \(2.2\))
+  or even a \( 0.3 \)-outlier (the cardinality is \( 5 \), greater
+  than \( 3.3 \).   This example says \( \alpha_0 = 1 \) is not
+  rare among the small fractions of the indices.
+
+  \end{remark}
 
 The following definition uses counting instead of proportions to express
 the smallness of a real number relative to a set.  The proof of 
@@ -314,9 +333,9 @@ for(int i=0; i<11; ++i) {
 draw(circle(alpha[0], 0.01), red);
 
 draw( (alpha[0]+h)--(alpha[10]+h), Bars);
-draw( (alpha[0]+h)--(eps * (alpha[10]-alpha[0]) + h), Bars);
+// draw( (alpha[0]+h)--(eps * (alpha[10]-alpha[0]) + h), Bars);
 
-label("$\epsilon$", ((1/2)* eps * (alpha[10]-alpha[0])) + 1.5*h);
+// label("$\epsilon$", ((1/2)* eps * (alpha[10]-alpha[0])) + 1.5*h);
 label("$\alpha_0$", alpha[0]-h);
 label("$\alpha_n$", alpha[10]-h);
       \end{asy}
@@ -1376,7 +1395,7 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
     For a set of real values \( \alpha_0, \dots \alpha_n \), compare the
     definition of ``\( \epsilon \)-outlier'' and ``among-\( \ell \)-smallest''
     to the notions of the order of a list and the rank of elements of a
-    list.
+    set.
 \end{exercise}
 \begin{solution}
     For a set with no duplicates (or ties), \( \alpha_0 \) is an \(
@@ -1399,13 +1418,32 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
     replaces them by their mean, and \texttt{max} and \texttt{min}
     replaces them by their maximum and minimum respectively, the latter
     being the typical sports ranking.  See the examples in the R
-    documentation for \texttt{rank()}.  However, the \( \epsilon \)-outlier
-    is well-defined.  For example, consider the \( 11 \) values \( 3, 1,
-    4, 1, 5, 9, 2, 6, 5, 3, 5 \) and \( \epsilon = 0.1 \).  Then \(
+    documentation for \texttt{rank()}.
+
+    For example, consider the set of \( 11 \) values
+    \( \set{\alpha_0 = 3, \alpha_1 = 1, \alpha_2 = 4, \alpha_3 = 1,
+      \alpha_4 = 5, \alpha_5 = 9, \alpha_6 = 2, \alpha_7 = 6, \alpha_8
+      = 5, \alpha_9 = 3, \alpha_{10} = 5} \) and ask for the value
+    with rank \( 1 \).  With the \( \texttt{first} \) method the rank
+    \( 1 \) element is \( \alpha_1 = 1 \).  With the
+    \( \texttt{last} \) method the rank \( 1 \) element is
+    \( \alpha_3 = 1 \).  With the \( \texttt{random} \) method the
+    rank \( 1 \) element may be \( \alpha_1 = 1 \) or
+    \( alpha_3 = 1 \).  With the \( \texttt{average} \) method the
+    rank \( 1 \) element has value \( 1 \).  With the \texttt{max} and \texttt{min}
+    methods the rank \( 1 \) elements are \( \alpha_1 = 1 \) or
+    \( alpha_3 = 1 \) respectively.
+
+    The
+    \( \epsilon \)-outlier
+    is well-defined with \( \epsilon = 0.1 \).  Then \(
     \alpha_0 = 1 \) is \emph{not} an \( 0.1 \)-outlier since \( 2 =
     \card{%
-    \setof{i}{\alpha_i \le \alpha_0}} \ge \epsilon(n+1) = 1.1 \).  On
-    the other hand, \( \alpha_0 = 1 \) \emph{is} an \( 0.2 \)-outlier.
+    \setof{i}{\alpha_i \le \alpha_0}} \ge \epsilon(n+1) = 1.1 \).  In
+  fact,  \( \alpha_0 = 1 \) \emph{is not} a \( 0.2 \)-outlier (the
+  cardinality is \( 3 \), greater than \(2.2\))
+  or even a \( 0.3 \)-outlier (the cardinality is \( 5 \), greater
+  than \( 3.3 \).
 \end{solution}
 
 \begin{exercise}
@@ -1427,7 +1465,8 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
     probability that for a \( \pi \)-stationary trajectory \( X_1, X_2,
     \dots X_n \) the label \( v(X_j) \) is among-\( \ell \)-smallest in \( v(X_1),
     v(X_2), \dots v(X_n) \) is the probability of this sub-event.
-\end{solution}
+  \end{solution}
+  
 \begin{exercise}
     Use the script to determine the proportion of trials for which the
     state \( 0 \) is an \( 0.01 \)-outlier for the alternative Ehrenfest
@@ -1438,6 +1477,7 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 \end{exercise}
 \begin{solution}
 
+\begin{lstlisting}[language=R]
 library(markovchain)
 
 N <- 7; p <- 1/2; q <- 1 - p;
@@ -1495,64 +1535,53 @@ results[pL, nT] <- probEpsOutlier
 }
 
 results
+\end{lstlisting}
 
-## NAME: ehrenfest2.R
-## USAGE: within R, at interactive prompt
-##        source("ehrenfest2.R")
-## REQUIRED ARGUMENTS: none
-## OPTIONS: none
-## DESCRIPTION: An R script using the markovchain library to 
-##              simulate an alternative Ehrenfest urn model.            
-## DIAGNOSTICS: some diagnostics implicit from markovchain
-## CONFIGURATION AND ENVIRONMENT:  library(markovchain)
-## DEPENDENCIES:  library(markovchain)
-## INCOMPATIBILITIES: none known
-## PROVENANCE: created Steve Dunbar, based on documentation in
-## "The markovchain Package: A Package for Easily Handling Discrete
-##  Markov Chains in R" by G. Spedicato, et al.
-## BUGS AND LIMITATIONS: none known
-## FEATURES AND POTENTIAL IMPROVEMENTS:
-## 1.  Make a random start state.
-## AUTHOR:  Steve Dunbar
-## VERSION: Version 1.0 as of Tue Jan 22 07:43:53 CST 2019
-## KEYWORDS: Markov chain, stable distribution
-
-
-  \( N= 7 \)
-
+\begin{description}
+\item[\( N= 7 \)\
+\begin{verbatim*}
         [,1]   [,2]    [,3]     [,4]
 [1,] 0.430 0.3975 0.38875 0.407500
 [2,] 0.475 0.4800 0.48125 0.488125
 [3,] 0.555 0.5675 0.52500 0.530000
 [4,] 0.545 0.5900 0.59750 0.577500
-
-\( N = 21 \)
-
+\end{verbatim*}
+\item[\( N = 21 \)]
+\begin{verbatim*}
       [,1]   [,2]    [,3]     [,4]
 [1,] 0.730 0.7250 0.75250 0.740625
 [2,] 0.875 0.9200 0.92625 0.920000
 [3,] 0.985 0.9825 0.98625 0.975000
 [4,] 1.000 1.0000 1.00000 0.999375
-
-\( N = 51 \)
+\end{verbatim*}
+\item[\( N = 51 \)]
+\begin{verbatim*}
       [,1]   [,2]    [,3]     [,4]
 [1,] 0.775 0.7425 0.73500 0.734375
 [2,] 0.930 0.9275 0.94125 0.935625
 [3,] 0.980 0.9850 0.98375 0.979375
 [4,] 0.995 0.9975 0.99875 1.000000
-
+\end{verbatim*}
+\end{description}
 \end{solution}
 
-%         Examples of outliers for reversible chains.
+These experiments shows that
+the proportion of trials for which the
+    state \( 0 \) is an \( 0.01 \)-outlier for the alternative Ehrenfest
+    urn model is reasonably constant with respect to the length of the
+    chain, but slowly increases with the number of trials.  The
+    experiments also show that
+the proportion of trials for which the
+    state \( 0 \) is an \( 0.01 \)-outlier for the alternative Ehrenfest
+    urn model increases with the number of values allowed by the value
+    function, or equivalently the sensitivity of the value function.  
+
+% Examples of outliers for reversible chains.
 %         \begin{enumerate}
 %             \item
 %                 bathroom example in Stationary Distributions (reversible?)
 %             \item
-%                 Random walk with reflective boundary
-%             \item
 %                 Random walk on a circle
-%             \item
-%                 Ehrenfest urn model
 %             \item
 %                 Card shuffling on 3 cards
 %             \item
@@ -1562,13 +1591,19 @@ results
 %         \end{enumerate}
 
 \begin{exercise}
-    Pennsylvania is divided into roughly \( 9,000 \) census blocks.
+    Pennsylvania is divided into roughly \( 9{,}000 \) census block groups.
     Define a division of these blocks into \( 18 \) districts to be a
     valid districting of Pennsylvania if districts are equal in
-    population. Assume that census block are approximately equal in
-    size, and assume the only constraint on valid districting is that
-    the districts have roughly equal population, then justify the claim
-    that there would be \( 10^{10000} \) or so valid districtings.
+    population. For purposes of the problem, assume
+    that census block groups are approximately equal in
+    size. (This is not a valid valid assumption, census block groups
+    can have widely varying populations between rural and urban
+    areas.) Also assume the only constraint on valid districting is that
+    the districts have roughly equal population. (This is not the only
+    constraint, usually district are also required to be connected and
+    to be compact, that is, have no extremely contorted shapes.)  Justify the claim
+    that there would be \( 10^{10000} \) or so valid districtings
+    under this simple assumption.
 \end{exercise}
 
 \begin{solution}
