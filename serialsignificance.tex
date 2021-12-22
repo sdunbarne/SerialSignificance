@@ -1565,7 +1565,7 @@ results
 \end{description}
 \end{solution}
 
-These experiments shows that
+These experiments show that
 the proportion of trials for which the
     state \( 0 \) is an \( 0.01 \)-outlier for the alternative Ehrenfest
     urn model is reasonably constant with respect to the length of the
@@ -1575,6 +1575,93 @@ the proportion of trials for which the
     state \( 0 \) is an \( 0.01 \)-outlier for the alternative Ehrenfest
     urn model increases with the number of values allowed by the value
     function, or equivalently the sensitivity of the value function.  
+
+\begin{exercise}
+Consider the bathroom occupancy example in the section on Stationary
+Distributions.  The Markov chain considered there is irreducible and
+aperiodic and because it is formulated as a random walk on a weighted
+graph it is reversible.  Let the states be valued as ``OOO''$=1$,
+``OOV''$=2$, ``OFO''$=3$, ``OCO''$=4$, ``VO''$=5$, ``VV''$=6$, so the greater
+value is a more desirable state.  For $\epsilon=0.1$ and a path
+length of $1000$ steps starting from ``OOO'', determine if the least
+desirable state ``OOO'' is unusual with respect to this value function
+in the sense of being an $\epsilon$-outlier.
+
+The transition probability matrix is
+\[
+    P= \bordermatrix{ & OCO & OFO & OOO & OOV & VO & VV \cr
+    OCO & 1/2 & 0 & 0 & 0 & 0 & 1/2 \cr
+    OFO & 0 & 1/2 & 0 & 0 & 1/4 & 1/4 \cr
+    OOO & 0 & 0 & 1/2 & 0 & 1/2 & 0 \cr
+    OOV & 0 & 0 & 0 & 1/2 & 1/2 & 0 \cr
+    VO & 1/6 & 1/6 & 1/6 & 0 & 1/2 & 0 \cr
+    VV & 1/6 & 1/6 & 0 & 1/6 & 0 & 1/2 \cr
+    }.
+\]
+\end{exercise}
+
+\begin{solution}
+  Using this R script, the answer is \emph{yes}.  This says that starting from
+  ``OOO'', the probability of seeing such an unusual state with respect to
+  this value function is less than $0.1$.  While this is not a
+  terribly small probability, in the context of the bathroom example,
+  it is somewhat reassuring!
+
+  \begin{lstlisting}[language=R]
+library("markovchain")
+
+rows = 6
+
+stateNames <- c("OCO","OFO","OOO", "OOV", "VO", "VV")
+P <- matrix(c(1/2,   0,  0,  0,   0, 1/2,
+                0, 1/2,  0,  0, 1/4, 1/4,
+              0,   0, 1/2, 0, 1/2,   0,
+              0,   0, 0,   1/2, 1/2, 0,
+              1/6, 1/6, 1/6, 0, 1/2, 0,
+              1/6, 1/6,  0, 1/6, 0, 1/2), 
+             nrow=rows, byrow=TRUE)
+rownames(P) <- stateNames
+colnames(P) <- stateNames
+
+startState  <- "OOO"
+
+bathroom  <- new("markovchain", transitionMatrix=P,
+                 states=stateNames, name="Bathroom_Occupancy")
+
+pathLength <- 1000
+
+eps <- 0.1
+outlierThreshold <- floor( eps * (pathLength + 1) ) + 1
+
+v <- function (x) {
+## value the states, greater value is more desirable state
+    switch(x, "OOO"=1, "OOV"=2, "OFO"=3, "OCO"=4, "VO"=5, "VV"=6)
+}    
+
+bathroomHistory  <- rmarkovchain(n=pathLength, object=bathroom,
+                                 t0=startState)
+
+values <- rep(0, pathLength)
+
+for (i in 1:pathLength) {
+    values[i] <- v(bathroomHistory[i])
+}    
+
+if (!identical(sort(values)[outlierThreshold], v(startState))) {
+       print(cat( startState, "IS an", eps, "outlier for the bathroom states\n"))
+   } else {
+       print(cat( startState, "is NOT an", eps, "outlier for the bathroom states\n"))
+}
+\end{lstlisting}
+
+This should not be too surprising, since the probability of ``OOO''
+occurring in the stationary distribution is $1/12$, so in $n=1000$  steps
+in the stationary distribution, one could expect to see ``OOO'' about
+$80$ times, near the threshold of $\epsilon \cdot n = 100$.  The
+second largest eigenvalue of $P$ is $1/2$, so expect the Markov chain to have a
+total variation distance from stationary in about $0.01$ in about $7$
+steps or so.
+\end{solution}
 
 % Examples of outliers for reversible chains.
 %         \begin{enumerate}
