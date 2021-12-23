@@ -780,11 +780,10 @@ is distributed with small total variation distance to \( \pi \).
 \end{proof}
 
 \begin{example}
-    Consider a simple specific case of the alternative Ehrenfest urn
-    model%
-    \index{Ehrenfest urn
-  model}%
-.    Two urns, labeled \( A \) and \( B \), contain a total of \( N = 7 \)
+    Consider a specific simple case of the alternative Ehrenfest urn
+    model.%
+    \index{Ehrenfest urn model}%
+    Two urns, labeled \( A \) and \( B \), contain a total of \( N = 7 \)
     balls.  At each step a ball is selected at random with all selections equally
     likely.  Then an urn is selected, urn \( A \) with probability \( p
     = \frac{1}{2} \) and urn \( B \) with probability \( q = 1-p = \frac
@@ -836,14 +835,12 @@ is distributed with small total variation distance to \( \pi \).
     smallest \( \epsilon \)-fraction of the ranked values, that is, the
     least two values.  Equivalently \( 198 \) of the \( 200 \) values
     from the path would be greater than \( 0 \).  Actually running
-    simulations of the Ehrenfest Markov chains show that state \( 0 \)
-    is an \( 0.01 \)-outlier according to this test roughly half of the
+    simulations of the alternative Ehrenfest Markov chain shows that state \( 0 \)
+    is an \( 0.01 \)-outlier according to this test about half of the
     time, see the exercises.  The simulations show that rejecting the
-    null hypothesis, that is, falsely concluding that \( 0 \) is \emph{not}
-    from the stationary distribution, occurs about half the time.  This
-    illustrates that Corollary~%
-    \ref{thm:significance:sqrtepstest} bounds the Type I error, not the
-    Type II error.
+    null hypothesis, that is,  concluding in error that \( 0 \) is \emph{not}
+    unusual with respect to the stationary distribution, occurs about
+    half the time.  
 
     However, with just \( 8 \) labels, there is not much to distinguish
     being an \( \epsilon \)-outlier, and variation among Markov chain
@@ -855,24 +852,30 @@ is distributed with small total variation distance to \( \pi \).
     Experiments with more trials with longer path lengths for the Markov
     chain shows that the proportion of trials showing that \( 0 \) is an
     \( \epsilon \)-outlier, that is, the empirical probability, slowly
-    increases.  This is an illustration of the problem of determining
+    increases.  Accepting the null hypothesis increases with
+    increasing the length of the chain, as expected.  This
+    illustrates that Corollary~%
+    \ref{thm:significance:sqrtepstest} bounds the Type I error, not the
+    Type II error.  This is an illustration of the problem of determining
     the statistical power of the test discussed later.
 
-    Considering a slightly larger specific case of the alternative
+    Considering larger specific cases of the alternative
     Ehrenfest urn model%
     \index{Ehrenfest urn
   model}%
-.    \( N = 21 \) balls illustrates the utility of a more discriminating
-    label function.  Now with Markov chain runs of \( 299 \) steps in \(
-    1000 \) trials the proportion showing that \( 0 \) is an \( \epsilon
-    \)-outlier is about \( 0.86 \).  With longer Markov chain runs of \(
-    399 \) steps in \( 1000 \) trials the proportion showing that \( 0 \)
-    is an \( \epsilon \)-outlier is about \( 0.90 \).
+.   with \( N = 21 \) and \( N = 51 \) balls illustrates the utility of a more discriminating
+    label function.  With \( N = 21 \) balls, Markov chain runs of \( 399 \) steps in \(
+    400 \) trials the proportion showing that \( 0 \) is an \( \epsilon
+    \)-outlier is about \( 0.92 \).  With longer Markov chain runs of \(
+    800 \) or \( 1600 \) steps in \( 1000 \) trials the proportion showing that \( 0 \)
+    is an \( \epsilon \)-outlier is better than \( 0.97 \).  With \( N
+    = 51 \) balls, the probability of showing state \( 0 \) is unusual
+    in long runs is virtually certain.
 
-    % The important observation now is that the \( \epsilon \)-outlier
-    % test can show that state \( 0 \) is unusual without knowing the
-    % mixing time, or that the Markov chain is in the steady state, or
-    % even the steady state distribution.
+    The important observation is that the \( \epsilon \)-outlier test
+    can show that state \( 0 \) is unusual with high confidence
+    without knowing the mixing time, or that the Markov chain is in
+    the steady state, or even the steady state distribution.
 
 \end{example}
 
@@ -886,7 +889,7 @@ significance \( p = O(\sqrt{\epsilon}) \) established by Corollary~%
 \ref{thm:significance:sqrtepstest}.  However, because Corollary~%
 \ref{thm:significance:sqrtepstest} places no demand on the mixing rate
 of \( X \), it should instead seem remarkable that any significance can
-be shown in general, and indeed, an example in this section shows that
+be shown in general.  An example in this section shows that
 significance at \( p = O( \sqrt{\epsilon}) \) is the best possible.
 
 Let \( N \) be a large integer.  Let \( X \) be the Markov chain where \(
@@ -896,7 +899,7 @@ and for any \( \nu \ge 1 \), \( X_{\nu} \) is equal to \( X_{\nu-1} +
 equal probability \( \frac{1}{2} \).  That is, \( X \) is random walk on
 the circle.  Note that the chain is stationary and reversible.  Let the
 value function be the position around the circle, that is, \(
-v(X_{\nu}) = X_{\nu} \mod N \).
+v(X_{\nu}) = X_{\nu} \).
 
 Given \( n \) and \( \epsilon \), choose \( N > \frac{2n+1}{\epsilon} \).
 Then \( N \) is large enough that the distance of \( X_0 \) from \( 0 \)
@@ -908,7 +911,7 @@ sums \( \sum\limits_{\nu=1}^ {j} \zeta_\nu \) are positive for \( j \le
 n \).  The probability of this event is just the probability that an \( n
 \)-step \( 1 \)-dimensional random walk from \( X_0 \) takes a first
 step to the right and does not return to the origin.  The calculation of
-this probability is a classical problem in random walks, which can be
+this probability is a classical problem in random walks, 
 solved using the reflection principle.  In particular, for \( n \) even,
 the probability is given by (see the exercises) 
 \[
@@ -921,11 +924,11 @@ can be as high as \( \sqrt{\epsilon/(2\pi)} \).  Of course, \( \sqrt{\epsilon/
 in the \( \sqrt{\epsilon} \) test is an interesting question.
 
 Figure~\ref{fig:serialsignificance:circlewalk} schematically illustrates a specific
-example.  Let $n = 199$, $\epsilon = 0.01$, so $N >
-\frac{2k+1}{\epsilon} = 39,000$.  Take $N = 40{,}000}$ for
+example.  Let $n = 198$, $\epsilon = 0.01$, so $N >
+\frac{2n+1}{\epsilon} = 39,700$.  Take $N = 40{,}000}$ for
 simplicity.  States, such as $20{,}000$, chosen outside the region
 marked with bars have the distance of \( X_0 \) from \( 0 \)
-in both directions is greater than \( n = 199 \) with probability greater
+in both directions is greater than \( n = 198 \) with probability greater
 than \( 1 - \epsilon = 0.99 \).  An \( n
 \)-step random walk from \( X_0 \) satisfying the condition is
 drawn schematically.
@@ -1718,6 +1721,20 @@ steps or so.
     Just for comparison, scientists estimate there are about \( 10^{80} \)
     \emph{atoms} in the universe.
   \end{solution}
+
+  \begin{exercise}
+  Cite a reference to a theorem from classical probability for the probability that an \( n
+\)-step \( 1 \)-dimensional random walk from \( X_0 \) takes a first
+step to the right and does not return to the origin.
+  \end{exercise}
+  \begin{solution}
+    This is Corollary 10.4, page 63 of \title{Heads or Tails: An
+      Introduction to Limit Theorems in Probability}, Emmanuel
+    Lesigne, AMS Student Mathematical Library, Volume 28, 2005.   This
+    is also formulas (3.5) and (2.3), on pages 77 and 75 respectively
+    in W. Feller's \title{An Introduction to Probability Theory and Its
+    Applications, Volume I.}, John Wiley and Sons, 1973.
+\end{solution}
 
   \begin{exercise}
     Verify that
