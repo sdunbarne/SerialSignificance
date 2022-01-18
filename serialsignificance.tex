@@ -64,7 +64,6 @@ test mean?
         \( v(X_0), \dots v(X_n ) \) is significant at \( p = \sqrt {2\epsilon}
         \).
     \item \begin{theorem}
-    \label{thm:significance:powerthm}
     \begin{enumerate}
         \item
             Let \( X \) be a reversible Markov chain on \( \mathcal{X} \).
@@ -235,7 +234,7 @@ significance of the smallness of the label of \( x_0 \). However, such
 convergence bounds are rarely available.
 
 Proposition~%
-\ref{thm:significance:basethm} detects that \( X_0 = x_0 \) is unusual
+\ref{thm:serialsignificance:basethm} detects that \( X_0 = x_0 \) is unusual
 relative to states chosen randomly according to \( \pi \).  The test
 does not need bounds on the mixing rate of \( X \).  First, a more
 precise definition of ``unusual relative to states chosen randomly''.
@@ -292,7 +291,7 @@ precise definition of ``unusual relative to states chosen randomly''.
 The following definition uses counting instead of proportions to express
 the smallness of a real number relative to a set.  The proof of
 Proposition~%
-\ref{thm:significance:basethm} uses this definition.
+\ref{thm:serialsignificance:basethm} uses this definition.
 
 \begin{definition}
     Say \( \alpha_j \) is \defn{among-\( \ell \)-smallest}%
@@ -389,7 +388,7 @@ label("$\alpha_n$", alpha[10]-h);
 \subsection*{Probability of Outliers}
 
 \begin{proposition}
-    \label{thm:significance:basethm}
+    \label{thm:serialsignificance:basethm}
     \begin{enumerate}
         \item
             Fix \( n \).
@@ -455,7 +454,7 @@ label("$\alpha_n$", alpha[10]-h);
                 } X_s, \dots, X_{s+n} \given X_j = \sigma }.
             \end{multline*}
         \item
-            \label{enum:significance:basethm5} Because \( X = X_0 , X_1,
+            \label{enum:serialsignificance:basethm5} Because \( X = X_0 , X_1,
             \dots \) is stationary and reversible, the probability of \(
             (X_0, \dots, X_n ) = (\sigma_0, \dots , \sigma_n ) \) equals
             the probability \( (X_0,\dots, X_n ) = (\sigma_n, \dots,
@@ -472,7 +471,7 @@ label("$\alpha_n$", alpha[10]-h);
                 \given \sigma).
             \]
         \item
-            \label{enum:significance:basethm6} The next claim is:
+            \label{enum:serialsignificance:basethm6} The next claim is:
             \[
                 \rho(j; 2\ell, n \given \sigma) \ge \rho(j; \ell, j
                 \given \sigma) \cdot \rho(0; \ell, n-j \given \sigma).
@@ -489,7 +488,7 @@ label("$\alpha_n$", alpha[10]-h);
             \)-smallest from \( X_0, \dots, X_n \).  This establishes
             the inequality in the claim.
         \item
-            \label{enum:significance:basethm7} Using the previous steps
+            \label{enum:serialsignificance:basethm7} Using the previous steps
             \begin{align*}
                 \rho(j; 2\ell, n \given \sigma) &\ge \rho(j; \ell, j
                 \given \sigma) \cdot \rho(0; \ell, n-j \given \sigma) \\
@@ -498,19 +497,19 @@ label("$\alpha_n$", alpha[10]-h);
                 &\ge \left( \rho(0; \ell, n \given \sigma) \right)^2.
             \end{align*}
             where the first inequality comes from step~%
-            \ref{enum:significance:basethm6}.  The middle equality comes
+            \ref{enum:serialsignificance:basethm6}.  The middle equality comes
             from step~%
-            \ref{enum:significance:basethm5}. The last inequality comes
+            \ref{enum:serialsignificance:basethm5}. The last inequality comes
             from the simple observation that \( \rho(j; \ell, n \given
             \sigma) \) is nonincreasing in \( n \) for fixed \( j \), \(
             \ell \) and \( \sigma \), in particular for \( j \) fixed to
             be \( 0 \).
         \item
-            \label{enum:significance:basethm8} Now \( \rho(j;\ell,n) =
+            \label{enum:serialsignificance:basethm8} Now \( \rho(j;\ell,n) =
             \E{\rho(j; \ell, n \given X_j)} \), where the expectation is
             taken over the random choice of \( X_j \sim \pi \).  Thus,
             taking expectations over the inequality in step~%
-            \ref{enum:significance:basethm7}
+            \ref{enum:serialsignificance:basethm7}
             \begin{multline}
                 \rho(j; 2\ell, n) = \E{\rho(j; 2\ell, n \given \sigma)}
                 \ge \E{\rho(j; \ell, n \given \sigma)^2} \\
@@ -522,7 +521,7 @@ label("$\alpha_n$", alpha[10]-h);
         \item
             To complete the proof, sum the left- and right-hand sides of
             the inequality in step~%
-            \ref{enum:significance:basethm8} to obtain
+            \ref{enum:serialsignificance:basethm8} to obtain
             \[
                 \sum\limits_{j=0}^n \rho(j; 2\ell, n) \ge (n+1) (\rho(0;
                 \ell, n))^2.
@@ -562,7 +561,7 @@ label("$\alpha_n$", alpha[10]-h);
     requires contiguous districts of roughly equal populations, it is
     unknown if any valid districting is reachable from any other by a
     legal sequence of steps.  Proposition~%
-    \ref{thm:significance:basethm} can only show a given sample is
+    \ref{thm:serialsignificance:basethm} can only show a given sample is
     unusual with respect to \( \pi \).  The Proposition does not give a
     way for generating samples from \( \pi \).
 
@@ -575,7 +574,7 @@ label("$\alpha_n$", alpha[10]-h);
 \end{remark}
 
 \begin{corollary}[The $\sqrt{2\epsilon}$ test]
-    \label{thm:significance:sqrtepstest}
+    \label{thm:serialsignificance:sqrtepstest}
     \begin{enumerate}
         \item
             Fix \( n \).
@@ -600,7 +599,7 @@ label("$\alpha_n$", alpha[10]-h);
     \begin{enumerate}
         \item
             This is a restatement of Proposition~%
-            \ref{thm:significance:basethm} as a statistical test in
+            \ref{thm:serialsignificance:basethm} as a statistical test in
             terms of the proportion \( \epsilon \).
         \item
             Let the reversible Markov chain \( X \), the stationary
@@ -615,7 +614,7 @@ label("$\alpha_n$", alpha[10]-h);
             \dots, v(X_n) \).
         \item
             Proposition~%
-            \ref{thm:significance:basethm} proves
+            \ref{thm:serialsignificance:basethm} proves
             \[
                 \rho(0; \epsilon, n) \le \sqrt{\frac{2 \lfloor \epsilon
                 (n+1) \rfloor}{n+1}} \le \sqrt{\frac{2 \epsilon (n+1)}{n+1}}
@@ -627,7 +626,7 @@ label("$\alpha_n$", alpha[10]-h);
 \begin{remark}
     Chikina, et al.~%
     \cite{Chikina2860} call Corollary~%
-    \ref{thm:significance:sqrtepstest} the \( \sqrt{\epsilon} \) test,
+    \ref{thm:serialsignificance:sqrtepstest} the \( \sqrt{\epsilon} \) test,
     and this section follows their terminology.  However, more logically
     it could be called the \( \epsilon \) test, referring to the outlier
     fraction, or the \( \sqrt{2 \epsilon} \) test referring to the
@@ -641,9 +640,9 @@ label("$\alpha_n$", alpha[10]-h);
     null hypothesis is true.  Often in statistics, the probability of
     rejecting the null hypothesis is denoted by \( \alpha \).  So here
     Corollary~%
-    \ref{thm:significance:sqrtepstest} says if the value is an \(
+    \ref{thm:serialsignificance:sqrtepstest} says if the value is an \(
     \epsilon \)-outlier, then the probability of \emph{erroneously}
-    concluding \( X_0 \) is \emph{not}} unusual, when in fact \( X_0 \) \emph{is}}
+    concluding \( X_0 \) is \emph{not} unusual, when in fact \( X_0 \) \emph{is}
     unusual, is less than \( \sqrt{2 \epsilon } \).
 \end{remark}
 
@@ -685,11 +684,11 @@ in the chain, it might be natural to guess \( p_i^n \approx \frac{1}{n+1}
 \).  To be the minimum value means the value occurs in the least \(
 \frac{1}{n+1} \) fraction, so \( \epsilon = \frac {1}{n+1} \).
 Corollary~%
-\ref{thm:significance:sqrtepstest} shows \( p_0^n \le \frac{2}{\sqrt {%
+\ref{thm:serialsignificance:sqrtepstest} shows \( p_0^n \le \frac{2}{\sqrt {%
 n+1}} \).  The next subsection has an example that \( p_0^n \) can be as
 large as \( \frac{1}{\sqrt{2\pi n}} \).  The example means the \( O (\sqrt
 {\epsilon}) \) probability from Corollary~%
-\ref{thm:significance:sqrtepstest}, as the worst possible behavior for \(
+\ref{thm:serialsignificance:sqrtepstest}, as the worst possible behavior for \(
 p_0^n \), can actually be achieved.
 
 In the general setting of a reversible Markov chain, the Corollary leads
@@ -704,7 +703,7 @@ hypothesis that \( X_0 \) is unusual is
 true, is less than \( \sqrt{2 \epsilon } \).
 
 Corollary~%
-\ref{thm:significance:sqrtepstest} leads to the Outlier Test Algorithm:%
+\ref{thm:serialsignificance:sqrtepstest} leads to the Outlier Test Algorithm:%
 \index{Outlier Test Algorithm}
 
 \begin{algorithm}[H]
@@ -738,7 +737,7 @@ value) under a sequence of chain transitions, with a best-possible
 quantification of this fact (up to constant factors).]
 
 Next is a corollary of Theorem~%
-\ref{thm:significance:basethm} that applies to the setting where \( X_0 \)
+\ref{thm:serialsignificance:basethm} that applies to the setting where \( X_0 \)
 is not distributed as a stationary distribution \( \pi \) but instead is
 distributed with small total variation distance to \( \pi \).
 
@@ -774,12 +773,14 @@ distributed with small total variation distance to \( \pi \).
             and \( \tau \) is the uniform distribution on sequences of
             length \( n \) of real numbers \( r_1 , r_2, \dots, r_n \)
             in \( [0, 1] \).
-        \item [Rewrite this and following steps for better clarity.]
+        \item 
             The distribution of the trajectory \( X_0 , X_1,\dots, X_n \)
             is the product \( (\rho, \tau ) \) by using sequences of
             reals \( r_1, \dots, r_n \) to choose transitions in the
             chain; from \( X_i = \sigma_i \), if there are \( L \)
-            transitions possible, with probabilities \( p_1, \dots, p_L \).
+            transitions possible, with probabilities \( p_1, \dots,
+            p_L \).
+            [Rewrite this and following steps for better clarity.]
         \item
             Then, make the \( t \)th possible transition if \( r_i \in [p_1
             + \cdots + p_{t-1}, p_1 + \cdots + p_{t-1 }+ p_t] \).  If \(
@@ -873,7 +874,7 @@ distributed with small total variation distance to \( \pi \).
     that is, the empirical probability, slowly increases.  Accepting the
     null hypothesis increases with increasing the length of the chain,
     as expected.  This illustrates Corollary~%
-    \ref{thm:significance:sqrtepstest} bounds the Type I error, not the
+    \ref{thm:serialsignificance:sqrtepstest} bounds the Type I error, not the
     Type II error.  This is an illustration of the problem of
     determining the statistical power of the test discussed later.
 
@@ -904,8 +905,8 @@ It might be natural to suspect that observing \( \epsilon \)-outlier
 status for \( \sigma \) on a random trajectory from \( \sigma \) is
 significant at something like \( p = O(\epsilon) \) instead of the
 significance \( p = O(\sqrt{\epsilon}) \) established by Corollary~%
-\ref{thm:significance:sqrtepstest}.  However, because Corollary~%
-\ref{thm:significance:sqrtepstest} uses no information about the mixing
+\ref{thm:serialsignificance:sqrtepstest}.  However, because Corollary~%
+\ref{thm:serialsignificance:sqrtepstest} uses no information about the mixing
 rate of \( X \), it seems remarkable any significance can be shown in
 general.  An example in this section shows significance at \( p = O(
 \sqrt{\epsilon}) \) is the best possible.
@@ -1060,13 +1061,13 @@ very likely to succeed when \( n \) is sufficiently large and \( v(\sigma_0)
 \end{remark}
 
 Theorem~%
-\ref{thm:significance:powerthm} below is a simple application of the
+\ref{thm:serialsignificance:powerthm} below is a simple application of the
 following theorem of Gillman~%
 \cite[Theorem 2.1]{gillman98} translated into the current notation and
 assumptions.
 
 \begin{theorem}[Gillman's Chernoff-Type Bound]%
-    \label{thm:significance:gillman}
+    \label{thm:serialsignificance:gillman}
     \begin{enumerate}
         \item
             Let \( X = X_0, X_1, \dots \) be a reversible Markov chain
@@ -1111,7 +1112,7 @@ assumptions.
 \end{remark}
 
 \begin{theorem}
-    \label{thm:significance:powerthm}
+    \label{thm:serialsignificance:powerthm}
     \begin{enumerate}
         \item
             Let \( X \) be a reversible Markov chain on \( \mathcal{X} \).
@@ -1138,13 +1139,13 @@ assumptions.
     \begin{enumerate}
         \item
             Apply Theorem~%
-            \ref{thm:significance:gillman} with \( A \) as the set of
+            \ref{thm:serialsignificance:gillman} with \( A \) as the set of
             states \( \sigma \in \mathcal{X} \) such that \( v(\sigma)
             \le v(\sigma_0) \), \( X_0 = \sigma_0 \) and \( \gamma =
             \epsilon \).  By assumption \( \pi(A) \le \epsilon \).
         \item
             Theorem~%
-            \ref{thm:significance:gillman} gives
+            \ref{thm:serialsignificance:gillman} gives
             \[
                 \Prob{N_{n}(A)/n > 2\epsilon} \le \left( 1 + \frac{\epsilon
                 n}{10 \tau_2} \right) \cdot \frac{1}{\sqrt{\pi_{\min}}}
@@ -1169,11 +1170,11 @@ assumptions.
 
 \begin{remark}
     The probability \( \rho \) in Theorem~%
-    \ref{thm:significance:powerthm} converges in \( n \) exponentially
+    \ref{thm:serialsignificance:powerthm} converges in \( n \) exponentially
     quickly to \( 1 \).  The probability \( \rho \) is very close to \( 1
     \) if \( n \) is large relative to \( \tau_2 \).  In particular,
     Theorem~%
-    \ref{thm:significance:powerthm} shows the \( \sqrt{2\epsilon} \) test
+    \ref{thm:serialsignificance:powerthm} shows the \( \sqrt{2\epsilon} \) test
     will work when the test runs long enough.  Of course, one strength
     of the \( \sqrt{2\epsilon} \) test is that it can sometimes show
     bias, even when \( n \) is far too small to mix the chain, which is
@@ -1260,14 +1261,14 @@ test the political districting of a state:\\
     \item
         Begin with the districting being evaluated.
     \item
-        \label{enum:significance:mcstep} Make a sequence of random
+        \label{enum:serialsignificance:mcstep} Make a sequence of random
         changes to the districting, while preserving some set of
         constraints imposed on the districtings.
     \item
         Evaluate the partisan properties of each districting encountered
         (e.g., by simulating elections using past voting data).
     \item
-        \label{enum:significance:crafted} Call the original districting
+        \label{enum:serialsignificance:crafted} Call the original districting
         ``carefully crafted'' or ``gerrymandered'' if the overwhelming
         majority of districtings produced by making small random changes
         are less partisan than the original districting.
@@ -1291,14 +1292,14 @@ follows:  merge two districts in the plan, generate a minimum spanning
 tree for the precincts in the merged district, then ``split'' the merged
 district into two new districts by finding a population-balanced cut of
 the minimum spanning tree.  The ``random changes' from Step~%
-\ref{enum:significance:mcstep} will then be precisely governed by the
+\ref{enum:serialsignificance:mcstep} will then be precisely governed by the
 transition probabilities of the Markov chain \( X \).  By designing \( X
 \) so the uniform distribution \( \pi \) on the set of comparison
 districtings \( \Sigma \) is a stationary distribution for \( X \),
 Theorem 1.1 gives an upper bound on the false-positive rate (in other
 words, a global statistical significance) for the ``gerrymandered''
 declaration when it is made in Step~%
-\ref{enum:significance:crafted}.
+\ref{enum:serialsignificance:crafted}.
 
 \visual{Section Starter Question}{../../../../CommonInformation/Lessons/question_mark.png}
 \section*{Section Ending Answer}
@@ -1318,7 +1319,7 @@ with respect to the valuing.
 \cite{Chikina2860, Chikina2019, doi:10.1080/2330443X.2020.1806763}.
 
 The first paragraph of the remark following Proposition~%
-\ref{{thm:significance:basethm}} about Markov chains with distinct
+\ref{{thm:serialsignificance:basethm}} about Markov chains with distinct
 irreducible components is adapted from
 https://math.stackexchange.com/questions/1636992/an-example-of-a-reversible-but-reducible-markov-chain
 
