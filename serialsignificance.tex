@@ -380,7 +380,9 @@ label("$\alpha_n$", alpha[10]-h);
     is at most the value of \( 0.042 \), specifically the value \( 0.006
     \).
 
-    The exercises have a comparison of \( \epsilon \)-outlier and among-\(
+    The notion of \( \epsilon \)-outlier is a generalization of
+    median, quartile and percentile, see the exercises.
+    The exercises also have a comparison of \( \epsilon \)-outlier and among-\(
     \ell \)-smallest to the notions of the order of a list and the rank
     of elements of a list.
 \end{example}
@@ -1374,6 +1376,24 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 \renewcommand{\theexercise}{\arabic{exercise}}
 
 \begin{exercise}
+  Compare the notion of \( \epsilon \)-outlier to median.
+\end{exercise}
+\begin{solution}
+  If \( n \) is odd, a real number \( \alpha_0 \) is a median among
+  \( \alpha_0, \alpha_1, \dots \alpha_n \) (with repetitions possible)
+  if there are \( \frac{n+1}{2} \) indices for which
+  \( \alpha_i \le \alpha_0 \).  Then the median is a member of the
+  list.  If \( n \) is even, a real number \( \alpha_0 \) is a median
+  among \( \alpha_0, \alpha_1, \dots \alpha_n \) (with repetitions
+  possible) if there are \( \frac{n}{2} \) indices for which
+  \( \alpha_i \le \alpha_0 \).  If there are no repetitions, the
+  median is not a member of the list.  So if \( n \) is even, the
+  \( \frac{1}{2} \)-outlier is the median, but this is not the case
+  when \( n \) is even.  The comparison is similar for the quartile
+  and the percentile.
+\end{solution}
+  
+\begin{exercise}
     For a set of real values \( \alpha_0, \dots \alpha_n \), compare the
     definition of ``\( \epsilon \)-outlier'' and ``among-\( \ell \)-smallest''
     to the notions of the order of a list and the rank of elements of a
@@ -1504,32 +1524,39 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
         results
     \end{lstlisting}
 
-    \begin{description}
-        \item[\( N= 7 \)]
-\begin{verbatim*}
+    \begin{enumerate}
+    \item
+      \( N= 7 \)
+      
+\texttt{
         [,1]   [,2]    [,3]     [,4]
 [1,] 0.430 0.3975 0.38875 0.407500
 [2,] 0.475 0.4800 0.48125 0.488125
 [3,] 0.555 0.5675 0.52500 0.530000
 [4,] 0.545 0.5900 0.59750 0.577500
-\end{verbatim*}
-        \item[\( N = 21 \)]
-\begin{verbatim*}
+}
+\item
+
+  \( N = 21 \)
+  
+\texttt{
       [,1]   [,2]    [,3]     [,4]
 [1,] 0.730 0.7250 0.75250 0.740625
 [2,] 0.875 0.9200 0.92625 0.920000
 [3,] 0.985 0.9825 0.98625 0.975000
 [4,] 1.000 1.0000 1.00000 0.999375
-\end{verbatim*}
-        \item[\( N = 51 \)]
-\begin{verbatim*}
+}
+\item
+  \( N = 51 \)
+  
+\texttt{
       [,1]   [,2]    [,3]     [,4]
 [1,] 0.775 0.7425 0.73500 0.734375
 [2,] 0.930 0.9275 0.94125 0.935625
 [3,] 0.980 0.9850 0.98375 0.979375
 [4,] 0.995 0.9975 0.99875 1.000000
-\end{verbatim*}
-    \end{description}
+}
+    \end{enumerate}
 
 These experiments show the proportion of trials for which the state \( 0
 \) is an \( 0.01 \)-outlier for the alternative Ehrenfest urn model is
