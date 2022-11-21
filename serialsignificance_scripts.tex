@@ -1,0 +1,104 @@
+
+\begin{description}
+
+% \item[Geogebra] 
+
+% \link{  .ggb}{GeoGebra applet}
+
+\item[R]
+
+\link{http://www.math.unl.edu/~sdunbar1/altEhrenfestOutliers.R}{R
+      script for alternative Erhenfest outliers.}
+
+\begin{lstlisting}[language=R]
+library(markovchain)
+
+N <- 51; p <- 1/2; q <- 1 - p;
+stateNames <- as.character( 0:N )
+## Be careful here, because states numbered from 0,
+## but R indexes from 1
+transMatrix <- matrix(0, N+1,N+1)
+transMatrix[1,1] <- q
+transMatrix[1,2] <- p
+transMatrix[N+1, N  ] <- q
+transMatrix[N+1, N+1] <- p
+for (row in 2:N) {
+    transMatrix[row, row-1] <- ((row-1)/N)*q
+    transMatrix[row,row] <- ((N-(row-1))/N)*q + ((row-1)/N)*p
+    transMatrix[row,row+1] <- ((N-(row-1))/N)*p
+}
+
+startState <- "0"
+
+altEhernfest <- new("markovchain", transitionMatrix=transMatrix,
+                 states=stateNames, name="AltEhernfest")
+
+
+pathLength <- c(199, 399, 599, 999)
+nTrials <- c(200, 400, 800, 1600)
+
+eps <- 0.01
+
+results <- matrix(0, length(pathLength), length(nTrials))
+
+for (pL in 1:length(pathLength)) {
+for  (nT in 1:length(nTrials)) {
+
+outlierThreshold <- floor( eps * (pathLength[pL] + 1) ) + 1
+
+nEpsOutlier<- 0
+
+for (i in 1:nTrials[nT]) {
+            
+    path <- rmarkovchain(n=pathLength[pL],
+                         object = altEhernfest,
+                         t0 = startState)
+    fullPath <- c(startState, path)
+    labelFullPath <- as.numeric(fullPath)
+    labelStartState <- as.numeric(startState)
+    if (!identical(sort(labelFullPath)[outlierThreshold], labelStartState)) {
+                nEpsOutlier <- nEpsOutlier + 1
+    }
+}
+
+probEpsOutlier <- nEpsOutlier/nTrials[nT]
+
+results[pL, nT] <- probEpsOutlier
+}
+}
+
+results
+
+\end{lstlisting}  
+
+% \item[Octave]
+
+% \link{http://www.math.unl.edu/~sdunbar1/    .m}{Octave script for .}
+
+% \begin{lstlisting}[language=Octave]
+
+% \end{lstlisting}
+
+% \item[Perl] 
+
+% \link{http://www.math.unl.edu/~sdunbar1/    .pl}{Perl PDL script for .}
+
+% \begin{lstlisting}[language=Perl]
+
+% \end{lstlisting}
+
+% \item[SciPy] 
+
+% \link{http://www.math.unl.edu/~sdunbar1/    .py}{Scientific Python script for .}
+
+% \begin{lstlisting}[language=Python]
+
+% \end{lstlisting}
+
+\end{description}
+
+
+
+%%% Local Variables:
+%%% TeX-master: t
+%%% End:
