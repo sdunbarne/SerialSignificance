@@ -1,6 +1,6 @@
 library(markovchain)
 
-N <- 51; p <- 1/2; q <- 1 - p;
+N <- 7; p <- 1/2; q <- 1 - p;
 stateNames <- as.character( 0:N )
 ## Be careful here, because states numbered from 0,
 ## but R indexes from 1
