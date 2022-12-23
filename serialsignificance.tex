@@ -110,7 +110,7 @@ mean?
         most, \( \epsilon(n + 1) \) indices \( i \) for which \( \alpha_i
         \le \alpha_0 \), in other words
         \[
-            \card{ \setof{\nu}{\alpha_{\nu} < \alpha_0}} \le \epsilon(n+1).
+            \card{ \setof{\nu}{\alpha_{\nu} \le \alpha_0}} \le \epsilon(n+1).
         \]
 
     \item
@@ -277,7 +277,8 @@ precise definition of ``unusual relative to states chosen randomly''.
 \begin{definition}
     A real number \( \alpha_0 \) is an \defn{\( \epsilon \)-outlier}%
     \index{\( \epsilon \)-outlier}
-    among \( \alpha_0, \alpha_1, \dots \alpha_n \) (with repetitions
+    among \( \alpha_0, \alpha_1, \dots \alpha_n \) (not necessarily
+    in increasing order and with repetitions
     possible) if there are, at most, \( \epsilon(n + 1) \) indices \( i \)
     for which \( \alpha_i \le \alpha_0 \), in other words \( \card{%
     \setof{\nu}{\alpha_{\nu} \le \alpha_0}} \le \epsilon(n+1) \).
@@ -402,6 +403,174 @@ Proposition~%
 
 \subsection*{Probability of Outliers}
 
+Proposition~%
+\ref{thm:serialsignificance:basethm} gives an upper bound on the
+probability of a value of a Markov chain being
+among-\(\ell\)-smallest using the following definition.
+\begin{definition}
+Let \( n \) be fixed.  Let \( X_1, X_2, \dots, X_n \) be a sample of the Markov
+            chain starting from \( X_0 = \sigma_0 \).
+            Suppose the state space has a value function \( v :
+            \mathcal {X} \to \Reals \).
+    For \( 0 \le j \le n \) define
+    \[
+	\rho(j; \ell, n) = \Prob{X_j \text{ is among- \(\ell\)
+	-smallest from } X_0, \dots, X_n }
+    \] and
+    \[
+	\rho(j; \ell, n \given \sigma) = \Prob{X_j \text{ is
+	among- \(\ell\) -smallest from } X_0, \dots, X_n%
+	\given X_j = \sigma }.
+    \]
+\end{definition}
+
+Observe \( \rho(j; 0 ,n) \) is the probability \( X_j \)
+has the unique minimum value in the Markov chain of length \(
+n \).  Likewise, \( \rho(j; 0, n \given \sigma) \) is the
+probability \( X_j = \sigma \) has the unique minimum value
+in the Markov chain of length \( n \) given that the Markov
+passes through \( \sigma \) at step \( j \).  Additionally,
+\( \rho(0; \ell, n\given \sigma_0) \) is the probability that the
+starting value \( X_0 = \sigma_0 \) is among-\(\ell\)-smallest from \(
+v(X_0) \) through \(v(X_n) \).
+
+\begin{example}
+The previous definitions have several levels:  Markov chain
+sample paths of some
+length \( n \) with a value function, a upper bound \( \ell \), a specific step \(j\), the
+number of steps with value less than the given step, and the
+probability that number of steps is no greater than the upper bound.
+This example illustrates those  concepts of \emph{among-\( \ell
+\)-smallest} and \( \rho(j; 0 ,n) \) in the context of a specific
+Markov-chain. 
+
+    Consider the alternative Ehrenfest urn
+    model.%
+    \index{Ehrenfest urn model}
+    Two urns, labeled \( A \) and \( B \), contain a total of \( N = 7 \)
+    balls.  At each step a ball is selected at random with all
+    selections equally likely.  Then an urn is selected, urn \( A \)
+    with probability \( p = \frac{1}{2} \) and urn \( B \) with
+    probability \( q = 1-p = \frac {1}{2} \) and the ball is moved to
+    that urn.  The state at each step is the number of balls in the urn \(
+    A \), from \( 0 \) to \( N \).  Start from state \( \sigma \)
+    selected at random from the stationary distribution.
+    For this simple example, let the value function be the number of
+    balls in urn \( A \), so that the value function is identical with
+    the state number.  The simplicity of the alternative Ehrenfest urn
+    model limits the possibilities for value functions.
+
+    This example uses the reproducible simulation of the alternate
+    Ehrenfest urn model in \texttt{simRhoProb.R}.
+    The path length, or number of steps, is \(10 \), short enough to
+    be comprehensible, long enough have some
+    content. Including the start state, the Markov chain has \( 11 \)
+    values.
+    The number of trials is \( 15 \), enough to illustrate
+    the variety of sample paths, but not too many to overwhelm.
+    Thus the Markov chain is simulated \( 15 \) times starting from a state
+    selected at random from the stable distribution.  The values along
+    the paths are recorded in the rows of an \( 15 \times 11 \)
+    matrix.  See Table~\ref{tab:serialsignificance:recordpaths}.
+    Then for each given step \( j \) along the path, the count
+    of other step values along the path less than or equal to the given step value is
+    compared to \( \ell \).  If the count is less than or equal to \(
+    \ell \), that makes the given step value at \( j \) among-\(\ell\)-smallest and the
+    count in a \( 11 \times 11 \)  matrix is incremented.  See
+    Table~\ref{tab:serialsignificance:rhon}.  When done, divide
+    the counting matrix by the number of trials, \( 15 \), to
+    give an empirical estimate of \( \rho(j; 0 ,n) \).
+
+    \begin{table}
+      \centering
+      \begin{tabular}{c|ccccccccccc}
+        0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+        \hline
+         1& 5 & 4 & 4 & 3 & 3 & 4 & 4 & 4 & 4 & 3 &  3 \\
+         2& 2 & 2 & 3 & 4 & 4 & 3 & 4 & 3 & 2 & 3 &  4 \\
+         3& 3 & 3 & 3 & 2 & 3 & 2 & 2 & 3 & 3 & 4 &  4 \\
+         4& 3 & 3 & 3 & 2 & 3 & 2 & 3 & 4 & 4 & 3 &  4 \\
+         5& 5 & 5 & 6 & 5 & 5 & 4 & 4 & 4 & 3 & 3 &  4 \\
+         6& 4 & 4 & 4 & 4 & 4 & 3 & 4 & 5 & 4 & 4 &  5 \\
+         7& 3 & 3 & 3 & 4 & 5 & 6 & 5 & 4 & 3 & 3 &  4 \\
+         8& 4 & 4 & 4 & 4 & 4 & 5 & 4 & 4 & 4 & 4 &  4 \\
+         9& 4 & 5 & 5 & 5 & 4 & 4 & 4 & 4 & 4 & 5 &  4 \\
+        10& 4&  5&  5&  4&  5&  4&  4&  5&  5&  4&   5 \\
+        11& 4&  4&  3&  3&  2&  3&  3&  4&  3&  2&   2 \\
+        12& 3&  3&  3&  3&  2&  3&  3&  3&  2&  2&   3 \\
+        13& 2&  3&  2&  2&  1&  0&  1&  2&  2&  3&   2 \\
+        14& 1&  2&  3&  4&  5&  6&  6&  6&  5&  4&   5 \\
+        15& 5&  6&  7&  6&  5&  4&  4&  5&  6&  6&   5 \\
+      \end{tabular}
+      \caption{Record of 15 sample paths of the alternate Ehrenfest
+        urn model.}
+      \label{tab:serialsignificance:recordpaths}
+    \end{table}
+
+    \begin{table}
+      \centering
+      \begin{tabular}{c|ccccccccccc}
+        &  0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+        \hline
+        0&  1 & 1 & 2 & 2 & 4 & 5 & 6 & 7 &10 &12 & 15 \\
+        1&  0 & 1 & 2 & 2 & 3 & 3 & 3 & 4 & 6 &10 & 15 \\
+        2&  0 & 0 & 1 & 1 & 2 & 2 & 3 & 5 & 8 &10 & 15 \\
+        3&  0 & 1 & 2 & 3 & 5 & 5 & 5 & 7 & 9 &12 & 15 \\
+        4&  0 & 0 & 3 & 4 & 4 & 5 & 6 & 8 &10 &13 & 15 \\
+        5&  2 & 4 & 5 & 5 & 6 & 7 & 9 &10 &10 &11 & 15 \\
+        6&  0 & 1 & 3 & 3 & 4 & 5 & 6 & 8 & 9 &12 & 15 \\
+        7&  0 & 0 & 0 & 0 & 0 & 2 & 4 & 5 & 7 & 9 & 15 \\
+        8&  0 & 1 & 3 & 3 & 4 & 4 & 5 & 7 &10 &13 & 15 \\
+        9&  0 & 1 & 3 & 4 & 7 & 7 & 8 & 9 &10 &12 & 15 \\
+        1&0 0 & 0 & 1 & 2 & 2 & 4 & 5 & 7 & 8 & 9 & 15 \\
+      \end{tabular}
+      \caption{The count of step values \( \)}
+      \label{tab:serialsignificance:rhon}
+    \end{table}
+
+    Next is a detailed analysis of Table~\ref{tab:serialsignificance:recordpaths} to illustrate
+    the entries of the counting matrix in Table~\ref{tab:serialsignificance:rhon}.
+    \begin{itemize}
+    \item The entry at \( [0,0] \)  records the number of trials
+     where the starting value \( j=0 \) is the unique minimum.  In trials 2,
+     7,8,9,10 the start value is the minimum of the path, but not the unique
+     minimum.
+     In trial 14, the start value \( 1 \)  is the unique minimum, which gives
+   the entry value \( 1 \).
+   \item
+    Entries at \( [j,0] \), with \( j \ge 1 \), record the number of trials where
+   the value of step \( X_j \) is the unique minimum.  In trial 6, at step \( j=5 \)
+   and in trial 13, at step \( j = 5 \) the unique minimum occurs.  Thus \( rho[5,0] = 2 \).
+   \item
+   The entry at \( [0,1] \) records the number of trials where
+   the start value, namely \( X_0 \), is among-\(1\)-smallest.  That is, the
+   number of trials where the number of values other than the start
+   value less than or equal to the start value is less than or equal to \( 1 \).  This is just
+   trial 14 again.
+   \item
+   The entry at \( [0,2] \) records the number of trials where
+   the start value \( X_0 \) is among-\(2\)-smallest.  That is, the
+   number of trials where the number of values, other than the start
+   value, less than or equal to the start value is less than or equal to  \( 2 \).  This is just
+   trial 14 again, with \( 0 \) other values less than \( X_0 = 1 \), and trial 2
+   with \( 2 \) step values, namely \( X_1 \) and \( X_8 \) equal to \( X_0 = 2 \).
+    \end{itemize}
+   See the exercises for more explanation of entries in
+   Table~\ref{tab:serialsignificance:rhon}.
+
+   This example is deliberately small in scope to illustrate the
+   definition of \( \rho(j; \ell, n) \).  Increasing the path
+   length and the number of trials gives better empirical estimates
+   for \( \rho(j; \ell, n) \).
+   
+   \begin{remark}
+   For a given value of \( n \),  \( \rho(j; \ell, n) \) is increasing in
+   \( \ell \) like a cdf.  This is an obvious conclusion, since the definition is
+   in terms of an inequality and gets more permissive in terms of the
+   number of allowed values in the among-\(\ell\) -smallest.
+   \end{remark}
+
+
 \begin{proposition}
     \label{thm:serialsignificance:basethm}
     \begin{enumerate}
@@ -444,22 +613,22 @@ Proposition~%
             values of the states.  For a first understanding of the
             proof, use the \( \ell = 0 \) case, so the minimum value is
             the focus.
-        \item
-            For \( 0 \le j \le n \) define
-            \[
-                \rho(j; \ell, n) = \Prob{X_j \text{ is among- \(\ell\)
-                -smallest from } X_0, \dots, X_n }
-            \] and
-            \[
-                \rho(j; \ell, n \given \sigma) = \Prob{X_j \text{ is
-                among- \(\ell\) -smallest from } X_0, \dots, X_n%
-                \given X_j = \sigma }.
-            \] Observe \( \rho(j; 0 ,n) \) is the probability \( X_j \)
-            has the unique minimum value in the Markov chain of length \(
-            n \).  Likewise, \( \rho(j; 0, n \given \sigma) \) is the
-            probability \( X_j = \sigma \) has the unique minimum value
-            in the Markov chain of length \( n \) given that the Markov
-            passes through \( \sigma \) at step \( j \).
+        % \item
+        %     For \( 0 \le j \le n \) define
+        %     \[
+        %         \rho(j; \ell, n) = \Prob{X_j \text{ is among- \(\ell\)
+        %         -smallest from } X_0, \dots, X_n }
+        %     \] and
+        %     \[
+        %         \rho(j; \ell, n \given \sigma) = \Prob{X_j \text{ is
+        %         among- \(\ell\) -smallest from } X_0, \dots, X_n%
+        %         \given X_j = \sigma }.
+        %     \] Observe \( \rho(j; 0 ,n) \) is the probability \( X_j \)
+        %     has the unique minimum value in the Markov chain of length \(
+        %     n \).  Likewise, \( \rho(j; 0, n \given \sigma) \) is the
+        %     probability \( X_j = \sigma \) has the unique minimum value
+        %     in the Markov chain of length \( n \) given that the Markov
+        %     passes through \( \sigma \) at step \( j \).
         \item
             Observe that because \( X_s \sim \pi \) for all \( s \),
             additionally
@@ -556,6 +725,17 @@ Proposition~%
             \]
     \end{enumerate}
 \end{proof}
+
+\begin{remark}
+    Proposition~%
+    \ref{thm:serialsignificance:basethm} only gives a theoretical upper bound for
+    \( \rho(0; \ell, n) \) although the alternate Ehrenfest urn model simulation
+    gives empirical estimates for all \( \rho(j; \ell, n) \).  The
+    theoretical upper bound is not very sharp either, for instance \( \( \rho(0; n, n) =
+    1\) for all \( j \), but the theoretical upper bound is
+    approximately \( \sqrt{2} \).
+  
+\end{remark}
 
 \begin{remark}
     Proposition~%
@@ -883,6 +1063,7 @@ instead is distributed with small total variation distance to \( \pi \).
     Consider a specific simple case of the alternative Ehrenfest urn
     model.%
     \index{Ehrenfest urn model}
+    The setup of the urn model is repeated here for convenient reference.
     Two urns, labeled \( A \) and \( B \), contain a total of \( N = 7 \)
     balls.  At each step a ball is selected at random with all
     selections equally likely.  Then an urn is selected, urn \( A \)
@@ -1431,15 +1612,49 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 \end{exercise}
 \begin{solution}
     If \( n \) is odd, the median \( \mu_{1/2} \) among \( \alpha_0,
-    \alpha_1, \dots \alpha_n \) (with repetitions possible) has \( \frac
-    {n+1}{2} \) indices for which \( \alpha_i \le \mu_{1/2} \).  If \( n
-    \) is odd, the median is not necessarily a member of the list.  If \(
-    n \) is even, a real number \( \mu_{1/2} \) is a median among \(
-    \alpha_0, \alpha_1, \dots \alpha_n \) (with repetitions possible) if
-    there are \( \frac{n+1}{2} \) indices for which \( \alpha_i \le \mu_
-    {1/2} \).  So if \( n \) is even, the \( \frac{1}{2} \)-outlier is
-    the median, but this is not the case when \( n \) is odd.  The
-    comparison is similar for the quartile and the percentile.
+    \alpha_1, \dots \alpha_n \) (with repetitions possible in the even
+    number \( n+1 \) of values) has \( \frac
+    {n+1}{2} \) indices for which \( \alpha_i \le \mu_{1/2} \).  The
+    median may not be a value in the set.  To
+    say that \( \alpha_0 \) is a \(1/2\)-outlier means the number of
+    indices of values at most as large as \( \alpha_0 \) is  at most
+    \( (n+1)/2 \), in other words \( \card{%
+      \setof{\nu}{\alpha_{\nu} \le \alpha_0}} \le \frac{1}{2}(n+1) \).
+    Then \( \alpha_0 \) is at most as large as the median, \( \alpha_0
+    \le mu_{1/2} \). Also \( \alpha_0 \) is a member of the set while
+    the median may not be.  The median focuses more on the middle
+    among the values, splitting the values into halves, ranked by
+    value.
+    However \( \alpha_0 \) is a \( 1/2 \)-outlier focuses more on
+    whether the count of
+    indices of values at most as large as \( \alpha_0 \) is  at most
+    half of all indices, so that \( \alpha_0 \) is among the smaller
+    half of values ranked by order.
+
+    If \( n \) is even, so \( n + 1 \) is odd, the median is a member
+    of the list.  If \( n \) is even, a real number \( \mu_{1/2} \) is
+    a median among \( \alpha_0, \alpha_1, \dots \alpha_n \) (with
+    repetitions possible) if there are \( \frac{n}{2} \) indices for
+    which \( \alpha_i \le \mu_ {1/2} \).  So if \( n \) is even and if
+    \( alpha_0 \) happens to be the median, then \( \alpha_0 \) is not
+    a \( \frac{1}{2} \)-outlier because there are are least
+    \( n/2 + 1 \) values at most \( \alpha_0 \), including
+    \( \alpha_0 \) itself, possibly more if there are repetitions in
+    the set.  That is, if \( \alpha_0 \) is the median, it is not
+    among at most \( (n+1)/2 = n/2 + 1/2 \) (really just \( n/2 \))
+    indices.  However, if \( alpha_0 \) is strictly less than the
+    median \( m_{1/2} \), \( \alpha_0 < \m_{1/2} \), then
+    \( \alpha_0 \) is a \( 1/2 \)-outlier because the count of indices
+    at most as large as \( \alpha_0 \) is at most \( n/2 \) which is
+    less than \( (n+1)/2 \).
+
+    The point is that considering values only, as with the median,
+    repetitions or equality among values do not matter.  However, with
+    the \( 1/2 \)-outlier, repetitions or equality do matter.  The
+    point is whether the value \( \alpha_0 \) appears infrequently,
+    i.e among the  \( \epsilon \)-fraction of smallest ordered values.
+    The comparisons are similar for the first quartile and a \(1/4\)-outlier
+    and the first percentile and a \( 0.01 \)-outlier.
 \end{solution}
 
 \begin{exercise}
@@ -1452,11 +1667,11 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
     For a set with no duplicates (or ties), \( \alpha_0 \) is an \(
     \epsilon \)-outlier of the set if and only if the rank (by
     increasing value) of \( \alpha_0 \) in \( \set{\alpha_0, \dots
-    \alpha_n} \) is less than or equal to \( \epsilon(n+1) \).
+    \alpha_n} \) is less than or equal to \( \lfloor \epsilon(n+1)  \rfloor \).
 
     For a set with no duplicates (or ties), \( \alpha_0 \) is among-\(
     \ell \)-smallest if and only its order (increasing) in \( \set{\alpha_0,
-    \dots \alpha_n} \) is \( \ell + 1 \).
+    \dots \alpha_n} \) is at most \( \ell + 1 \).
 
     For a set with duplicates (or ties), the rank is not well-defined
     since there are several methods of ranking the ties.  For example,
@@ -1493,6 +1708,43 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
     \setof{\nu}{\alpha_{\nu} \le \alpha_0}} \ge \epsilon(n+1) = 1.1 \).
     In fact, \( \alpha_0 = 1 \) \emph{is not} a \( 0.2 \)-outlier or
     even a \( 0.3 \)-outlier.
+
+    The point is that with rank and order, as with
+    \(\epsilon\)-outlier, repetitions or equality among values matter
+    a lot.  The point with \(\epsilon\)-outlier is whether the value
+    \( \alpha_0 \) appears infrequently, i.e.\ only among the
+    \( \epsilon \)-fraction of smallest ordered values, but not how to
+    assign its place in the ordered values especially when repetitions
+    occur.
+\end{solution}
+
+\begin{exercise}
+  Using Table~\ref{tab:serialsignificance:recordpaths}, explain how
+  the values \( [5,3] \), \( [10, 7] \), and \( [n, 10] \) are obtained.
+\end{exercise}
+\begin{solution}
+  \begin{enumerate}
+\item
+   The entry \( [5,3] = 5 \) records the number of trials where
+   the value of \( X_5 \), is among-3-smallest.  That is, the
+   number of trials where the number of values, other than \( X_5 \) itself,
+   is less than or equal to to \( X_5 \), is less than or equal to  \( 3 \).  These would be
+   trials 3, 4, 6, 13, and 15.
+   \item
+   The entry \( [10, 7] = 7 \) records the number of trials where
+   the value of \( X_{10} \) is among-\( 7 \)-smallest.  That is, the
+   number of trials where the number of values, other than \( X_{10} \) itself,
+   is less than or equal to \( X_10 \), is less than or equal to \( 7 \).  In other words, trials
+   where 7 previous values in the path are less than or equal to than the value of
+   X_{10}.   These would be trials 1, 5, 7, 9, 11, 14, and 15.
+   \item
+   The entries \( [n, 10] = 15 \) record the number of trials where
+   the value of \( X_{10} \) is among-\(10\)-smallest.  That is, the
+   number of trials where the number of values, other than X_{10} itself,
+   is less than or equal to \( X_10 \), is less than or equal \( 10 \), which is all the previous
+   path.  This will be true for all paths, so the entries will all
+   be \( 15 \) .
+ \end{enumerate}
 \end{solution}
 
 \begin{exercise}
