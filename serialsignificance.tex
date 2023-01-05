@@ -1,7 +1,7 @@
-%%% -*-LaTex-*-
+%%% -*-LaTeX-*-
 %%% serialsignificance.tex.orig
 %%% Prettyprinted by texpretty lex version 0.02 [21-May-2001]
-%%% on Mon Nov 21 08:16:49 2022
+%%% on Wed Jan  4 08:12:23 2023
 %%% for Steve Dunbar (sdunbar@family-desktop)
 
 \documentclass[12pt]{article}
@@ -114,15 +114,15 @@ mean?
         \]
 
     \item
-        Say \( \alpha_j \) is \defn{among-\( \ell \)-smallest} among \(
-        \alpha_0, \dots \alpha_n \) if there are at most \( \ell \)
-        indices \( i \ne j \) from \( 0, \dots, n \) such that the value
-        of \( \alpha_i \) is at most the value of \( \alpha_j \).  That
-        is, \( \alpha_j \) is among-\( \ell \)-smallest among \( \alpha_0,
-        \dots \alpha_n \) if \( \card{ \setof{\nu}{0 \le \nu \le n,
-        \alpha_\nu < \alpha_j}} \le \ell \).  In particular, \( \alpha_j
-        \) is among-\( 0 \)-smallest from \( \alpha_0, \dots \alpha_n \)
-        when its value is the unique minimum value.
+        For \( 1 \le \ell \le n+1 \) say \( \alpha_j \) is \defn{among-\(
+        \ell \)-smallest} among \( \alpha_0, \dots \alpha_n \) if there
+        are at most \( \ell \) indices from \( 0, \dots, n \) such that
+        the value of \( \alpha_i \) is at most the value of \( \alpha_j \).
+        That is, \( \alpha_j \) is among-\( \ell \)-smallest among \(
+        \alpha_0, \dots \alpha_n \) if \( \card{ \setof{\nu}{\alpha_\nu
+        \le \alpha_j}} \le \ell \).  In particular, \( \alpha_j \) is
+        among-\( 1 \)-smallest from \( \alpha_0, \dots \alpha_n \) when
+        its value is the unique minimum value.
 \end{enumerate}
 
 \hr
@@ -147,8 +147,8 @@ mean?
         \( \epsilon \) -- small real number
     \item
         \[
-            \rho(j; \ell, n) = \Prob{X_j \text{ is among- \( \ell \)
-            -smallest from } X_0, \dots, X_n }
+            \rho(j; \ell, n) = \Prob{X_j \text{ is among-\( \ell \)-smallest
+            from } X_0, \dots, X_n }
         \]
     \item
         \( \rho(j; 0, n \given \sigma) \) -- the probability \( X_j =
@@ -187,11 +187,11 @@ stationary distribution of a reversible Markov chain is unusual.  The
 \begin{quote}
     The given state is unusual with respect to some value measure.
 \end{quote}
-Specifically, using a value function on the states of the Markov chain,
-this section rigorously bounds the probability that the given state is
-an outlier among the values.  Doing so gives a \( p \) value for
-outliers, assuming the given state comes from the stationary
-distribution of the chain.  The \emph{null hypothesis} is:
+Using a value function on the states of the Markov chain, this section
+rigorously bounds the probability that the given state is an outlier
+among the values.  Doing so gives a \( p \) value for outliers, assuming
+the given state comes from the stationary distribution of the chain.
+The \emph{null hypothesis} is:
 \begin{quote}
     The given state is not unusual with respect to some value measure.
 \end{quote}
@@ -200,13 +200,13 @@ In simplest form, the test is the following:  Given a particular state
 in the Markov chain, take a random walk from the state for any number of
 steps.  The simplest statistical test is finding the value of the
 presented state is an \( \epsilon \)-outlier on the walk with
-probability \( p \) at most \( \sqrt{2\epsilon} \) assuming the state
-was from the stationary distribution.  The test assumes nothing about
-the Markov chain beyond reversibility.  With the simple test,
-probability at \( p \approx \sqrt{\epsilon} \) is the best possible in
-general.  Compound tests in later sections using multiple random walks
-give improved probability of observing values with \( p \approx \epsilon
-\).
+probability \( p \le \sqrt{2\epsilon} \) assuming the state was from the
+stationary distribution.  The test assumes nothing about the Markov
+chain beyond reversibility.  With the simple serial test, probability at
+\( p \approx \sqrt{\epsilon} \) is the best possible in general.
+Compound tests in later sections using multiple random walks give
+improved probability of observing outlier values with \( p \approx
+\epsilon \).
 
 \subsection*{Background}
 
@@ -246,9 +246,9 @@ represents sample points in the sample space.) The values give auxiliary
 information without any relationship to the transition probabilities of \(
 X \).  The goal is to show a given state \( x_0 \) is unusual for states
 drawn from the stationary distribution \( \pi \).  With good bounds on
-the mixing time of \( X \), sampling from a distribution of \( v(\pi) \)
-gives a rigorous \( p \) value for the probability of the smallness of
-the label of \( x_0 \).  However, such convergence bounds are rarely
+the mixing time of \( X \), sampling \( v(x) \) from a distribution \(
+\pi \) gives a rigorous \( p \) value for the probability of the
+smallness of \( v(x_0) \).  However, such convergence bounds are rarely
 available.
 
 Proposition~%
@@ -277,10 +277,10 @@ precise definition of ``unusual relative to states chosen randomly''.
 \begin{definition}
     A real number \( \alpha_0 \) is an \defn{\( \epsilon \)-outlier}%
     \index{\( \epsilon \)-outlier}
-    among \( \alpha_0, \alpha_1, \dots \alpha_n \) (not necessarily
-    in increasing order and with repetitions
-    possible) if there are, at most, \( \epsilon(n + 1) \) indices \( i \)
-    for which \( \alpha_i \le \alpha_0 \), in other words \( \card{%
+    among \( \alpha_0, \alpha_1, \dots \alpha_n \) (not necessarily in
+    increasing order and with repetitions possible) if there are, at
+    most, \( \epsilon(n + 1) \) indices \( i \) for which \( \alpha_i
+    \le \alpha_0 \), in other words \( \card{%
     \setof{\nu}{\alpha_{\nu} \le \alpha_0}} \le \epsilon(n+1) \).
     Alternatively, \( \alpha_0 \) is in the smallest \( \epsilon \)-fraction
     of the \( n + 1 \) ranked values of \( \alpha_0, \alpha_1, \dots
@@ -290,22 +290,22 @@ precise definition of ``unusual relative to states chosen randomly''.
 \begin{remark}
     For \( \alpha_0 \) to be an \( \epsilon \)-outlier says \( \alpha \)
     is relatively more rare than the \( \epsilon \)-proportion that
-    might be expected if the indices were uniformly distributed in the
-    range of values.  For example, consider the set of \( 11 \) values
+    might be expected if the indices were uniformly distributed among
+    the range of ranked values.  For example, consider the set of \( 11 \)
+    values
     \begin{multline*}
-        \alpha_0 = 3, \alpha_1 = 1, \alpha_2 = 4, \alpha_3 = 1,
-        \alpha_4 = 5, \alpha_5 = 9, \\
+        \alpha_0 = 3, \alpha_1 = 1, \alpha_2 = 4, \alpha_3 = 1, \alpha_4
+        = 5, \alpha_5 = 9, \\
         \alpha_6 = 2, \alpha_7 = 6, \alpha_8 = 5, \alpha_9 = 3, \alpha_{10}
         = 5.
     \end{multline*}
     Then \( \alpha_0 = 3 \) is \emph{not} an \( 0.1 \)-outlier since \(
     5 = \card{%
-    \setof{\nu}{\alpha_\nu \le \alpha_0}} \ge \epsilon(n+1) = 1.1 \).
-    In fact, \( \alpha_0 = 3 \) \emph{is not} a \( 0.2 \)-outlier (the
+    \setof{\nu}{\alpha_\nu \le \alpha_0}} \ge \epsilon(n+1) = 1.1 \). In
+    fact, \( \alpha_0 = 3 \) \emph{is not} a \( 0.2 \)-outlier (the
     cardinality is \( 5 \), greater than \( 2.2 \)) or even a \( 0.3 \)-outlier.
     This example says \( \alpha_0 = 3 \) is not rare among small
-    fractions of the indices.
-
+    fractions of the values.
 \end{remark}
 
 The following definition uses counting instead of proportions to express
@@ -314,16 +314,16 @@ Proposition~%
 \ref{thm:serialsignificance:basethm} uses this definition.
 
 \begin{definition}
-    Say \( \alpha_j \) is \defn{among-\( \ell \)-smallest}%
+    For \( 1 \le \ell \le n+1 \) say \( \alpha_j \) is \defn{among-\(
+    \ell \)-smallest}%
     \index{among-\( \ell \)-smallest}
     among \( \alpha_0, \dots \alpha_n \) if there are at most \( \ell \)
-    indices \( \nu \ne j \) from \( 0, \dots, n \) such that \( \alpha_{\nu}
-    \) is at most as large as \( \alpha_j \).  That is, \( \alpha_j \)
-    is among-\( \ell \)-smallest among \( \alpha_0, \dots \alpha_n \) if
+    indices from \( 0, \dots, n \) such that \( \alpha_{\nu} \) is at
+    most as large as \( \alpha_j \).  That is, \( \alpha_j \) is among-\(
+    \ell \)-smallest among \( \alpha_0, \dots \alpha_n \) if
     \[
-        \card{ \setof{\nu}{\nu \ne j, \alpha_{\nu} \le \alpha_j}} \le
-        \ell.
-    \] In particular, \( \alpha_j \) is among-\( 0 \)-smallest from \(
+        \card{ \setof{\nu}{\alpha_{\nu} \le \alpha_j}} \le \ell.
+    \] In particular, \( \alpha_j \) is among-\( 1 \)-smallest from \(
     \alpha_0, \dots \alpha_n \) when its value is the unique minimum
     value.
 \end{definition}
@@ -336,8 +336,17 @@ Proposition~%
             \alpha_0 \) is among-\( \lfloor \epsilon (n+1) \rfloor \)-smallest.
         \item
             If \( \alpha_0 \) is among-\( \ell \)-smallest, then \(
-            \alpha_0 \) is an \( \frac{\ell + 1}{n+1} \)-outlier.
+            \alpha_0 \) is an \( \frac{\ell}{n+1} \)-outlier.
     \end{itemize}
+\end{remark}
+
+\begin{remark}
+  The definition of among-\( \ell \)-smallest differs from the
+  definition of \(\ell\)-small in~\cite{Chikina2860}.  Their
+  definition excludes \( \alpha_j \) from the count, while the
+  definition here includes \( \alpha_j \) in the count.  The
+  definition here corresponds with the definition of \( \epsilon
+  \)-outlier which includes the value in question in the count.
 \end{remark}
 
 \begin{example}
@@ -355,13 +364,13 @@ Proposition~%
     example.  However, \( 0.006 \) is not an \( 0.05 \)-outlier since
     the number of indices for which \( \alpha_i \le 0.006 \),
     specifically \( 1 \), is more than \( \epsilon(n+1) = 0.05 \cdot (10
-    +1) = 0.55 \). As a further example, there are \( 2 \) indices for
+    +1) = 0.55 \).  As a further example, there are \( 2 \) indices for
     which \( \alpha_i \le 0.042 \) so \( 0.042 \) is not an \( 0.05 \), \(
     0.1 \) or \( 0.15 \)-outlier, but it is a \( 0.2 \)-outlier
 
     \begin{figure}
         \centering
-        \begin{asy}
+\begin{asy}
             size(5inches);
 
             real myfontsize = 12; real mylineskip = 1.2*myfontsize; pen
@@ -380,22 +389,21 @@ Proposition~%
             label("\( \epsilon \)", ((1/2)* eps * (alpha[10]-alpha[0]))
             + 1.5*h); label("\( \alpha_0 \)", alpha[0]-h); label("\(
             \alpha_n \)", alpha[10]-h);
-        \end{asy}
+\end{asy}
         \caption{Example of \( \epsilon \)-outliers with \( 11 \) random
         values in \( [0,1] \) and \( \epsilon = 0.1 \).}%
         \label{fig:serialsignificance:epsoutlier}
     \end{figure}
 
-    Also, \( 0.006 \) is among-\( 0 \)-smallest since there are \( 0 \)
-    indices \( i \ne j \) from \( 0, \dots, 10 \) such that the value of
-    \( \alpha_i \) is at most the value of \( 0.006 \).  Additionally, \(
-    0.042 \) is among-\( 1 \)-smallest since there is \( 1 \) index \( i
-    \ne j \) from \( 0, \dots, 10 \) such that the value of \( \alpha_i \)
-    is at most the value of \( 0.042 \), specifically the value \( 0.006
-    \).
+    Also, \( 0.006 \) is among-\( 1 \)-smallest since there is \( 1 \)
+    index \( i \ne j \) from \( 0, \dots, 10 \) such that the value of \(
+    \alpha_i \) is at most the value of \( 0.006 \).  Additionally, \(
+    0.042 \) is among-\( 2 \)-smallest since there is \( 2 \) indices
+    from \( 0, \dots, 10 \) such that the value of \( \alpha_i \) is at
+    most the value of \( 0.042 \).
 
     The notion of \( \epsilon \)-outlier is a generalization of median,
-    quartile and percentile, see the exercises. The exercises also have
+    quartile and percentile, see the exercises.  The exercises also have
     a comparison of \( \epsilon \)-outlier and among-\( \ell \)-smallest
     to the notions of the order of a list and the rank of elements of a
     list.
@@ -405,47 +413,54 @@ Proposition~%
 
 Proposition~%
 \ref{thm:serialsignificance:basethm} gives an upper bound on the
-probability of a value of a Markov chain being
-among-\(\ell\)-smallest using the following definition.
+probability of a value of a Markov chain being among-\( \ell \)-smallest
+using the following definition.
 \begin{definition}
-Let \( n \) be fixed.  Let \( X_1, X_2, \dots, X_n \) be a sample of the Markov
-            chain starting from \( X_0 = \sigma_0 \).
-            Suppose the state space has a value function \( v :
-            \mathcal {X} \to \Reals \).
+    Let \( n \) be fixed.  Let \( X_1, X_2, \dots, X_n \) be a sample of
+    the Markov chain starting from \( X_0 = \sigma_0 \). Suppose the
+    state space has a value function \( v : \mathcal {X} \to \Reals \).
     For \( 0 \le j \le n \) define
     \[
-	\rho(j; \ell, n) = \Prob{X_j \text{ is among- \(\ell\)
-	-smallest from } X_0, \dots, X_n }
+        \rho(j; \ell, n) = \Prob{X_j \text{ is among-\( \ell \)-smallest
+        from } X_0, \dots, X_n }
     \] and
     \[
-	\rho(j; \ell, n \given \sigma) = \Prob{X_j \text{ is
-	among- \(\ell\) -smallest from } X_0, \dots, X_n%
-	\given X_j = \sigma }.
+        \rho(j; \ell, n \given \sigma) = \Prob{X_j \text{ is among-\(
+        \ell \)-smallest from } X_0, \dots, X_n%
+        \given X_j = \sigma }.
     \]
 \end{definition}
 
-Observe \( \rho(j; 0 ,n) \) is the probability \( X_j \)
-has the unique minimum value in the Markov chain of length \(
-n \).  Likewise, \( \rho(j; 0, n \given \sigma) \) is the
-probability \( X_j = \sigma \) has the unique minimum value
-in the Markov chain of length \( n \) given that the Markov
-passes through \( \sigma \) at step \( j \).  Additionally,
-\( \rho(0; \ell, n\given \sigma_0) \) is the probability that the
-starting value \( X_0 = \sigma_0 \) is among-\(\ell\)-smallest from \(
-v(X_0) \) through \(v(X_n) \).
+Observe \( \rho(j; 1 ,n) \) is the probability \( X_j \) has the unique
+minimum value in the Markov chain of length \( n \).  Likewise, \( \rho(j;
+1, n \given \sigma) \) is the probability \( X_j = \sigma \) has the
+unique minimum value in the Markov chain of length \( n \) given that
+the Markov passes through \( \sigma \) at step \( j \).  Additionally, \(
+\rho(0; \ell, n\given \sigma_0) \) is the probability that the starting
+value \( X_0 = \sigma_0 \) is among-\( \ell \)-smallest from \( v(X_0) \)
+through \( v(X_n) \).
 
 \begin{example}
-The previous definitions have several levels:  Markov chain
-sample paths of some
-length \( n \) with a value function, a upper bound \( \ell \), a specific step \(j\), the
-number of steps with value less than the given step, and the
-probability that number of steps is no greater than the upper bound.
-This example illustrates those  concepts of \emph{among-\( \ell
-\)-smallest} and \( \rho(j; 0 ,n) \) in the context of a specific
-Markov-chain. 
+    The previous definitions have several levels:
+    \begin{itemize}
+        \item
+            Markov chain sample paths of some length \( n \) with a
+            value function,
+        \item
+            a upper bound \( \ell \),
+        \item
+            a specific step \( j \),
+        \item
+            the number of steps with value less than the given step, and
+        \item
+            the probability that number of steps is at most the upper
+            bound.
+    \end{itemize}
 
-    Consider the alternative Ehrenfest urn
-    model.%
+    This example illustrates those concepts of \emph{among-\( \ell \)-smallest}
+    and \( \rho(j; 0 ,n) \) in the context of a specific Markov-chain.
+
+    Consider the alternative Ehrenfest urn model.%
     \index{Ehrenfest urn model}
     Two urns, labeled \( A \) and \( B \), contain a total of \( N = 7 \)
     balls.  At each step a ball is selected at random with all
@@ -454,122 +469,127 @@ Markov-chain.
     probability \( q = 1-p = \frac {1}{2} \) and the ball is moved to
     that urn.  The state at each step is the number of balls in the urn \(
     A \), from \( 0 \) to \( N \).  Start from state \( \sigma \)
-    selected at random from the stationary distribution.
-    For this simple example, let the value function be the number of
-    balls in urn \( A \), so that the value function is identical with
-    the state number.  The simplicity of the alternative Ehrenfest urn
-    model limits the possibilities for value functions.
+    selected at random from the stationary distribution. For this simple
+    example, let the value function be the number of balls in urn \( A \),
+    so that the value function is identical with the state number.  The
+    simplicity of the alternative Ehrenfest urn model limits the
+    possibilities for value functions.
 
     This example uses the reproducible simulation of the alternate
-    Ehrenfest urn model in \texttt{simRhoProb.R}.
-    The path length, or number of steps, is \(10 \), short enough to
-    be comprehensible, long enough have some
-    content. Including the start state, the Markov chain has \( 11 \)
-    values.
-    The number of trials is \( 15 \), enough to illustrate
-    the variety of sample paths, but not too many to overwhelm.
-    Thus the Markov chain is simulated \( 15 \) times starting from a state
-    selected at random from the stable distribution.  The values along
-    the paths are recorded in the rows of an \( 15 \times 11 \)
-    matrix.  See Table~\ref{tab:serialsignificance:recordpaths}.
-    Then for each given step \( j \) along the path, the count
-    of other step values along the path less than or equal to the given step value is
-    compared to \( \ell \).  If the count is less than or equal to \(
-    \ell \), that makes the given step value at \( j \) among-\(\ell\)-smallest and the
-    count in a \( 11 \times 11 \)  matrix is incremented.  See
-    Table~\ref{tab:serialsignificance:rhon}.  When done, divide
-    the counting matrix by the number of trials, \( 15 \), to
-    give an empirical estimate of \( \rho(j; 0 ,n) \).
+    Ehrenfest urn model in \texttt{simRhoProb.R}. The path length, or
+    number of steps, is \( 10 \), short enough to be comprehensible,
+    long enough have some content.  Including the start state, the
+    Markov chain has \( 11 \) values. The number of trials is \( 15 \),
+    enough to illustrate the variety of sample paths, but not too many
+    to overwhelm. Thus the Markov chain is simulated \( 15 \) times
+    starting from a state selected at random from the stable
+    distribution.  The values along the paths are recorded in the rows
+    of an \( 15 \times 11 \) matrix.  See Table~%
+    \ref{tab:serialsignificance:recordpaths}. Then for each given step \(
+    j \) along the path, the count of other step values along the path
+    less than or equal to the given step value is compared to \( \ell \).
+    If the count is less than or equal to \( \ell \), that makes the
+    given step value at \( j \) among-\( \ell \)-smallest and the count
+    in a \( 11 \times 11 \) matrix is incremented.  See Table~%
+    \ref{tab:serialsignificance:rhon}.  When done, divide the counting
+    matrix entries by the number of trials, \( 15 \), to give an
+    empirical estimate of \( \rho(j; \ell ,n) \) with \( n = 11 \).
 
     \begin{table}
-      \centering
-      \begin{tabular}{c|ccccccccccc}
-        0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
-        \hline
-         1& 5 & 4 & 4 & 3 & 3 & 4 & 4 & 4 & 4 & 3 &  3 \\
-         2& 2 & 2 & 3 & 4 & 4 & 3 & 4 & 3 & 2 & 3 &  4 \\
-         3& 3 & 3 & 3 & 2 & 3 & 2 & 2 & 3 & 3 & 4 &  4 \\
-         4& 3 & 3 & 3 & 2 & 3 & 2 & 3 & 4 & 4 & 3 &  4 \\
-         5& 5 & 5 & 6 & 5 & 5 & 4 & 4 & 4 & 3 & 3 &  4 \\
-         6& 4 & 4 & 4 & 4 & 4 & 3 & 4 & 5 & 4 & 4 &  5 \\
-         7& 3 & 3 & 3 & 4 & 5 & 6 & 5 & 4 & 3 & 3 &  4 \\
-         8& 4 & 4 & 4 & 4 & 4 & 5 & 4 & 4 & 4 & 4 &  4 \\
-         9& 4 & 5 & 5 & 5 & 4 & 4 & 4 & 4 & 4 & 5 &  4 \\
-        10& 4&  5&  5&  4&  5&  4&  4&  5&  5&  4&   5 \\
-        11& 4&  4&  3&  3&  2&  3&  3&  4&  3&  2&   2 \\
-        12& 3&  3&  3&  3&  2&  3&  3&  3&  2&  2&   3 \\
-        13& 2&  3&  2&  2&  1&  0&  1&  2&  2&  3&   2 \\
-        14& 1&  2&  3&  4&  5&  6&  6&  6&  5&  4&   5 \\
-        15& 5&  6&  7&  6&  5&  4&  4&  5&  6&  6&   5 \\
-      \end{tabular}
-      \caption{Record of 15 sample paths of the alternate Ehrenfest
-        urn model.}
-      \label{tab:serialsignificance:recordpaths}
+        \centering
+        \begin{tabular}{c|ccccccccccc}
+            step   & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ 
+            \hline
+            1      & 5 & 4 & 4 & 3 & 3 & 4 & 4 & 4 & 4 & 3 & 3  \\ 
+            2      & 2 & 2 & 3 & 4 & 4 & 3 & 4 & 3 & 2 & 3 & 4  \\ 
+            3      & 3 & 3 & 3 & 2 & 3 & 2 & 2 & 3 & 3 & 4 & 4  \\ 
+            4      & 3 & 3 & 3 & 2 & 3 & 2 & 3 & 4 & 4 & 3 & 4  \\ 
+            5      & 5 & 5 & 6 & 5 & 5 & 4 & 4 & 4 & 3 & 3 & 4  \\ 
+            6      & 4 & 4 & 4 & 4 & 4 & 3 & 4 & 5 & 4 & 4 & 5  \\ 
+            7      & 3 & 3 & 3 & 4 & 5 & 6 & 5 & 4 & 3 & 3 & 4  \\ 
+            8      & 4 & 4 & 4 & 4 & 4 & 5 & 4 & 4 & 4 & 4 & 4  \\ 
+            9      & 4 & 5 & 5 & 5 & 4 & 4 & 4 & 4 & 4 & 5 & 4  \\ 
+            10     & 4 & 5 & 5 & 4 & 5 & 4 & 4 & 5 & 5 & 4 & 5  \\ 
+            11     & 4 & 4 & 3 & 3 & 2 & 3 & 3 & 4 & 3 & 2 & 2  \\ 
+            12     & 3 & 3 & 3 & 3 & 2 & 3 & 3 & 3 & 2 & 2 & 3  \\ 
+            13     & 2 & 3 & 2 & 2 & 1 & 0 & 1 & 2 & 2 & 3 & 2  \\ 
+            14     & 1 & 2 & 3 & 4 & 5 & 6 & 6 & 6 & 5 & 4 & 5  \\ 
+            15     & 5 & 6 & 7 & 6 & 5 & 4 & 4 & 5 & 6 & 6 & 5  \\ 
+        \end{tabular}
+        \caption{Record of 15 sample paths of the alternate Ehrenfest
+        urn model.}%
+        \label{tab:serialsignificance:recordpaths}
     \end{table}
 
     \begin{table}
-      \centering
-      \begin{tabular}{c|ccccccccccc}
-        &  0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
-        \hline
-        0&  1 & 1 & 2 & 2 & 4 & 5 & 6 & 7 &10 &12 & 15 \\
-        1&  0 & 1 & 2 & 2 & 3 & 3 & 3 & 4 & 6 &10 & 15 \\
-        2&  0 & 0 & 1 & 1 & 2 & 2 & 3 & 5 & 8 &10 & 15 \\
-        3&  0 & 1 & 2 & 3 & 5 & 5 & 5 & 7 & 9 &12 & 15 \\
-        4&  0 & 0 & 3 & 4 & 4 & 5 & 6 & 8 &10 &13 & 15 \\
-        5&  2 & 4 & 5 & 5 & 6 & 7 & 9 &10 &10 &11 & 15 \\
-        6&  0 & 1 & 3 & 3 & 4 & 5 & 6 & 8 & 9 &12 & 15 \\
-        7&  0 & 0 & 0 & 0 & 0 & 2 & 4 & 5 & 7 & 9 & 15 \\
-        8&  0 & 1 & 3 & 3 & 4 & 4 & 5 & 7 &10 &13 & 15 \\
-        9&  0 & 1 & 3 & 4 & 7 & 7 & 8 & 9 &10 &12 & 15 \\
-        1&0 0 & 0 & 1 & 2 & 2 & 4 & 5 & 7 & 8 & 9 & 15 \\
-      \end{tabular}
-      \caption{The count of step values \( \)}
-      \label{tab:serialsignificance:rhon}
+        \centering
+        \begin{tabular}{c|ccccccccccc}
+                   & 1 & 2 & 3 & 4 & 5 & 6 & 7  & 8  & 9  & 10 & 11 \\ 
+            \hline
+            0      & 1 & 1 & 2 & 2 & 4 & 5 & 6 & 7  & 10 & 12 & 15 \\ 
+            1      & 0 & 1 & 2 & 2 & 3 & 3 & 3 & 4  & 6  & 10 & 15 \\ 
+            2      & 0 & 0 & 1 & 1 & 2 & 2 & 3 & 5  & 8  & 10 & 15 \\ 
+            3      & 0 & 1 & 2 & 3 & 5 & 5 & 5 & 7  & 9  & 12 & 15 \\ 
+            4      & 0 & 0 & 3 & 4 & 4 & 5 & 6 & 8  & 10 & 13 & 15 \\ 
+            5      & 2 & 4 & 5 & 5 & 6 & 7 & 9 & 10 & 10 & 11 & 15 \\ 
+            6      & 0 & 1 & 3 & 3 & 4 & 5 & 6 & 8  & 9  & 12 & 15 \\ 
+            7      & 0 & 0 & 0 & 0 & 0 & 2 & 4 & 5  & 7  & 9  & 15 \\ 
+            8      & 0 & 1 & 3 & 3 & 4 & 4 & 5 & 7  & 10 & 13 & 15 \\ 
+            9      & 0 & 1 & 3 & 4 & 7 & 7 & 8 & 9  & 10 & 12 & 15 \\ 
+            10     & 0 & 0 & 1 & 2 & 2 & 4 & 5 & 7  & 8  & 9  & 15 \\ 
+        \end{tabular}
+        \caption{The count of step values \( \)}%
+        \label{tab:serialsignificance:rhon}
     \end{table}
 
-    Next is a detailed analysis of Table~\ref{tab:serialsignificance:recordpaths} to illustrate
-    the entries of the counting matrix in Table~\ref{tab:serialsignificance:rhon}.
+    Next is a detailed analysis of Table~%
+    \ref{tab:serialsignificance:recordpaths} to illustrate the entries
+    of the counting matrix in Table~%
+    \ref{tab:serialsignificance:rhon}.
     \begin{itemize}
-    \item The entry at \( [0,0] \)  records the number of trials
-     where the starting value \( j=0 \) is the unique minimum.  In trials 2,
-     7,8,9,10 the start value is the minimum of the path, but not the unique
-     minimum.
-     In trial 14, the start value \( 1 \)  is the unique minimum, which gives
-   the entry value \( 1 \).
-   \item
-    Entries at \( [j,0] \), with \( j \ge 1 \), record the number of trials where
-   the value of step \( X_j \) is the unique minimum.  In trial 6, at step \( j=5 \)
-   and in trial 13, at step \( j = 5 \) the unique minimum occurs.  Thus \( rho[5,0] = 2 \).
-   \item
-   The entry at \( [0,1] \) records the number of trials where
-   the start value, namely \( X_0 \), is among-\(1\)-smallest.  That is, the
-   number of trials where the number of values other than the start
-   value less than or equal to the start value is less than or equal to \( 1 \).  This is just
-   trial 14 again.
-   \item
-   The entry at \( [0,2] \) records the number of trials where
-   the start value \( X_0 \) is among-\(2\)-smallest.  That is, the
-   number of trials where the number of values, other than the start
-   value, less than or equal to the start value is less than or equal to  \( 2 \).  This is just
-   trial 14 again, with \( 0 \) other values less than \( X_0 = 1 \), and trial 2
-   with \( 2 \) step values, namely \( X_1 \) and \( X_8 \) equal to \( X_0 = 2 \).
+        \item
+            The entry at \( [0,1] \) records the number of trials where
+            the starting value \( j=0 \) is the unique minimum.  In
+            trials \( 2 \), \( 7 \), \( 8 \), \( 9 \), \( 10 \) the
+            start value is the minimum of the path, but not the unique
+            minimum. In trial 14, the start value \( 1 \) is the unique
+            minimum, which gives the entry value \( 1 \).
+        \item
+            Entries at \( [j,1] \), with \( j \ge 1 \), record the
+            number of trials where the value of step \( X_j \) is the
+            unique minimum.  In trial 6, at step \( j=5 \) and in trial
+            13, at step \( j = 5 \) the unique minimum occurs. Thus the \(
+            [5,0] \) entry is \( 2 \).
+        \item
+            The entry at \( [0,1] \) records the number of trials where
+            the start value, namely \( X_0 \), is among-\( 1 \)-smallest.
+            That is, the number of trials where the number of values
+            less than or equal to the start value is less than or equal
+            to \( 1 \).  This is just trial 14 again.
+        \item
+            The entry at \( [0,2] \) records the number of trials where
+            the start value \( X_0 \) is among-\( 2 \)-smallest.  That
+            is, the number of trials where the number of values less
+            than or equal to the start value is less than or equal to \(
+            2 \).  This is just trial 14 again, with no other values
+            less than \( X_0 = 1 \), and trial 2 with \( 2 \) step
+            values, namely \( X_1 \) and \( X_8 \) equal to \( X_0 = 2 \).
     \end{itemize}
-   See the exercises for more explanation of entries in
-   Table~\ref{tab:serialsignificance:rhon}.
+    See the exercises for more explanation of entries in Table~%
+    \ref{tab:serialsignificance:rhon}.
 
-   This example is deliberately small in scope to illustrate the
-   definition of \( \rho(j; \ell, n) \).  Increasing the path
-   length and the number of trials gives better empirical estimates
-   for \( \rho(j; \ell, n) \).
-   
-   \begin{remark}
-   For a given value of \( n \),  \( \rho(j; \ell, n) \) is increasing in
-   \( \ell \) like a cdf.  This is an obvious conclusion, since the definition is
-   in terms of an inequality and gets more permissive in terms of the
-   number of allowed values in the among-\(\ell\) -smallest.
-   \end{remark}
+    This example is deliberately small in scope to illustrate the
+    definition of \( \rho(j; \ell, n) \).  Increasing the path length
+    and the number of trials gives better empirical estimates for \(
+    \rho(j; \ell, n) \).
+\end{example}
 
+\begin{remark}
+    For a given value of \( n \), \( \rho(j; \ell, n) \) is increasing
+    in \( \ell \) like a cdf.  This is an obvious conclusion, since the
+    definition is in terms of an inequality and gets more permissive in
+    terms of the number of allowed values in the among-\( \ell \)-smallest.
+\end{remark}
 
 \begin{proposition}
     \label{thm:serialsignificance:basethm}
@@ -583,13 +603,13 @@ Markov-chain.
             Suppose \( X_1, X_2, \dots, X_n \) is a sample of the Markov
             chain starting from \( X_0 = \sigma_0 \).
         \item
-            Suppose the state space has a value function \( v :
-            \mathcal {X} \to \Reals \).
+            Suppose the state space has a value function \( v : \mathcal
+            {X} \to \Reals \).
         \item
             Let
             \[
-                \rho(j; \ell, n) = \Prob{v(X_j) \text{ is among- \(
-                    \ell \)-smallest among } v(X_0), \dots, v(X_n) }.
+                \rho(j; \ell, n) = \Prob{v(X_j) \text{ is among-\( \ell \)-smallest
+                from } v(X_0), \dots, v(X_n) }.
             \]
     \end{enumerate}
 
@@ -604,31 +624,30 @@ Markov-chain.
         \item
             Let \( \pi \) denote the stationary distribution for \( X \)
             and suppose the initial state \( X_0 \) is distributed as \(
-            X_0 \sim \pi \), so that in fact, \( X_i \sim \pi \) for all
-            \( i \).
+            X_0 \sim \pi \), so that in fact, \( X_\nu \sim \pi \) for
+            all \( \nu \).
         \item
             Consider the set of values, \( v(X_0), v(X_1), \dots, v(X_n)
             \).  For simplicity, say \( X_j \) is among-\( \ell \)-smallest
             among \( X_0, \dots, X_n \) instead of referring to the
             values of the states.  For a first understanding of the
-            proof, use the \( \ell = 0 \) case, so the minimum value is
-            the focus.
-        % \item
-        %     For \( 0 \le j \le n \) define
-        %     \[
-        %         \rho(j; \ell, n) = \Prob{X_j \text{ is among- \(\ell\)
-        %         -smallest from } X_0, \dots, X_n }
-        %     \] and
-        %     \[
-        %         \rho(j; \ell, n \given \sigma) = \Prob{X_j \text{ is
-        %         among- \(\ell\) -smallest from } X_0, \dots, X_n%
-        %         \given X_j = \sigma }.
-        %     \] Observe \( \rho(j; 0 ,n) \) is the probability \( X_j \)
-        %     has the unique minimum value in the Markov chain of length \(
-        %     n \).  Likewise, \( \rho(j; 0, n \given \sigma) \) is the
-        %     probability \( X_j = \sigma \) has the unique minimum value
-        %     in the Markov chain of length \( n \) given that the Markov
-        %     passes through \( \sigma \) at step \( j \).
+            proof, use the \( \ell = 1 \) case, so the minimum value is
+            the focus. % \item
+            %     For \( 0 \le j \le n \) define
+            %     \[
+            %         \rho(j; \ell, n) = \Prob{X_j \text{ is among- \(\ell\)
+            %         -smallest from } X_0, \dots, X_n }
+            %     \] and
+            %     \[
+            %         \rho(j; \ell, n \given \sigma) = \Prob{X_j \text{ is
+            %         among- \(\ell\) -smallest from } X_0, \dots, X_n%
+            %         \given X_j = \sigma }.
+            %     \] Observe \( \rho(j; 0 ,n) \) is the probability \( X_j \)
+            %     has the unique minimum value in the Markov chain of length \(
+            %     n \).  Likewise, \( \rho(j; 0, n \given \sigma) \) is the
+            %     probability \( X_j = \sigma \) has the unique minimum value
+            %     in the Markov chain of length \( n \) given that the Markov
+            %     passes through \( \sigma \) at step \( j \).
         \item
             Observe that because \( X_s \sim \pi \) for all \( s \),
             additionally
@@ -649,7 +668,7 @@ Markov-chain.
             equiprobable sequence \( (\sigma_n,\dots, \sigma_0 ) \), for
             which \( \sigma_{n-j} = \sigma \) and \( \sigma_{n-j} \) is
             among-\( \ell \)-smallest.  Thus a first fact about \( \rho(j;
-            \ell, n \given \sigma) \) is:
+            \ell, n \given \sigma) \) for reversible Markov chains is:
             \[
                 \rho(j; \ell, n \given \sigma) = \rho(n-j; \ell, n
                 \given \sigma).
@@ -665,7 +684,7 @@ Markov-chain.
             These events are conditionally independent when conditioning
             on the value of \( X_j = \sigma \), and \( \rho(j; \ell, j
             \given \sigma) \) gives the probability of the first of
-            these events.  The second probability \( \rho(0, \ell, n-j
+            these events.  The second probability \( \rho(0; \ell, n-j
             \given \sigma) \) gives the probability of the second event.
             Finally, as a subevent when both of these events happen, \(
             X_j \) is among-\( 2\ell \)-smallest from \( X_0, \dots, X_n
@@ -691,9 +710,9 @@ Markov-chain.
         \item
             \label{enum:serialsignificance:basethm8} Now \( \rho(j;\ell,n)
             = \E{\rho(j; \ell, n \given X_j)} \), where the expectation
-            is taken over the random choice of \( X_j \sim \pi \).
-            Thus, taking expectations over the inequality in step~%
-            \ref{enum:serialsignificance:basethm7}
+            is taken over the random choice of \( X_j \sim \pi \). Thus,
+            taking expectations over the inequality in step~%
+            \ref{enum:serialsignificance:basethm7},
             \begin{multline}
                 \rho(j; 2\ell, n) = \E{\rho(j; 2\ell, n \given \sigma)}
                 \ge \E{\rho(j; \ell, n \given \sigma)^2} \\
@@ -705,7 +724,7 @@ Markov-chain.
         \item
             To complete the proof, sum the left- and right-hand sides of
             the inequality in step~%
-            \ref{enum:serialsignificance:basethm8} to obtain
+            \ref{enum:serialsignificance:basethm8}
             \[
                 \sum\limits_{j=0}^n \rho(j; 2\ell, n) \ge (n+1) (\rho(0;
                 \ell, n))^2.
@@ -728,13 +747,13 @@ Markov-chain.
 
 \begin{remark}
     Proposition~%
-    \ref{thm:serialsignificance:basethm} only gives a theoretical upper bound for
-    \( \rho(0; \ell, n) \) although the alternate Ehrenfest urn model simulation
-    gives empirical estimates for all \( \rho(j; \ell, n) \).  The
-    theoretical upper bound is not very sharp either, for instance \( \( \rho(0; n, n) =
-    1\) for all \( j \), but the theoretical upper bound is
-    approximately \( \sqrt{2} \).
-  
+    \ref{thm:serialsignificance:basethm} only gives a theoretical upper
+    bound for \( \rho(0; \ell, n) \) although the alternate Ehrenfest
+    urn model simulation gives empirical estimates for all \( \rho(j;
+    \ell, n) \).  The theoretical upper bound is not very sharp either,
+    for instance \( \rho(0; n, n) = 1 \) for all \( j \), but the
+    theoretical upper bound is approximately \( \sqrt{2} \).
+
 \end{remark}
 
 \begin{remark}
@@ -768,12 +787,12 @@ Markov-chain.
     This suggests a careful choice of value function can help to
     distinguish irreducible components, especially in political
     districting.  Suppose one component is relatively small and unusual
-    compared to more typical states from a larger component. A value
+    compared to more typical states from a larger component.  A value
     function measuring this difference would be a candidate for the
     Proposition.
 \end{remark}
 
-\begin{corollary}[The $\sqrt{2\epsilon}$ test]
+\begin{corollary}[The \( \sqrt{2\epsilon} \) Test]
     \label{thm:serialsignificance:sqrtepstest}
     \begin{enumerate}
         \item
@@ -785,21 +804,17 @@ Markov-chain.
             Suppose \( X_1, X_2, \dots, X_n \) is a sample of the Markov
             chain starting from \( X_0 = \sigma_0 \).
         \item
-            Suppose the state space has a value function \( v :
-            \mathcal {X} \to \Reals \).
+            Suppose the state space has a value function \( v : \mathcal
+            {X} \to \Reals \).
     \end{enumerate}
     Then the event \( v(X_0) \) is an \( \epsilon \)-outlier among \( v(x_0),
     \dots v(x_n ) \) with probability \( p = \sqrt{2\epsilon} \).
     % under the null hypothesis that \( X_0 \sim \pi \).
 \end{corollary}
-\index{$\sqrt{2\epsilon}$-test}
+\index{\(\sqrt{2\epsilon}\)-test}
 
 \begin{proof}
     \begin{enumerate}
-        \item
-            This is a restatement of Proposition~%
-            \ref{thm:serialsignificance:basethm} as a statistical test
-            in terms of the proportion \( \epsilon \).
         \item
             Let the reversible Markov chain \( X \), the stationary
             distribution \( \pi \), the value function \( v \), fixed
@@ -821,6 +836,13 @@ Markov-chain.
             \]
     \end{enumerate}
 \end{proof}
+
+\begin{remark}
+    This is a restatement of Proposition~%
+    \ref{thm:serialsignificance:basethm} as a statistical test in terms
+    of the proportion \( \epsilon \).
+
+\end{remark}
 
 \begin{remark}
     Chikina, et al.~%
@@ -860,15 +882,15 @@ Markov-chain.
     of a binary null hypothesis test is the probability the test
     correctly rejects the null hypothesis when the alternative
     hypothesis is true.  The power is the complementary probability of a
-    Type II error. Here the power is the probability the \( \sqrt{2\epsilon}
-    \) test correctly says \( X_0 \) as an \( \epsilon \)-outlier is
-    unusual. Later subsections consider the statistical power of the \(
+    Type II error.  Here the power is the probability the \( \sqrt{2\epsilon}
+    \) Test correctly says \( X_0 \) as an \( \epsilon \)-outlier is
+    unusual.  Later subsections consider the statistical power of the \(
     \sqrt{2\epsilon} \) test.
 \end{remark}
 
 \begin{figure}
     \centering
-    \begin{asy}
+\begin{asy}
         settings.outformat = "pdf";
 
         // import graph;
@@ -907,26 +929,26 @@ Markov-chain.
         ) ); label("Type II error", ( (w3+w)/2, (h1+h2)/2 )); label("Correct
         Inference", ( (w3+w)/2, h1/2 ) ); label("Type I error", ( (w2+w3)/2,
         h1/2));
-    \end{asy}
+\end{asy}
     \caption{Tabular presentation of hypothesis testing, decisions and
     error types.}%
     \label{fig:serialsignificance:errortypes}
 \end{figure}
 
-Another way to look at the theorem is the following.  The Markov chain \(
-X \), the stationary distribution \( \pi \), the valuing \( v \), and a
-fixed integer \( n \) determine a \( n \)-vector \( (p_0^n, p_1^n, \dots,
-p_n^n) \) where for each \( \nu \), \( p_{\nu}^n \) is the probability
-that in a \( n \)-step stationary trajectory \( X_0, X_1, \dots X_n \),
-the minimum \( v \) value occurs at \( X_i \).  In other words, choosing
-\( X_0 \) randomly from the stationary distribution \( \pi \) and taking
-\( n \) steps in \( \mathcal{X} \) to obtain the trajectory \( X_0, X_1,
-\dots X_n \), the probability that observing \( v(X_i) \) is the minimum
-among \( v(X_0), v(X_1), \dots, v(X_n) \) is \( p_i^n \).  Adopt the
-convention that ties for minimum among the values \( v (X_0), v (X_1),
-\dots, v(X_n) \) picks \( i \) randomly (uniformly among the steps
-achieving the minimum) so \( p_0^n + p_1^n + \cdots + p_n^n = 1 \) for \(
-X \), \( \pi \), \( n \).
+Another way to look at the \( \sqrt{2\epsilon} \) Test is the following.
+The Markov chain \( X \), the stationary distribution \( \pi \), the
+valuing \( v \), and a fixed integer \( n \) determine a \( n \)-vector \(
+(p_0^n, p_1^n, \dots, p_n^n) \) where for each \( \nu \), \( p_{\nu}^n \)
+is the probability that in a \( n \)-step stationary trajectory \( X_0,
+X_1, \dots X_n \), the minimum \( v \) value occurs at \( X_i \).  In
+other words, choosing \( X_0 \) randomly from the stationary
+distribution \( \pi \) and taking \( n \) steps in \( \mathcal{X} \) to
+obtain the trajectory \( X_0, X_1, \dots X_n \), the probability that
+observing \( v(X_i) \) is the minimum among \( v(X_0), v(X_1), \dots, v(X_n)
+\) is \( p_i^n \).  Adopt the convention that ties for minimum among the
+values \( v (X_0), v (X_1), \dots, v(X_n) \) picks \( i \) randomly (uniformly
+among the steps achieving the minimum) so \( p_0^n + p_1^n + \cdots + p_n^n
+= 1 \) for \( X \), \( \pi \), \( n \).
 
 Thinking the minimum value is roughly equally likely to occur anywhere
 in the chain, it might be natural to guess \( p_i^n \approx \frac{1}{n+1}
@@ -957,16 +979,19 @@ Algorithm:%
 \index{Outlier Test Algorithm}
 
 \begin{algorithm}[H]
-    DontPrintSemicolon; \KwData{Markov chain \( X \), starting state \(
-    \sigma_0 \), value function \( v(\cdot) \)} \KwResult{probability \(
+  \DontPrintSemicolon
+  \KwData{Markov chain \( X \), starting state \(
+    \sigma_0 \), value function \( v(\cdot) \)}
+  \KwResult{probability \(
     \sqrt{2 \epsilon} \) of \emph{erroneously} concluding \( X_0 \) is
     \emph{not unusual} with respect to the value function.} Begin from
-    the state being evaluated for ``outlier'' status.\; Make a sequence
-    of \( n \) random changes to the states according to the Markov
-    chain transition probabilities.\; Evaluate the labeling of the
-    chain.\; Call the original state an ``outlier'' if the overwhelming
-    majority of values (more than \( 1 - \epsilon \) of the values) are
-    greater in value than the starting state.\;
+  the state being evaluated for ``outlier'' status.\;
+  Make a sequence of \( n \) random changes to the states according to the Markov
+  chain transition probabilities.\;
+  Evaluate the labeling of the chain.\;
+  Call the original state an ``outlier'' if the overwhelming
+  majority of values (more than \( 1 - \epsilon \) of the values) are
+  greater in value than the starting state.\;
     \caption{Outlier Test Algorithm.}
 \end{algorithm}
 
@@ -975,9 +1000,10 @@ Algorithm:%
     is reasonably close to \( 0 \) for \( \epsilon \) small; in
     particular, it is possible to obtain ``good enough'' statistical
     significance from observations which can be made with reasonable
-    computational resources. Of course, smaller probability compared to \(
-    \epsilon \) would be even better, but, as already noted, \( p = O(\sqrt
-    {\epsilon}) \) is the best possible.
+    computational resources.  Of course, smaller probability compared to
+    \( \epsilon \) would be even better, but, as already noted, \( p = O
+    (\sqrt {\epsilon}) \) is the best possible with a single serial
+    Markov chain.
 \end{remark}
 
 \begin{remark}
@@ -1006,7 +1032,9 @@ instead is distributed with small total variation distance to \( \pi \).
             \operatorname{dist}
             (\mathcal{X}) \) with distribution such that
             \[
-                \| X_0 - \pi \|_{TV} \le \epsilon_1.
+                \|
+                \operatorname{dist}
+                (\mathcal{X}) - \pi \|_{TV} \le \epsilon_1.
             \]
     \end{enumerate}
     Then for any fixed \( n \), the probability the value of \( X_0 \)
@@ -1024,10 +1052,11 @@ instead is distributed with small total variation distance to \( \pi \).
             \| (\rho_1 , \rho_3 )- (\rho_2, \rho_3 )\|_{TV} = \|\rho_1-
             \rho_2 \|_{TV} \).% [Refer to a Theorem here?]
         \item
-            The plan is to split the randomness in the trajectory \( X_0,
-            \dots , X_n \) of the Markov chain into two independent
-            sources:  the initial distribution is \( X_0 \sim \rho \),
-            and \(
+            Split the randomness in the trajectory \( X_0, \dots , X_n \)
+            of the Markov chain into two independent sources:  the
+            initial distribution is \( X_0 \sim
+            \operatorname{dist}
+            (\mathcal{X}) \), and \(
             \operatorname{U}
             \) is the uniform distribution on sequences of length \( n \)
             of real numbers \( r_1 , r_2, \dots, r_n \) in \( [0, 1] \).
@@ -1043,7 +1072,11 @@ instead is distributed with small total variation distance to \( \pi \).
         \item
             Then, make the \( t \)th possible transition if \( r_i \in [p_1
             + \cdots + p_{t-1}, p_1 + \cdots + p_{t-1 }+ p_t] \).  If \(
-            \|\rho- \pi\|_{TV} \le \epsilon_1 \), then \( \|(\rho,
+            \|
+            \operatorname{dist}
+            (\mathcal{X})- \pi\|_{TV} \le \epsilon_1 \), then \( \|(
+            \operatorname{dist}
+            (\mathcal{X}),
             \operatorname{U}
             )- (\pi,
             \operatorname{U}
@@ -1063,10 +1096,10 @@ instead is distributed with small total variation distance to \( \pi \).
     Consider a specific simple case of the alternative Ehrenfest urn
     model.%
     \index{Ehrenfest urn model}
-    The setup of the urn model is repeated here for convenient reference.
-    Two urns, labeled \( A \) and \( B \), contain a total of \( N = 7 \)
-    balls.  At each step a ball is selected at random with all
-    selections equally likely.  Then an urn is selected, urn \( A \)
+    The setup of the urn model is repeated here for convenient
+    reference. Two urns, labeled \( A \) and \( B \), contain a total of
+    \( N = 7 \) balls.  At each step a ball is selected at random with
+    all selections equally likely.  Then an urn is selected, urn \( A \)
     with probability \( p = \frac{1}{2} \) and urn \( B \) with
     probability \( q = 1-p = \frac {1}{2} \) and the ball is moved to
     that urn.  The state at each step is the number of balls in the urn \(
@@ -1092,7 +1125,7 @@ instead is distributed with small total variation distance to \( \pi \).
     total variation distance of the probability distribution of the
     states at step \( n \) should differ from the stationary
     distribution by a multiple of \( (0.857)^n \).  Therefore, it takes
-    about \( 31 \) steps for the total variation distance of the
+    about \( 30 \) steps for the total variation distance of the
     probability distribution of the states to differ from the stationary
     distribution by less than \( 0.01 \).  For the alternative Ehrenfest
     urn model with \( 7 \) balls, the stationary distribution of the
@@ -1173,39 +1206,39 @@ remarkable any significance can be shown in general.  An example in this
 section shows probability at \( p = O( \sqrt{\epsilon}) \) is the best
 possible.
 
-Let \( N \) be a large integer.  Let \( X \) be the Markov chain where \(
-X_0 \) is chosen at random uniformly in \( \mathcal{X} = \set{0, 1, 2,
-\dots , N-1} \), and for any \( \nu \ge 1 \), \( X_{\nu} \) is equal to \(
-X_{\nu-1} + \zeta_{\nu} \) modulo \( N \), where \( \zeta_{\nu} = \pm 1 \)
-with equal probability \( \frac{1}{2} \).  That is, \( X \) is random
-walk on the circle.  Note the chain is reversible and has stationary
-distribution \( \pi_\nu = \frac{1}{N} \). % As a
+Given \( n \) and \( \epsilon \), choose \( N > \frac{2n+1}{\epsilon} \).
+Let \( X \) be the Markov chain where \( X_0 \) is chosen at random
+uniformly in \( \mathcal{X} = \set{0, 1, 2, \dots , N-1} \), and for any
+\( \nu \ge 1 \), \( X_{\nu} \) is equal to \( X_{\nu-1} + \zeta_{\nu} \)
+modulo \( N \), where \( \zeta_{\nu} = \pm 1 \) with equal probability \(
+\frac{1}{2} \).  That is, \( X \) is random walk on the circle.  Note
+the chain is reversible and has stationary distribution \( \pi_\nu =
+\frac{1}{N} \).  % As a
 % random walk, it would be unusual if the walk did not cross back and
 % forth over the initial state \( X_0 \).  To measure if the walk is
 % unusual,
-Take the value function be the position around the circle, that is, \( v
-(X_{\nu}) = X_{\nu} \). % Then an unusual walk, which does not
+The value function is the position around the circle, that is, \( v (X_{\nu})
+= X_{\nu} \).  % Then an unusual walk, which does not
 % cross back over \( X_0 \) would have \( v(X_0) \) as a minimum over the
 % sampled walk.
 
-Given \( n \) and \( \epsilon \), choose \( N > \frac{2n+1}{\epsilon} \).
 Then \( N \) is large enough that the distance of \( X_0 \) from \( 0 \)
 in both directions is greater than \( n \) with probability greater than
 \( 1 - \epsilon \).  Conditioning on this event, \( X_0 \) is minimum,
-i.e.\ among-0-smallest of \( X_0, \dots , X_n \) if and only if all of
-the partial sums \( \sum\limits_{\nu=1}^ {j} \zeta_\nu \) are positive
-for \( j \le n \). The probability of this event is just the probability
-an \( n \)-step \( 1 \)-dimensional random walk from \( X_0 \) takes a
-first step to the right and does not return to the origin.  The
+i.e.\ among-1-smallest of \( X_0, \dots , X_n \) if and only if all of
+the partial sums \( \sum\limits_{\nu=1}^{j} \zeta_\nu \) are positive
+for \( j \le n \).  The probability of this event is just the
+probability an \( n \)-step \( 1 \)-dimensional random walk from \( X_0 \)
+takes a first step to the right and does not return to the origin.  The
 calculation of this probability is a classical problem in random walks,
 solved using the reflection principle.  In particular, for \( n \) even,
 the probability is given exactly by (see the exercises)
 \[
     \frac{1}{2^{n+1}}\binom{n}{n/2} \asympt \frac{1}{\sqrt{2 \pi n}}.
-\] Because being the minimum or among-0-smallest of \( X_0, \dots , X_n \)
+\] Because being the minimum or among-1-smallest of \( X_0, \dots , X_n \)
 corresponds to being an \( \epsilon \)-outlier for \( \epsilon = \frac{1}
 {n+1} \) this example shows the probability of being an \( \epsilon \)-outlier
-can be as high as (a nearly unit multiple of )\( \sqrt{\epsilon/(2\pi)} \).
+can be as high as (a nearly unit multiple of) \( \sqrt{\epsilon/(2\pi)} \).
 Of course, \( \sqrt{\epsilon/ (2\pi)} < \sqrt{2\epsilon} \) so the best
 possible value of the constant in the \( \sqrt{2\epsilon} \) test is an
 interesting question.
@@ -1222,7 +1255,7 @@ satisfying the condition is drawn schematically.
 
 \begin{figure}
     \centering
-    \begin{asy}
+\begin{asy}
         size(5inches);
 
         import geometry;
@@ -1268,7 +1301,7 @@ satisfying the condition is drawn schematically.
         direction=CW);
 
         draw(walk1, Arrow); draw(walk2, Arrow); draw(walk3, Arrow);
-    \end{asy}
+\end{asy}
     \caption{A schematic diagram of the random walk on a circle
     illustrating the example of the best possible bound.}%
     \label{fig:serialsignificance:circlewalk}
@@ -1279,15 +1312,16 @@ The effectiveness of the \( \sqrt{2\epsilon} \) test depends on the
 availability of a sufficiently discriminating choice for the value
 function \( v \) and the ability to run the test for long enough (in
 other words, choose \( n \) large enough) to detect the presented state
-is a local outlier.  It is possible, however, to make a general
-statement about the power of the test when \( n \) is chosen large
-relative to the actual mixing time of the chain.  Recall one potential
-application of the test is in situations where the mixing time of the
-chain is actually accessible through reasonable computational resources,
-although this fact cannot be proved rigorously, because theoretical
-bounds on the mixing time are not available.  In particular, the test is
-very likely to succeed when \( n \) is sufficiently large and \( v(\sigma_0)
-\) is unusual as already shown by the alternative Ehrenfest urn model.
+is an \( \epsilon \)-outlier.  It is possible, however, to make a
+general statement about the power of the test when \( n \) is chosen
+large relative to the actual mixing time of the chain.  Recall one
+potential application of the test is in situations where the mixing time
+of the chain is actually accessible through reasonable computational
+resources, although this fact cannot be proved rigorously, because
+theoretical bounds on the mixing time are usually not available.  In
+particular, the test is very likely to succeed when \( n \) is
+sufficiently large and \( v(\sigma_0) \) is unusual as already shown by
+the alternative Ehrenfest urn model.
 
 \begin{remark}
     Let \( \tau_{\text{rel}} \) be the \emph{relaxation time}%
@@ -1299,13 +1333,13 @@ very likely to succeed when \( n \) is sufficiently large and \( v(\sigma_0)
     \] is the \emph{absolute spectral gap} for \( X \).  The relaxation
     time is related to the mixing time of \( X \).  Let \( d(t) = \sup_{\sigma}
     \| P^t - \pi \|_{TV} \).  The \emph{mixing time} is \( \tau_{\text{mix}}
-    (\epsilon) = \min\setof{t}{d(t) \le \epsilon} \). For reversible
+    (\epsilon) = \min\setof{t}{d(t) \le \epsilon} \).  For reversible
     chains~%
     \cite[Theorems 12.3, 12.4]{levin09},
     \[
         (\tau_{\text{rel}}-1) \log \left( \frac{1}{2\epsilon} \right)
-        \le \tau_{\text{mix}}(\epsilon) \le \tau_{\text{rel}} \log \left
-        ( \frac{1} {\epsilon \min_x \pi(x)} \right).
+        \le \tau_{\text{mix}}(\epsilon) \le \tau_{\text{rel}} \log
+        \left(\frac{1} {\epsilon \min_x \pi(x)} \right).
     \] In some cases the relaxation time can be calculated from the
     eigenvalues of the transition probability matrix to give bounds on
     the mixing time.  Typically, the mixing time is difficult to find
@@ -1355,9 +1389,9 @@ assumptions.
                 \Prob{v(\sigma) \le v(\sigma_0)} \le \epsilon.
             \]
     \end{enumerate}
-    Then with probability \( \rho \), where
+    Then with probability \( p \), where
     \[
-        \rho \ge 1 - \left( 1 + \frac{\epsilon}{10 \tau_{\text{rel}}}
+        p \ge 1 - \left( 1 + \frac{\epsilon}{10 \tau_{\text{rel}}}
         \right) \cdot \frac{1}{\sqrt{\pi_{\min}}} \cdot \exp \left(
         \frac {-\epsilon^ {2} \cdot n}{20 \tau_{\text{rel}}} \right),
     \] \( v(\sigma) \) is a \( 2\epsilon \)-outlier among \( v(\sigma_0),
@@ -1398,36 +1432,41 @@ assumptions.
 \end{proof}
 
 \begin{remark}
-    The probability \( \rho \) in Theorem~%
+    The probability \( p \) in Theorem~%
     \ref{thm:serialsignificance:powerthm} converges in \( n \)
-    exponentially quickly to \( 1 \).  The probability \( \rho \) is
-    very close to \( 1 \) if \( n \) is large relative to \( \tau_{\text
-    {rel}} \).  In particular, Theorem~%
+    exponentially quickly to \( 1 \).  The probability \( p \) is very
+    close to \( 1 \) if \( n \) is large relative to \( \tau_{\text {rel}}
+    \).  In particular, Theorem~%
     \ref{thm:serialsignificance:powerthm} shows the \( \sqrt{2\epsilon} \)
     test will work when the test runs long enough.  Of course, one
     strength of the \( \sqrt{2\epsilon} \) test is that it can sometimes
-    show bias, even when \( n \) is far too small to mix the chain,
-    which is almost certainly the case for the application to
+    detect unusual states, even when \( n \) is far too small to mix the
+    chain, which is almost certainly the case for the application to
     gerrymandering later.  When these short-\( n \) runs are successful
-    at detecting bias is, of course, dependent on the relationship of
-    the presented state \( \sigma_0 \) and its local neighborhood in the
-    chain.  An example is the random walk on the circle.
+    at detecting unusual states is, of course, dependent on the
+    relationship of the presented state \( \sigma_0 \) and its local
+    neighborhood in the chain.  An example is the random walk on the
+    circle.
 \end{remark}
 
 \subsection*{Application to Political Districting}
 
-Pennsylvania is divided into roughly \( 9,000 \) census blocks.  Define
-a division of these blocks into \( 18 \) districts to be a \emph{valid
-districting} of Pennsylvania if districts differ in population by less
-than \( 2\% \), are contiguous, are simply connected (districts do not
-contain holes), and are ``compact''.  Roughly, this last condition
-prohibits districts with extremely contorted structure.  The state space
-of the Markov chain is the set of valid districtings of Pennsylvania.
-One step of the Markov chain consists of randomly swapping a precinct on
-the boundary of a district to a neighboring district if the result is
-still a valid districting.  The chain is adjusted slightly to ensure the
-uniform distribution on valid districting is indeed the stationary
-distribution for the chain.  Observe that this Markov chain has a
+Pennsylvania has \( 18 \) Congressional districts.  According to the
+``one person, one vote'' principle, Congressional districts are required
+by law to be roughly equal in population. Pennsylvania is divided into
+roughly \( 9,000 \) voting precincts.  Define a division of these
+precincts into \( 18 \) districts to be a \emph{valid districting} of
+Pennsylvania if each district differs in population from uniform
+equality by less than \( 2\% \), are contiguous, are simply connected (districts
+do not contain holes), and are ``compact''.  Roughly, this last
+condition prohibits districts with extremely contorted structure.  The
+state space of the Markov chain is the set of valid districtings of
+Pennsylvania. One step of the Markov chain consists of randomly swapping
+a precinct on the boundary of a district to a neighboring district if
+the result is still a valid districting.  The chain has a technical
+modification to ensure the uniform distribution on valid districting is
+indeed the stationary distribution for the chain, see~%
+\cite{chikina2860si} for details. Observe that this Markov chain has a
 potentially huge state space; if the only constraint on valid
 districting was that the districts have roughly equal population, there
 would be \( 10^{10000} \) or so valid districtings.  (See the exercises
@@ -1449,14 +1488,14 @@ districting.  Two useful value functions are
     \item
         \( v_{\text{var}} \) is the (negative) variance of the
         proportion of Democrats in each district of the districting (as
-        measured by 2012 presidential votes), and
+        measured by quadrennial presidential votes), and
     \item
         \( v_{\text{MM}} \) is the difference between the median and
         mean of the proportions of Democrats in each district.
 \end{itemize}
 The variance can change quickly with small changes in districtings,
 making it a sensitive value function.  The median-mean difference \( v_{\text
-{MM}} \) metric has a long history in gerrymandering analysis. An
+{MM}} \) metric has a long history in gerrymandering analysis.  An
 important point is that these value functions are not based on an
 assumption that small values of \( v_{\text {var}} \) or \( v_{\text{MM}}
 \) directly imply gerrymandering.  Instead, because the \( \sqrt{2\epsilon}
@@ -1470,8 +1509,8 @@ quickly with small changes in districtings.  For chains of length \( 2^{40}
 compactness measure and threshold, the \( \sqrt{2\epsilon} \) test
 showed significance in the range from \( 10^{-4} \) to \( 10^ {-5} \)
 for the \( v_{\text {MM}} \) value function and the range from \( 10^{-4}
-\) to \( 10^{-7} \) for the \( v_{\text{var}} \) value function, see
-\cite{chikina2860si}.
+\) to \( 10^{-7} \) for the \( v_{\text{var}} \) value function,
+see~\cite{chikina2860si}.
 
 It should also be kept in mind that, although the \( \sqrt{2\epsilon} \)
 Test gives a method to show the districting is unusual among
@@ -1481,12 +1520,11 @@ distribution.  In particular, the method cannot answer the question of
 how many seats Republicans and Democrats should have in a \emph{typical}
 districting of Pennsylvania, because the chain is not selecting from the
 stationary distribution.  Instead, the \( \sqrt{2\epsilon} \) gives a
-way to \emph{disprove} the null hypothesis \( X_{0} \) is \emph{not
-unusual} without sampling \( \pi \). Consider the following
+way to \emph{disprove} the null hypothesis that a given districting is
+\emph{not unusual} without sampling \( \pi \).  Consider the following
 specialization of the Local Outlier Algorithm to test the political
 districting of a state:\\
-\textbf{Local Outlier Test}%
-\index{Local Outlier Test}
+\index{Local Outlier Algorithm}
 \begin{enumerate}
     \item
         Begin with the districting being evaluated.
@@ -1496,7 +1534,8 @@ districting of a state:\\
         constraints imposed on the districtings.
     \item
         Evaluate the partisan properties of each districting encountered
-        (e.g., by simulating elections using past voting data).
+        by simulating elections using past voting data and measuring \(
+        v_{\text {var}} \) or \( v_{\text{MM}} \).
     \item
         \label{enum:serialsignificance:crafted} Call the original
         districting ``carefully crafted'' or ``gerrymandered'' if the
@@ -1508,21 +1547,20 @@ Naturally, the test described above can be implemented so it precisely
 satisfies the hypotheses of the Theorems in this section.  For this
 purpose, a (very large) set of comparison districtings are defined, to
 which the districting being evaluated belongs.  For example, the
-comparison districtings may be the districtings built out of Census
-Blocks (or some other unit) which are contiguous, equal in population up
-to some specified deviation, or include other constraints.  A Markov
-chain \( \mathcal{X} \) randomly walks through the districtings, where
-transitions in the chain correspond to changes in districtings.  For
-example, a transition may correspond to randomly changing the district
-assignment of a randomly chosen Census Block which currently borders
-more than one district, subject to the constraints imposed on the
-comparison set.  This is called a ``flip chain'' on the state space of
-all feasible districting.  Alternatively, a ``ReCom chain'' method works
-as follows:  merge two districts in the plan, generate a minimum
-spanning tree for the precincts in the merged district, then ``split''
-the merged district into two new districts by finding a
-population-balanced cut of the minimum spanning tree.  The ``random
-changes' from Step~%
+comparison districtings may be the districtings built out of precincts (or
+some other unit) which are contiguous, equal in population up to some
+specified deviation, or include other constraints.  A Markov chain \( X \)
+randomly walks through the districtings, where transitions in the chain
+correspond to changes in districtings.  For example, a transition may
+correspond to randomly changing the district assignment of a randomly
+chosen Census Block which currently borders more than one district,
+subject to the constraints imposed on the comparison set.  This is
+called a ``flip chain'' on the state space of all feasible districting.
+Alternatively, a ``ReCom chain'' method works as follows:  merge two
+districts in the plan, generate a minimum spanning tree for the
+precincts in the merged district, then ``split'' the merged district
+into two new districts by finding a population-balanced cut of the
+minimum spanning tree.  The ``random changes' from Step~%
 \ref{enum:serialsignificance:mcstep} will then be precisely governed by
 the transition probabilities of the Markov chain \( X \).  By designing \(
 X \) so the uniform distribution \( \pi \) on the set of possible
@@ -1548,14 +1586,17 @@ respect to some function valuing the states when in fact, the state
 that the state is typical when in fact it is unusual.
 
 \subsection*{Sources} This section is adapted from~%
-\cite{Chikina2860, Chikina2019, doi:10.1080/2330443X.2020.1806763}.
+\cite{doi:10.1080/2330443X.2020.1806763, Chikina2860, Chikina2019}.
 
 The first paragraph of the remark following Proposition~%
 \ref{thm:serialsignificance:basethm} about Markov chains with distinct
 irreducible components is adapted from
 https://math.stackexchange.com/questions/1636992/an-example-of-a-reversible-but-reducible-markov-chain
 
-The remark about relaxation times and mixing times is adapted from%~
+The statement of Gillman's Chernoff-Type Bound is modified from~%
+\cite[Theorem 2.1]{gillman98}.
+
+The remark about relaxation times and mixing times is adapted from~%
 \cite{levin09} and
 https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time-of-markov-chains
 
@@ -1567,32 +1608,52 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 \subsection*{Algorithm}
 
 \begin{algorithm}[H]
-    DontPrintSemicoln \SetKwInOut{Input}{input} \SetKwInOut{Output}{output}
-    \SetKwData{pL}{pathLength} \SetKwData{nT}{nTrials} \SetKwData{res}{results}
-    \SetKwData{oT}{outlierThreshold} \SetKwData{nEO}{nEpsilonOutlier}
-    \SetKwData{pEO}{probEpsOutlier} \SetKwFunction{Floor}{floor}
+  \DontPrintSemicolon
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+  \SetKwData{pL}{pathLength}
+  \SetKwData{nT}{nTrials}
+  \SetKwData{res}{results}
+  \SetKwData{oT}{outlierThreshold}
+  \SetKwData{nEO}{nEpsilonOutlier}
+  \SetKwData{pEO}{probEpsOutlier}
+  \SetKwFunction{Floor}{floor}
 
-    \Input{Number of balls \( N \) and probability of urn switch, \( p \)}
-    \Output{Table of empirical probabilities of \( \epsilon \)-Outlier
-    Test success.} \BlankLine \( N \leftarrow 7 \), \( p \leftarrow 1/2 \),
-    \( q \leftarrow 1-p \).\; \tcp{Build transition \( (N+1) \times (N+1)
-    \) probability matrix} \( P_{11} \leftarrow q \), \( P_{12}
-    \leftarrow p \)\; \( P_{N+1,N} \leftarrow q \), \( P_{N+1, N+1}
-    \leftarrow p \)\; \For{\( r \leftarrow 2 \)} \KwTo \( N \){ \( P_{r,r-1}
-    \leftarrow (r-1)/N \cdot q \)\; \( P_{r,r} \leftarrow (N-(r-1))/N
-    \cdot q + (r-1)/N \cdot p \)\; \( P_{r,r-1} \leftarrow (N-(r-1))/N
-    \cdot p \)\; } \tcp{Build and initialize Markov chain} \( X_0
-    \leftarrow 0 \); Build Markov chain object\; \BlankLine Set \pL
-    array, \nT array\, \( \epsilon \), initialize \res
+  \Input{Number of balls \( N \) and probability of urn switch, \( p \)}
+  \Output{Table of empirical probabilities of \( \epsilon \)-Outlier
+    Test success.}
+  \BlankLine
+  \( N \leftarrow 7 \), \( p \leftarrow 1/2 \),
+  \( q \leftarrow 1-p \)\;
+  \tcp{Build \( (N+1) \times (N+1) \) transition probability matrix}
+  \( P_{11} \leftarrow q \), \( P_{12} \leftarrow p \)\;
+  \( P_{N+1,N} \leftarrow q \), \( P_{N+1, N+1} \leftarrow p \)\;
+  \For{\( r \leftarrow 2 \) \KwTo \( N \)}{
+    \( P_{r,r-1} \leftarrow (r-1)/N \cdot q \)\;
+    \( P_{r,r} \leftarrow (N-(r-1))/N \cdot q + (r-1)/N \cdot p \)\;
+    \( P_{r,r-1} \leftarrow (N-(r-1))/N \cdot p \)\;
+  }
+  \tcp{initialize and build Markov chain}
+  \( X_0 \leftarrow 0 \)\;
+  Build Markov chain object\;
+  \BlankLine
+  Set \pL array, \nT array, \( \epsilon \), initialize \res\;
+  \ForEach{element in \pL}{
+    \ForEach{element in \nT} {
+      \oT \(\leftarrow \) \Floor( (\( \epsilon \cdot \) \pL +1) )+1\;
+      Initialize \nEO \( \leftarrow 0 \)\;
 
-    \lForEach{element in \pL}{ \lForEach{element in \nT} { \oT \(
-    \leftarrow \) \Floor( (\( \epsilon \cdot \) \pL +1) )+1\; Initialize
-    \nEO \( \leftarrow 0 \)\;
-
-    \lForEach{\( i \leftarrow 1 \) \KwTo \nT }{ Run Markov chain of
-    length \pL\; Prepend initial state \( X_0 \)\; \If{ \( X_0 < \) \oT}
-    {increment \nEO} } \pEO \( \leftarrow \) \nEO\( / \)\nT; Update
-    results table with \pEO; } } Report results table\;
+      \ForEach{\( i \leftarrow 1 \) \KwTo \nT }{
+        Run Markov chain of length \pL\;
+        Prepend initial state \( X_0 \)\;
+        \If{ \( X_0 < \) \oT } {
+          increment \nEO}
+      }
+      \pEO \( \leftarrow \) \nEO\(/\)\nT\;
+      Update results table with \pEO;
+    }
+  }
+  Report results table\;
 \end{algorithm}
 \subsection*{Scripts}
 
@@ -1613,47 +1674,43 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 \begin{solution}
     If \( n \) is odd, the median \( \mu_{1/2} \) among \( \alpha_0,
     \alpha_1, \dots \alpha_n \) (with repetitions possible in the even
-    number \( n+1 \) of values) has \( \frac
-    {n+1}{2} \) indices for which \( \alpha_i \le \mu_{1/2} \).  The
-    median may not be a value in the set.  To
-    say that \( \alpha_0 \) is a \(1/2\)-outlier means the number of
-    indices of values at most as large as \( \alpha_0 \) is  at most
-    \( (n+1)/2 \), in other words \( \card{%
-      \setof{\nu}{\alpha_{\nu} \le \alpha_0}} \le \frac{1}{2}(n+1) \).
+    number \( n+1 \) of values) has \( \frac {n+1}{2} \) indices with
+    \( \alpha_i \le \mu_{1/2} \).  The median may not be a value
+    in the set.  To say that \( \alpha_0 \) is a \( 1/2 \)-outlier means
+    the number of indices of values at most as large as \( \alpha_0 \)
+    is at most \( (n+1)/2 \), in other words \( \card{%
+    \setof{\nu}{\alpha_{\nu} \le \alpha_0}} \le \frac{1}{2}(n+1) \).
     Then \( \alpha_0 \) is at most as large as the median, \( \alpha_0
-    \le mu_{1/2} \). Also \( \alpha_0 \) is a member of the set while
-    the median may not be.  The median focuses more on the middle
-    among the values, splitting the values into halves, ranked by
-    value.
-    However \( \alpha_0 \) is a \( 1/2 \)-outlier focuses more on
-    whether the count of
-    indices of values at most as large as \( \alpha_0 \) is  at most
-    half of all indices, so that \( \alpha_0 \) is among the smaller
-    half of values ranked by order.
+    \le \mu_{1/2} \).  Also \( \alpha_0 \) is a member of the set while
+    the median may not be.  The median focuses more on the middle among
+    the values, splitting the values into halves, ranked by value.
+    However ``\( \alpha_0 \) is a \( 1/2 \)-outlier'' focuses more on
+    whether the count of indices of values at most as large as \( \alpha_0
+    \) is at most half of all indices, so that \( \alpha_0 \) is among
+    the half of smaller values ranked by order.
 
-    If \( n \) is even, so \( n + 1 \) is odd, the median is a member
-    of the list.  If \( n \) is even, a real number \( \mu_{1/2} \) is
-    a median among \( \alpha_0, \alpha_1, \dots \alpha_n \) (with
+    If \( n \) is even, so \( n + 1 \) is odd, the median is a member of
+    the list.  If \( n \) is even, a real number \( \mu_{1/2} \) is a
+    median among \( \alpha_0, \alpha_1, \dots \alpha_n \) (with
     repetitions possible) if there are \( \frac{n}{2} \) indices for
-    which \( \alpha_i \le \mu_ {1/2} \).  So if \( n \) is even and if
-    \( alpha_0 \) happens to be the median, then \( \alpha_0 \) is not
-    a \( \frac{1}{2} \)-outlier because there are are least
-    \( n/2 + 1 \) values at most \( \alpha_0 \), including
-    \( \alpha_0 \) itself, possibly more if there are repetitions in
-    the set.  That is, if \( \alpha_0 \) is the median, it is not
-    among at most \( (n+1)/2 = n/2 + 1/2 \) (really just \( n/2 \))
-    indices.  However, if \( alpha_0 \) is strictly less than the
-    median \( m_{1/2} \), \( \alpha_0 < \m_{1/2} \), then
-    \( \alpha_0 \) is a \( 1/2 \)-outlier because the count of indices
-    at most as large as \( \alpha_0 \) is at most \( n/2 \) which is
-    less than \( (n+1)/2 \).
+    which \( \alpha_i \le \mu_ {1/2} \).  So if \( n \) is even and if \(
+    \alpha_0 \) happens to be the median, then \( \alpha_0 \) is not a \(
+    \frac{1}{2} \)-outlier because there are least \( n/2 + 1 \)
+    values at most \( \alpha_0 \), including \( \alpha_0 \) itself,
+    possibly more if there are repetitions of \( \alpha_0 \) in the set.  That is, if \(
+    \alpha_0 \) is the median, it is not among at most \( (n+1)/2 = n/2
+    + 1/2 \) (really just \( n/2 \)) indices.  However, if \( \alpha_0 \)
+    is strictly less than the median \( \mu_{1/2} \), \( \alpha_0 < \mu_{1/2}
+    \), then \( \alpha_0 \) is a \( 1/2 \)-outlier because the count of
+    indices at most as large as \( \alpha_0 \) is at most \( n/2 \)
+    which is less than \( (n+1)/2 \).
 
     The point is that considering values only, as with the median,
     repetitions or equality among values do not matter.  However, with
-    the \( 1/2 \)-outlier, repetitions or equality do matter.  The
-    point is whether the value \( \alpha_0 \) appears infrequently,
-    i.e among the  \( \epsilon \)-fraction of smallest ordered values.
-    The comparisons are similar for the first quartile and a \(1/4\)-outlier
+    the \( 1/2 \)-outlier, repetitions or equality do matter.  The point
+    is whether the value \( \alpha_0 \) appears infrequently, i.e among
+    the \( \epsilon \)-fraction of smallest ordered values. The
+    comparisons are similar for the first quartile and a \( 1/4 \)-outlier
     and the first percentile and a \( 0.01 \)-outlier.
 \end{solution}
 
@@ -1667,11 +1724,12 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
     For a set with no duplicates (or ties), \( \alpha_0 \) is an \(
     \epsilon \)-outlier of the set if and only if the rank (by
     increasing value) of \( \alpha_0 \) in \( \set{\alpha_0, \dots
-    \alpha_n} \) is less than or equal to \( \lfloor \epsilon(n+1)  \rfloor \).
+    \alpha_n} \) is less than or equal to \( \lfloor \epsilon(n+1)
+    \rfloor \).
 
     For a set with no duplicates (or ties), \( \alpha_0 \) is among-\(
     \ell \)-smallest if and only its order (increasing) in \( \set{\alpha_0,
-    \dots \alpha_n} \) is at most \( \ell + 1 \).
+    \dots \alpha_n} \) is at most \( \ell \).
 
     For a set with duplicates (or ties), the rank is not well-defined
     since there are several methods of ranking the ties.  For example,
@@ -1688,8 +1746,8 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 
     For example, consider the set of \( 11 \) values
     \begin{multline*}
-        \alpha_0 = 3, \alpha_1 = 1, \alpha_2 = 4, \alpha_3 = 1,
-        \alpha_4 = 5, \alpha_5 = 9, \\
+        \alpha_0 = 3, \alpha_1 = 1, \alpha_2 = 4, \alpha_3 = 1, \alpha_4
+        = 5, \alpha_5 = 9, \\
         \alpha_6 = 2, \alpha_7 = 6, \alpha_8 = 5, \alpha_9 = 3, \alpha_
         {10} = 5
     \end{multline*}
@@ -1703,48 +1761,54 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
     \alpha_3 = 1 \) or \( \alpha_1 = 1 \) respectively.
 
     However, the\( \epsilon \)-outlier is always well-defined with \(
-    \epsilon = 0.1 \). Then \( \alpha_0 = 3 \) is \emph{not} an \( 0.1 \)-outlier
+    \epsilon = 0.1 \).  Then \( \alpha_0 = 3 \) is \emph{not} an \( 0.1 \)-outlier
     since \( 4 = \card{%
     \setof{\nu}{\alpha_{\nu} \le \alpha_0}} \ge \epsilon(n+1) = 1.1 \).
     In fact, \( \alpha_0 = 1 \) \emph{is not} a \( 0.2 \)-outlier or
     even a \( 0.3 \)-outlier.
 
-    The point is that with rank and order, as with
-    \(\epsilon\)-outlier, repetitions or equality among values matter
-    a lot.  The point with \(\epsilon\)-outlier is whether the value
-    \( \alpha_0 \) appears infrequently, i.e.\ only among the
-    \( \epsilon \)-fraction of smallest ordered values, but not how to
-    assign its place in the ordered values especially when repetitions
-    occur.
+    The point is that with rank and order, as with \( \epsilon \)-outlier,
+    repetitions or equality among values matter a lot.  The point with \(
+    \epsilon \)-outlier is whether the value \( \alpha_0 \) appears
+    infrequently, i.e.\ only among the \( \epsilon \)-fraction of
+    smallest ordered values, but not how to assign its place in the
+    ordered values especially when repetitions occur.
 \end{solution}
 
 \begin{exercise}
-  Using Table~\ref{tab:serialsignificance:recordpaths}, explain how
-  the values \( [5,3] \), \( [10, 7] \), and \( [n, 10] \) are obtained.
+    Using Table~%
+    \ref{tab:serialsignificance:recordpaths}, explain how the values \(
+    [5,3] \), \( [10, 7] \), and \( [n, 11] \) in  Table~%
+    \ref{tab:serialsignificance:rhon}
+    are obtained.
 \end{exercise}
 \begin{solution}
-  \begin{enumerate}
-\item
-   The entry \( [5,3] = 5 \) records the number of trials where
-   the value of \( X_5 \), is among-3-smallest.  That is, the
-   number of trials where the number of values, other than \( X_5 \) itself,
-   is less than or equal to to \( X_5 \), is less than or equal to  \( 3 \).  These would be
-   trials 3, 4, 6, 13, and 15.
-   \item
-   The entry \( [10, 7] = 7 \) records the number of trials where
-   the value of \( X_{10} \) is among-\( 7 \)-smallest.  That is, the
-   number of trials where the number of values, other than \( X_{10} \) itself,
-   is less than or equal to \( X_10 \), is less than or equal to \( 7 \).  In other words, trials
-   where 7 previous values in the path are less than or equal to than the value of
-   X_{10}.   These would be trials 1, 5, 7, 9, 11, 14, and 15.
-   \item
-   The entries \( [n, 10] = 15 \) record the number of trials where
-   the value of \( X_{10} \) is among-\(10\)-smallest.  That is, the
-   number of trials where the number of values, other than X_{10} itself,
-   is less than or equal to \( X_10 \), is less than or equal \( 10 \), which is all the previous
-   path.  This will be true for all paths, so the entries will all
-   be \( 15 \) .
- \end{enumerate}
+    \begin{enumerate}
+        \item
+            The entry \( [5,3] = 5 \) records the \( 5 \) trials where
+            the value of \( X_5 \), is among-3-smallest.  That is, the
+            number of trials where the number of values in a sample path
+            less than or equal to \( X_5 \) is less
+            than or equal to \( 3 \).  These would be trials 3, 4, 6,
+            13, and 15.
+        \item
+            The entry \( [10, 7] = 5 \) records the \( 5 \) trials
+            where the value of \( X_{10} \) is among-\( 7 \)-smallest.
+            That is, the number of trials where the number of values
+            in a sample path is less than or equal to \(
+            X_{10} \), is less than or equal to \( 7 \).  In other words,
+            trials where 7 values in the path are less than or
+            equal to than the value of \( X_{10} \).  These would be
+            trials 1, 5, 9, 11, and 15.
+        \item
+            The entries \( [n, 11] = 15 \) record the number of trials
+            where the value of \( X_{10} \) is among-\( 11 \)-smallest.
+            That is, the number of trials where the number of values
+            less than or equal to \(   X_{10} \), is less than or equal
+            \( 11 \), which is all the
+            path.  This is true for all paths, so the
+            entries are all \( 15 \).
+    \end{enumerate}
 \end{solution}
 
 \begin{exercise}
@@ -1757,16 +1821,17 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
     well-defined.
 \end{exercise}
 \begin{solution}
-    The probability of a \( \pi \)-stationary trajectory \( X_1, X_2,
-    \dots X_n \) can be calculated as usual.  Then the probability of
-    the value sequence \( v(X_1), v(X_2), \dots v(X_n) \) can be
-    calculated. The event that the value \( v(X_j) \) is among-\( \ell \)-smallest
+    The probability of a specific \( \pi \)-stationary trajectory \( X_1, X_2,
+    \dots X_n \) can be calculated as usual.  This determines the probability of
+    the value sequence \( v(X_1), v(X_2), \dots v(X_n) \).
+    The event that the value \( v(X_j) \) is among-\( \ell \)-smallest
     in \( v(X_1), v(X_2), \dots v(X_n) \) is a subevent of the event \(
     v(X_1), v(X_2), \dots v(X_n) \).  Then \( \rho(j; \ell, n) \) which
     is the probability that for a \( \pi \)-stationary trajectory \( X_1,
     X_2, \dots X_n \) the value \( v(X_j) \) is among-\( \ell \)-smallest
     in \( v(X_1), v(X_2), \dots v(X_n) \) is the probability of this
-    subevent.
+    subevent  So ultimately, the transition probability matrix is the
+    only data determining \( \rho(j; \ell, n) \).
 \end{solution}
 
 \begin{exercise}
@@ -1779,7 +1844,7 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 \end{exercise}
 \begin{solution}
 
-    \begin{lstlisting}[language=R]
+\begin{lstlisting}[language=R]
         library(markovchain)
 
         N <- 51; p <- 1/2; q <- 1 - p; stateNames <- as.character( 0:N )
@@ -1822,7 +1887,7 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
         results[pL, nT] <- probEpsOutlier } }
 
         results
-    \end{lstlisting}
+\end{lstlisting}
 
     \begin{enumerate}
         \item
@@ -1884,13 +1949,14 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 
     The transition probability matrix is
     \[
-        P= \bordermatrix{ & OCO & OFO & OOO & OOV & VO & VV \cr
-        OCO & 1/2 & 0 & 0 & 0 & 0 & 1/2 \cr
-        OFO & 0 & 1/2 & 0 & 0 & 1/4 & 1/4 \cr
-        OOO & 0 & 0 & 1/2 & 0 & 1/2 & 0 \cr
-        OOV & 0 & 0 & 0 & 1/2 & 1/2 & 0 \cr
-        VO & 1/6 & 1/6 & 1/6 & 0 & 1/2 & 0 \cr
-        VV & 1/6 & 1/6 & 0 & 1/6 & 0 & 1/2 \cr
+        P= \bordermatrix{       & OCO   & OFO   & OOO   & OOV   & VO
+        & VV \cr
+        OCO     & 1/2   & 0     & 0     & 0     & 0     & 1/2 \cr
+        OFO     & 0     & 1/2   & 0     & 0     & 1/4   & 1/4 \cr
+        OOO     & 0     & 0     & 1/2   & 0     & 1/2   & 0 \cr
+        OOV     & 0     & 0     & 0     & 1/2   & 1/2   & 0 \cr
+        VO      & 1/6   & 1/6   & 1/6   & 0     & 1/2   & 0 \cr
+        VV      & 1/6   & 1/6   & 0     & 1/6   & 0     & 1/2 \cr
         }.
     \]
 \end{exercise}
@@ -1902,7 +1968,7 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
     is not a terribly small probability, in the context of the bathroom
     example, it is somewhat reassuring!
 
-    \begin{lstlisting}[language=R]
+\begin{lstlisting}[language=R]
         library("markovchain")
 
         rows = 6
@@ -1938,7 +2004,7 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
         print(cat( startState, "IS an", eps, "outlier for the bathroom
         states\n")) } else { print(cat( startState, "is NOT an", eps,
         "outlier for the bathroom states\n")) }
-    \end{lstlisting}
+\end{lstlisting}
 
     This should not be too surprising, since the probability of ``OOO''
     occurring in the stationary distribution is \( 1/12 \), so in \(
@@ -1951,13 +2017,13 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 \end{solution}
 
 \begin{exercise}
-    Pennsylvania is divided into roughly \( 9{,}000 \) census block
-    groups.  Define a division of these blocks into \( 18 \) districts
+    Pennsylvania is divided into roughly \( 9{,}000 \) precincts.
+    Define a division of these precincts into \( 18 \) congressional districts
     to be a valid districting of Pennsylvania if districts are equal in
-    population.  For purposes of the problem, assume census block groups
-    are approximately equal in size.  (This is not a valid assumption,
-    census block groups can have widely varying populations between
-    rural and urban areas.) Also assume the only constraint on valid
+    population.  For purposes of the problem, assume precincts
+    are approximately equal in population.  (This is not a valid assumption,
+    precincts can have widely varying populations between
+    rural and urban areas.) Also assume the only constraint on a valid
     districting is the districts have roughly equal population.  (This
     is not the only constraint, districts are also required to be
     connected and to be compact, that is, have no extremely contorted
@@ -1966,17 +2032,18 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 \end{exercise}
 
 \begin{solution}
-    Assuming census blocks are approximately equal in size, and the only
+    Assuming precincts are approximately equal in size, and the only
     constraint on valid districting is the districts have roughly equal
-    population, then each district would have \( 500 \) blocks.  The way
+    population, then each district would have \( 500 \) precincts.  The way
     to allocate \( 9000 \) blocks in \( 18 \) groups of \( 500 \) each
     is the multinomial
     \[
         N = \frac{9000!}{(500!)^{18}}
     \] With Stirling's approximation, this is approximately
     \begin{align*}
-        N &\approx \frac{\sqrt{2\pi} (9000)^{9000} \sqrt{9000} \EulerE^{-9000}}
-        {(\sqrt{2\pi} (500)^{500} \sqrt{500} \EulerE^{-500})^{18}} \\
+        N       &\approx \frac{\sqrt{2\pi} (9000)^{9000} \sqrt{9000}
+        \EulerE^{-9000}} {(\sqrt{2\pi} (500)^{500} \sqrt{500} \EulerE^{-500})^
+        {18}} \\
         &= (2\pi)^{-17/2} \left( \frac{9000}{500} \right)^{9000} \left(
         \frac{\sqrt{9000}}{500^{9}} \right) \\
         &= (2\pi)^{-17/2} 18^{9000} \left( \frac{\sqrt{9000}}{500^{9}}
@@ -2024,7 +2091,7 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
     \] established in the subsection \emph{Wallis' Formula and the
     Central Binomial Coefficient} of the section \emph{Wallis Formula}
     in the chapter on Stirling's Formula.  Rewrite \( n = 2m \) and
-    divide through by \( 2^{n + 1} = 2 \cdot 4^n \) to obtain
+    divide through by \( 2^{n + 1} = 2 \cdot 4^m \) to obtain
     \[
         \frac{1}{\sqrt{2\pi(n+1)}} \left( 1 - \frac{1}{n} \right) <
         \frac{1}{2^{n+1}} \binom{n}{n/2} < \frac{1}{\sqrt{2\pi(n+1)}}
@@ -2069,3 +2136,9 @@ Last modified:  \flastmod
 
 \end{document}
 
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-master: t
+%%% TeX-master: t
+%%% End:
