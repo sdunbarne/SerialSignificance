@@ -115,13 +115,13 @@ mean?
 
     \item
         For \( 1 \le \ell \le n+1 \) say \( \alpha_j \) is \defn{among-\(
-        \ell \)-smallest} among \( \alpha_0, \dots \alpha_n \) if there
+        \ell \)-smallest} in \( \alpha_0, \dots \alpha_n \) if there
         are at most \( \ell \) indices from \( 0, \dots, n \) such that
         the value of \( \alpha_i \) is at most the value of \( \alpha_j \).
-        That is, \( \alpha_j \) is among-\( \ell \)-smallest among \(
+        That is, \( \alpha_j \) is among-\( \ell \)-smallest in \(
         \alpha_0, \dots \alpha_n \) if \( \card{ \setof{\nu}{\alpha_\nu
         \le \alpha_j}} \le \ell \).  In particular, \( \alpha_j \) is
-        among-\( 1 \)-smallest from \( \alpha_0, \dots \alpha_n \) when
+        among-\( 1 \)-smallest in \( \alpha_0, \dots \alpha_n \) when
         its value is the unique minimum value.
 \end{enumerate}
 
@@ -148,7 +148,7 @@ mean?
     \item
         \[
             \rho(j; \ell, n) = \Prob{X_j \text{ is among-\( \ell \)-smallest
-            from } X_0, \dots, X_n }
+            in } X_0, \dots, X_n }
         \]
     \item
         \( \rho(j; 0, n \given \sigma) \) -- the probability \( X_j =
@@ -157,7 +157,7 @@ mean?
         step \( j \).
     \item
         \( \xi_j \) -- the indicator variable that is \( 1 \) whenever \(
-        X_j \) is among-\( 2\ell \)-smallest among \( X_0, \dots , X_n \)
+        X_j \) is among-\( 2\ell \)-smallest in \( X_0, \dots , X_n \)
     \item
         \( p_{\nu}^n \) -- the probability in a \( n \)-step stationary
         trajectory \( X_0, X_1, \dots X_n \), the minimum \( v \) label
@@ -317,13 +317,13 @@ Proposition~%
     For \( 1 \le \ell \le n+1 \) say \( \alpha_j \) is \defn{among-\(
     \ell \)-smallest}%
     \index{among-\( \ell \)-smallest}
-    among \( \alpha_0, \dots \alpha_n \) if there are at most \( \ell \)
+    in \( \alpha_0, \dots \alpha_n \) if there are at most \( \ell \)
     indices from \( 0, \dots, n \) such that \( \alpha_{\nu} \) is at
     most as large as \( \alpha_j \).  That is, \( \alpha_j \) is among-\(
-    \ell \)-smallest among \( \alpha_0, \dots \alpha_n \) if
+    \ell \)-smallest in \( \alpha_0, \dots \alpha_n \) if
     \[
         \card{ \setof{\nu}{\alpha_{\nu} \le \alpha_j}} \le \ell.
-    \] In particular, \( \alpha_j \) is among-\( 1 \)-smallest from \(
+    \] In particular, \( \alpha_j \) is among-\( 1 \)-smallest in \(
     \alpha_0, \dots \alpha_n \) when its value is the unique minimum
     value.
 \end{definition}
@@ -422,11 +422,11 @@ using the following definition.
     For \( 0 \le j \le n \) define
     \[
         \rho(j; \ell, n) = \Prob{X_j \text{ is among-\( \ell \)-smallest
-        from } X_0, \dots, X_n }
+        in } X_0, \dots, X_n }
     \] and
     \[
         \rho(j; \ell, n \given \sigma) = \Prob{X_j \text{ is among-\(
-        \ell \)-smallest from } X_0, \dots, X_n%
+        \ell \)-smallest in } X_0, \dots, X_n%
         \given X_j = \sigma }.
     \]
 \end{definition}
@@ -437,7 +437,7 @@ minimum value in the Markov chain of length \( n \).  Likewise, \( \rho(j;
 unique minimum value in the Markov chain of length \( n \) given that
 the Markov passes through \( \sigma \) at step \( j \).  Additionally, \(
 \rho(0; \ell, n\given \sigma_0) \) is the probability that the starting
-value \( X_0 = \sigma_0 \) is among-\( \ell \)-smallest from \( v(X_0) \)
+value \( X_0 = \sigma_0 \) is among-\( \ell \)-smallest in \( v(X_0) \)
 through \( v(X_n) \).
 
 \begin{example}
@@ -609,7 +609,7 @@ through \( v(X_n) \).
             Let
             \[
                 \rho(j; \ell, n) = \Prob{v(X_j) \text{ is among-\( \ell \)-smallest
-                from } v(X_0), \dots, v(X_n) }.
+                in } v(X_0), \dots, v(X_n) }.
             \]
     \end{enumerate}
 
@@ -653,7 +653,7 @@ through \( v(X_n) \).
             additionally
             \begin{multline*}
                 \rho(j; \ell, n \given \sigma) =\\
-                \Prob{X_{s+j} \text{ is among-\( \ell \)-smallest among
+                \Prob{X_{s+j} \text{ is among-\( \ell \)-smallest in
                 } X_s, \dots, X_{s+n} \given X_j = \sigma }.
             \end{multline*}
         \item
@@ -679,15 +679,15 @@ through \( v(X_n) \).
                 \rho(j; 2\ell, n \given \sigma) \ge \rho(j; \ell, j
                 \given \sigma) \cdot \rho(0; \ell, n-j \given \sigma).
             \] The proof of the claim is to consider the subevent \( X_j
-            \) is among-\( \ell \)-smallest among \( X_0, \dots, X_j \)
-            and also among-\( \ell \)-smallest among \( X_j, \dots, X_n \).
+            \) is among-\( \ell \)-smallest in \( X_0, \dots, X_j \)
+            and also among-\( \ell \)-smallest in \( X_j, \dots, X_n \).
             These events are conditionally independent when conditioning
             on the value of \( X_j = \sigma \), and \( \rho(j; \ell, j
             \given \sigma) \) gives the probability of the first of
             these events.  The second probability \( \rho(0; \ell, n-j
             \given \sigma) \) gives the probability of the second event.
             Finally, as a subevent when both of these events happen, \(
-            X_j \) is among-\( 2\ell \)-smallest from \( X_0, \dots, X_n
+            X_j \) is among-\( 2\ell \)-smallest in \( X_0, \dots, X_n
             \).  This establishes the inequality in the claim.
         \item
             \label{enum:serialsignificance:basethm7} Using the previous
@@ -732,7 +732,7 @@ through \( v(X_n) \).
         \item
             Letting \( \xi_j \), \( 0 \le i \le n \) be the indicator
             variable that is \( 1 \) whenever \( X_j \) is among-\( 2\ell
-            \)-smallest among \( X_0, \dots , X_n \), then \( \sum_{\nu=0}^n
+            \)-smallest in \( X_0, \dots , X_n \), then \( \sum_{\nu=0}^n
             \xi_{\nu} \) is the number of among-\( 2\ell \)-smallest
             terms which is at most \( 2\ell + 1 \).  Therefore,
             linearity of expectation gives
@@ -1225,7 +1225,7 @@ The value function is the position around the circle, that is, \( v (X_{\nu})
 Then \( N \) is large enough that the distance of \( X_0 \) from \( 0 \)
 in both directions is greater than \( n \) with probability greater than
 \( 1 - \epsilon \).  Conditioning on this event, \( X_0 \) is minimum,
-i.e.\ among-1-smallest of \( X_0, \dots , X_n \) if and only if all of
+i.e.\ among-1-smallest in \( X_0, \dots , X_n \) if and only if all of
 the partial sums \( \sum\limits_{\nu=1}^{j} \zeta_\nu \) are positive
 for \( j \le n \).  The probability of this event is just the
 probability an \( n \)-step \( 1 \)-dimensional random walk from \( X_0 \)
@@ -1667,7 +1667,7 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 \renewcommand{\theexercise}{\arabic{exercise}}
 
 \begin{exercise}
-    Compare the notion of \( \epsilon \)-outlier of a set of \( n+1 \)
+    Compare the notion of \( \frac{1}{2} \)-outlier of a set of \( n+1 \)
     real numbers \( \set{\alpha_0, \alpha_1, \dots \alpha_n} \) to the
     median of the set.
 \end{exercise}
@@ -1733,16 +1733,16 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
 
     For a set with duplicates (or ties), the rank is not well-defined
     since there are several methods of ranking the ties.  For example,
-    for the R function \texttt{rank()}, the user can specify the
-    argument \texttt{ties.method} to determine the result at the
-    corresponding indices.  The \texttt{first} method results in a
+    for the R function \lstinline[language=R]{rank()}, the user can specify the
+    argument \lstinline[language=R]{ties.method} to determine the result at the
+    corresponding indices.  The \lstinline[language=R]{first} method results in a
     permutation with increasing values at each index set of ties, and
-    analogously \texttt{last} with decreasing values.  The \texttt{random}
-    method puts these in random order whereas the default, \texttt{average},
-    replaces them by their mean, and \texttt{max} and \texttt{min}
+    analogously \lstinline[language=R]{last} with decreasing values.  The \lstinline[language=R]{random}
+    method puts these in random order whereas the default, \lstinline[language=R]{average},
+    replaces them by their mean, and \lstinline[language=R]{max} and \lstinline[language=R]{min}
     replaces them by their maximum and minimum respectively, the latter
     being the typical sports ranking.  See the examples in the R
-    documentation for \texttt{rank()}.
+    documentation for \lstinline[language=R]{rank()}.
 
     For example, consider the set of \( 11 \) values
     \begin{multline*}
@@ -1751,13 +1751,13 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
         \alpha_6 = 2, \alpha_7 = 6, \alpha_8 = 5, \alpha_9 = 3, \alpha_
         {10} = 5
     \end{multline*}
-    and ask for the value with rank \( 1 \).  With the \( \texttt{first}
-    \) method the rank \( 1 \) element is \( \alpha_1 = 1 \).  With the \(
-    \texttt{last} \) method the rank \( 1 \) element is \( \alpha_3 = 1 \).
-    With the \( \texttt{random} \) method the rank \( 1 \) element may
-    be \( \alpha_1 = 1 \) or \( \alpha_3 = 1 \).  With the \( \texttt{average}
-    \) method the rank \( 1 \) element has value \( 1 \).  With the
-    \texttt{max} and \texttt{min} methods the rank \( 1 \) elements are \(
+    and ask for the value with rank \( 1 \).  With the \lstinline[language=R]{first}
+    method the rank \( 1 \) element is \( \alpha_1 = 1 \).  With the
+   \lstinline[language=R]{last} method the rank \( 1 \) element is \( \alpha_3 = 1 \).
+    With the \lstinline[language=R]{random} method the rank \( 1 \) element may
+    be \( \alpha_1 = 1 \) or \( \alpha_3 = 1 \).  With the \lstinline[language=R]{average}
+    method the rank \( 1 \) element has value \( 1 \).  With the
+    \lstinline[language=R]{max} and \lstinline[language=R]{min} methods the rank \( 1 \) elements are \(
     \alpha_3 = 1 \) or \( \alpha_1 = 1 \) respectively.
 
     However, the\( \epsilon \)-outlier is always well-defined with \(
@@ -1773,6 +1773,35 @@ https://math.stackexchange.com/questions/1382222/relaxation-time-and-mixing-time
     infrequently, i.e.\ only among the \( \epsilon \)-fraction of
     smallest ordered values, but not how to assign its place in the
     ordered values especially when repetitions occur.
+\end{solution}
+
+\begin{exercise}
+  Given a set of of \( n + 1 \) real values \( \set{\alpha_0, \dots \alpha_n} \),
+  show that \( \alpha_0 \) is an \( \epsilon \)-outlier if and only if
+  \( \alpha_0 < \alpha_{(t + 1)} \) where \( t = \lfloor \epsilon (n +
+  1) \rfloor \) is the ``\( \epsilon \)-outlier threshold'' and \(
+  \alpha_{(0)}, \alpha_{(1)}, \dots, \alpha_{(n)} \) is the set sorted
+  into increasing order.
+\end{exercise}
+\begin{solution}
+    Using \( t = \lfloor \epsilon (n +
+  1) \rfloor \) as the ``\( \epsilon \)-outlier threshold'' and \(
+  \alpha_{(0)}, \alpha_{(1)}, \dots, \alpha_{(n)} \) as the set sorted
+  into increasing order, then there will be \( t + 1 = \lfloor \epsilon (n +
+  1) \rfloor + 1 \) members of the set among\(
+  \alpha_{(0)}, \alpha_{(1)}, \dots, \alpha_{(t)} \).  This collection
+  is an \( \epsilon \)-fraction of values.  The requirement
+  that \( \alpha_0 < \alpha_{(t + 1)} \) means that that \emph{ no duplicates or
+  repetitions} of \( \alpha_0 \) are possible among \(
+  \alpha_{(t+1)}, \dots, \alpha_{(n)} \) so that \( \alpha_0 \) is
+  among the \( \epsilon \)-fraction of smallest values from
+  \( \set{\alpha_0, \dots \alpha_n} \).
+
+  This simple observation is useful in the computer programs in this
+  section and the next for evaluating whether a state in a Markov
+  chain is an \( \epsilon \)-outlier.  Sorting the values of a chain
+  and evaluating the sorted values at the ``\( \epsilon \)-outlier
+  threshold'' are relatively quick and are simple to program.
 \end{solution}
 
 \begin{exercise}
